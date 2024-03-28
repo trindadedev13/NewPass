@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class GeneratePasswordViewModel extends ViewModel {
 
@@ -52,19 +52,19 @@ public class GeneratePasswordViewModel extends ViewModel {
 
     public void toggleUppercase() {
         uppercase = !uppercase;
-        uppercaseStateLiveData.setValue(uppercase); // Emit un evento quando lo stato di uppercase cambia
+        uppercaseStateLiveData.setValue(uppercase);
         generatePassword();
     }
 
     public void toggleNumber() {
         number = !number;
-        numberStateLiveData.setValue(number); // Emit un evento quando lo stato di number cambia
+        numberStateLiveData.setValue(number);
         generatePassword();
     }
 
     public void toggleSpecial() {
         special = !special;
-        specialeStateLiveData.setValue(special); // Emit un evento quando lo stato di special cambia
+        specialeStateLiveData.setValue(special);
         generatePassword();
     }
 
@@ -77,7 +77,7 @@ public class GeneratePasswordViewModel extends ViewModel {
 
         String characters = charSet1 + charSet2 + charSet3 + charSet4;
 
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
 
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
