@@ -75,6 +75,7 @@ public class GeneratePasswordViewModel extends ViewModel {
         String charSet3 = (number) ? "0123456789" : "";
         String charSet4 = (special) ? "?#%{}@!$()[]" : "";
 
+
         String characters = charSet1 + charSet2 + charSet3 + charSet4;
 
         SecureRandom random = new SecureRandom();
