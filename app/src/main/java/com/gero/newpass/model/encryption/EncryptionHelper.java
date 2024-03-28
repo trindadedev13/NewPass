@@ -3,7 +3,6 @@ package com.gero.newpass.model.encryption;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
-import android.util.Log;
 
 import java.security.KeyStore;
 import java.util.Arrays;
@@ -28,11 +27,9 @@ public class EncryptionHelper {
     public static String encrypt(String plainText) {
 
         try {
-            // Get AES key
             SecretKey secretKey = getOrCreateAESKey();
 
             if (secretKey == null) {
-                Log.e("4950734", "Failed to retrieve the AES key");
                 return null;
             }
 
@@ -47,16 +44,9 @@ public class EncryptionHelper {
             System.arraycopy(iv, 0, ivAndEncryptedBytes, 0, iv.length);
             System.arraycopy(encryptedBytes, 0, ivAndEncryptedBytes, iv.length, encryptedBytes.length);
 
-            Log.i("4950734", "---------------- Encryption ----------------");
-            Log.i("4950734","plain  text:   " + plainText);
-            Log.i("4950734","KEY:           " + secretKey);
-            Log.i("4950734","IV:            " + Arrays.toString(Arrays.copyOfRange(ivAndEncryptedBytes, 0, 16)));
-            Log.i("4950734","cipher text:   " + Base64.encodeToString(ivAndEncryptedBytes, Base64.DEFAULT));
-
             return Base64.encodeToString(ivAndEncryptedBytes, Base64.DEFAULT);
 
         } catch (Exception e) {
-            Log.e("4950734", "Error during encryption: " + e.getMessage());
             return null;
         }
     }
@@ -73,11 +63,9 @@ public class EncryptionHelper {
             SecretKey secretKey = getOrCreateAESKey();
 
             if (secretKey == null) {
-                Log.e("4950734", "Failed to retrieve the AES key");
+
                 return null;
             }
-
-            Log.i("4950734", "Decryption key obtained successfully: " + secretKey);
 
             byte[] ivAndEncryptedBytes = Base64.decode(cipherText, Base64.DEFAULT);
 
@@ -90,18 +78,9 @@ public class EncryptionHelper {
             byte[] decryptedBytes = cipher.doFinal(ivAndEncryptedBytes);
 
 
-            String plainText = new String(Arrays.copyOfRange(decryptedBytes, 16, decryptedBytes.length));
-
-            Log.i("4950734", "---------------- Decryption ----------------");
-            Log.i("4950734","cipher text:   " + cipherText);
-            Log.i("4950734","KEY:           " + secretKey);
-            Log.i("4950734","IV:            " + Arrays.toString(iv));
-            Log.i("4950734","plain text:    " + plainText);
-
-            return plainText;
+            return new String(Arrays.copyOfRange(decryptedBytes, 16, decryptedBytes.length));
 
         } catch (Exception e) {
-            Log.e("4950734", "Error during decryption: " + e.getMessage());
             return null;
         }
     }
@@ -122,8 +101,6 @@ public class EncryptionHelper {
 
                 KeyStore.SecretKeyEntry secretKeyEntry = (KeyStore.SecretKeyEntry) keyStore.getEntry(KEY_ALIAS, null);
 
-                Log.w("4950734", "Key obtained successfully form key store:");
-
                 return secretKeyEntry.getSecretKey();
             } else {
 
@@ -134,12 +111,9 @@ public class EncryptionHelper {
                         .setKeySize(128);
                 keyGenerator.init(builder.build());
 
-                Log.w("4950734", "The key doesn't exist, I'll create a new one");
-
                 return keyGenerator.generateKey();
             }
         } catch (Exception e) {
-            Log.e("4950734", "Error getting/creating AES key: " + e.getMessage());
             return null;
         }
     }
