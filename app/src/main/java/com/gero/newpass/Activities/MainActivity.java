@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         myDB = DatabaseServiceLocator.getDatabaseHelper();
         storeDataInArrays();
 
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, this, userDataList);
+        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, userDataList);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 

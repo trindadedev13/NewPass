@@ -18,17 +18,14 @@ import com.gero.newpass.R;
 import com.gero.newpass.model.UserData;
 import com.gero.newpass.view.activities.UpdateActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private final Context context;
     private final List<UserData> userDataList;
-    private final Activity activity;
 
-    public CustomAdapter(MainActivity activity, MainActivity context, List<UserData> userDataList) {
-        this.activity = activity;
+    public CustomAdapter(MainActivity context, List<UserData> userDataList) {
         this.context = context;
         this.userDataList = userDataList;
     }
