@@ -49,7 +49,9 @@ git clone https://github.com/6eero/NewPass.git
 2. Open the project in [Android Studio](https://developer.android.com/studio).
 3. When you click the `▶ Run` button, it will be built automatically.
 4. Launch NewPass.
-  
+
+## 🫱🏻‍🫲🏼 Contributions and Development
+If you wish to contribute to the NewPass project or report bugs, we encourage you to do so through the GitHub issue system. I accept and appreciate community contributions to continually improve the application.
 
 ## ⚒️ Todo
 - [ ] Refactor code to use MVVM design pattern.
@@ -63,4 +65,4 @@ git clone https://github.com/6eero/NewPass.git
 - [x] Add encryption: The app does not currently provide secrecy restrictions on entered passwords.
 
 ## 📜 License
-GNU GPL v3.0 © [NewPass](https://github.com/6eero/NewPass/blob/master/LICENSE)
+The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please refer to the [LICENSE](https://github.com/6eero/NewPass/blob/master/LICENSE) file for more information on the license.
