@@ -13,27 +13,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
+import com.gero.newpass.model.UserData;
 import com.gero.newpass.view.activities.UpdateActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private final Context context;
-    private final ArrayList<String> row_id;
-    private final ArrayList<String> row_name;
-    private final ArrayList<String> row_email;
-    private final ArrayList<String> row_password;
+    private final List<UserData> userDataList;
     private final Activity activity;
 
-    public CustomAdapter(Activity activity, Context context, ArrayList<String> row_id, ArrayList<String> row_name, ArrayList<String> row_email, ArrayList<String> row_password) {
+    public CustomAdapter(MainActivity activity, MainActivity context, List<UserData> userDataList) {
         this.activity = activity;
         this.context = context;
-        this.row_id = row_id;
-        this.row_name = row_name;
-        this.row_email = row_email;
-        this.row_password = row_password;
+        this.userDataList = userDataList;
     }
 
     @NonNull
@@ -53,8 +50,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
-        String name = String.valueOf(row_name.get(holder.getAdapterPosition()));
-        String email = String.valueOf(row_email.get(holder.getAdapterPosition()));
+        UserData userData = userDataList.get(position);
+
+        String name = userData.getName();
+        String email = userData.getEmail();
+
 
         String tw;
         if (name.length() > 2) {
@@ -69,11 +69,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         holder.mainLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, UpdateActivity.class);
-            intent.putExtra("entry", String.valueOf(row_id.get(position)));
-            intent.putExtra("name", String.valueOf(row_name.get(position)));
-            intent.putExtra("email", String.valueOf(row_email.get(position)));
-            intent.putExtra("password", String.valueOf(row_password.get(position)));   // change this to change the displayed password in the update activity
-            activity.startActivityForResult(intent, 1);
+            intent.putExtra("entry", userData.getId());
+            intent.putExtra("name", userData.getName());
+            intent.putExtra("email", userData.getEmail());
+            intent.putExtra("password", userData.getPassword());
+            ((Activity) context).startActivityForResult(intent, 1);
         });
     }
 
@@ -83,7 +83,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
      */
     @Override
     public int getItemCount() {
-        return row_id.size();
+        return userDataList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
