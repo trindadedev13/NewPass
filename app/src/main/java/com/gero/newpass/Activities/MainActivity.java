@@ -3,6 +3,8 @@ package com.gero.newpass.Activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gero.newpass.model.UserData;
 import com.gero.newpass.view.activities.AddActivity;
 import com.gero.newpass.view.activities.GeneratePasswordActivity;
 import com.gero.newpass.view.adapters.CustomAdapter;
@@ -24,25 +27,38 @@ import com.gero.newpass.model.database.DatabaseHelper;
 import com.gero.newpass.model.database.DatabaseServiceLocator;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityMainBinding;
+import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
+import com.gero.newpass.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView no_data;
     private DatabaseHelper myDB;
-    private ArrayList<String> row_id, row_name, row_email, row_password;
     private ImageView empty_imageview;
+    private List<UserData> userDataList;
+    private MainViewModel mainViewModel;
 
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.gero.newpass.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         changeBarsColor(R.color.background_primary);
+
+        DatabaseHelper myDB = DatabaseServiceLocator.getDatabaseHelper();
+        if (myDB == null) {
+            myDB = new DatabaseHelper(getApplicationContext());
+            DatabaseServiceLocator.setDatabaseHelper(myDB);
+        }
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
 
         RecyclerView recyclerView = binding.recyclerView;
         ImageButton buttonGenerate = binding.buttonGenerate;
@@ -52,21 +68,26 @@ public class MainActivity extends AppCompatActivity {
         no_data = binding.noData;
 
 
-        //myDB = new DatabaseHelper(MainActivity.this);
-        row_id = new ArrayList<>();
-        row_name = new ArrayList<>();
-        row_email = new ArrayList<>();
-        row_password = new ArrayList<>();
-
-        DatabaseServiceLocator.init(getApplicationContext());
-        myDB = DatabaseServiceLocator.getDatabaseHelper();
-        storeDataInArrays();
-
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, this, row_id, row_name, row_email, row_password);
+        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, userDataList);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         count.setText("["+ customAdapter.getItemCount() +"]");
+
+        mainViewModel.getUserDataList().observe(this, new Observer<List<UserData>>() {
+            @Override
+            public void onChanged(List<UserData> userDataList) {
+                customAdapter.setUserList(userDataList);
+                count.setText("[" + userDataList.size() + "]");
+                if (userDataList.isEmpty()) {
+                    empty_imageview.setVisibility(View.VISIBLE);
+                    no_data.setVisibility(View.VISIBLE);
+                } else {
+                    empty_imageview.setVisibility(View.INVISIBLE);
+                    no_data.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         buttonGenerate.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GeneratePasswordActivity.class);
@@ -89,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
     void storeDataInArrays() {
 
-        // Retrieve data from the database
         Cursor cursor = myDB.readAllData();
 
         if (cursor.getCount() == 0) {
@@ -99,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             while (cursor.moveToNext()) {
-                row_id.add(cursor.getString(0));
-                row_name.add(cursor.getString(1));
-                row_email.add(cursor.getString(2));
-                row_password.add(cursor.getString(3));
+                // Creazione di un oggetto UserData e aggiunta alla lista
+                UserData userData = new UserData(cursor.getString(0), cursor.getString(1),
+                        cursor.getString(2), cursor.getString(3));
+                userDataList.add(userData);
             }
 
             empty_imageview.setVisibility((View.INVISIBLE));
