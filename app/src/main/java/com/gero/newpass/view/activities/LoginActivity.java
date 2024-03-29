@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
+import com.gero.newpass.databinding.ActivityGeneratePasswordBinding;
 import com.gero.newpass.model.utilities.StringUtility;
 import com.gero.newpass.model.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.LoginViewModel;
@@ -31,6 +32,9 @@ import java.security.GeneralSecurityException;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText loginTextViewName, loginTextViewPassword;
+    private ImageButton buttonLogin, buttonRegister;
+    private TextView welcomeLoginTextView, welcomeRegisterTextView;
+    private ImageView logo, logoLogin, backgroundInputboxName;
     private EncryptedSharedPreferences sharedPreferences;
     private LoginViewModel loginViewModel;
 
@@ -42,15 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
-        loginTextViewName = binding.loginTwName;
-        loginTextViewPassword = binding.loginTwPassword;
-        TextView welcomeRegisterTextView = binding.welcomeRegisterTw;
-        TextView welcomeLoginTextView = binding.welcomeLoginTw;
-        ImageButton buttonLogin = binding.loginButton;
-        ImageButton buttonRegister = binding.registerButton;
-        ImageView backgroundInputboxName = binding.backgroundInputbox1;
-        ImageView logo = binding.logoRegister;
-        ImageView logoLogin = binding.logoLogin;
+        initViews(binding);
 
 
         buttonLogin.setVisibility(View.GONE);
@@ -121,5 +117,17 @@ public class LoginActivity extends AppCompatActivity {
             String passwordInput = loginTextViewPassword.getText().toString();
             loginViewModel.createUser(nameInput, passwordInput, sharedPreferences);
         });
+    }
+
+    private void initViews(ActivityLoginBinding binding) {
+        loginTextViewName = binding.loginTwName;
+        loginTextViewPassword = binding.loginTwPassword;
+        welcomeRegisterTextView = binding.welcomeRegisterTw;
+        welcomeLoginTextView = binding.welcomeLoginTw;
+        buttonLogin = binding.loginButton;
+        buttonRegister = binding.registerButton;
+        backgroundInputboxName = binding.backgroundInputbox1;
+        logo = binding.logoRegister;
+        logoLogin = binding.logoLogin;
     }
 }

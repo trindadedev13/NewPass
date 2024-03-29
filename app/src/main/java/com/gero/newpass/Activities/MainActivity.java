@@ -2,7 +2,6 @@ package com.gero.newpass.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,8 +10,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,26 +29,23 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView no_data;
+    private TextView noData, count;
     private DatabaseHelper myDB;
     private ArrayList<UserData> userDataList;
     private ImageView empty_imageview;
+    private RecyclerView recyclerView;
+    private ImageButton buttonGenerate, buttonAdd;
 
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.gero.newpass.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
-        RecyclerView recyclerView = binding.recyclerView;
-        ImageButton buttonGenerate = binding.buttonGenerate;
-        ImageButton buttonAdd = binding.buttonAdd;
-        TextView count = binding.textViewCount;
-        empty_imageview = binding.emptyImageview;
-        no_data = binding.noData;
+        initViews(binding);
 
         userDataList = new ArrayList<>();
 
@@ -90,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (cursor.getCount() == 0) {
             empty_imageview.setVisibility((View.VISIBLE));
-            no_data.setVisibility((View.VISIBLE));
+            noData.setVisibility((View.VISIBLE));
         } else {
 
             while (cursor.moveToNext()) {
@@ -104,7 +98,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
             empty_imageview.setVisibility((View.INVISIBLE));
-            no_data.setVisibility((View.INVISIBLE));
+            noData.setVisibility((View.INVISIBLE));
         }
+    }
+
+    private void initViews(ActivityMainBinding binding) {
+        recyclerView = binding.recyclerView;
+        buttonGenerate = binding.buttonGenerate;
+        buttonAdd = binding.buttonAdd;
+        count = binding.textViewCount;
+        empty_imageview = binding.emptyImageview;
+        noData = binding.noData;
     }
 }

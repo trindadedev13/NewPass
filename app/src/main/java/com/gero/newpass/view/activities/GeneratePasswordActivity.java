@@ -117,6 +117,13 @@ public class GeneratePasswordActivity extends AppCompatActivity {
     }
 
 
+    private void copyToClipboard(String text) {
+
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("Text copied to clipboard", text);
+        clipboardManager.setPrimaryClip(clipData);
+    }
+
 
     private void initViews(ActivityGeneratePasswordBinding binding) {
         seekBar = binding.seekBar;
@@ -127,13 +134,5 @@ public class GeneratePasswordActivity extends AppCompatActivity {
         buttonSpecial = binding.buttonSpecial1;
         buttonRegenerate = binding.buttonRegenerate;
         backButton = binding.backButton;
-    }
-
-
-    private void copyToClipboard(String text) {
-
-        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("Text copied to clipboard", text);
-        clipboardManager.setPrimaryClip(clipData);
     }
 }

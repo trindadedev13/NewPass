@@ -18,6 +18,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 
 import com.gero.newpass.Activities.MainActivity;
+import com.gero.newpass.databinding.ActivityLoginBinding;
 import com.gero.newpass.model.encryption.EncryptionHelper;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityUpdateBinding;
@@ -29,6 +30,7 @@ public class UpdateActivity extends AppCompatActivity {
     private EditText name_input, email_input, password_input;
     private String entry, name, email, password;
     private UpdateViewModel updateViewModel;
+    private ImageButton updateButton, deleteButton, copyButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +41,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         updateViewModel = new ViewModelProvider(this).get(UpdateViewModel.class);
 
-        name_input = binding.nameInput2;
-        email_input = binding.emailInput2;
-        password_input = binding.passwordInput2;
-        ImageButton updateButton = binding.updateButton;
-        ImageButton backButton = binding.backButton;
-        ImageButton deleteButton = binding.deleteButton;
-        ImageButton copyButton = binding.copyButton;
+        initViews(binding);
 
         try {
             getAndSetIntentData();
@@ -126,5 +122,15 @@ public class UpdateActivity extends AppCompatActivity {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("Text copied to the clipboard", text);
         clipboardManager.setPrimaryClip(clipData);
+    }
+
+    private void initViews(ActivityUpdateBinding binding) {
+        name_input = binding.nameInput2;
+        email_input = binding.emailInput2;
+        password_input = binding.passwordInput2;
+        updateButton = binding.updateButton;
+        backButton = binding.backButton;
+        deleteButton = binding.deleteButton;
+        copyButton = binding.copyButton;
     }
 }
