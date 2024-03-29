@@ -45,6 +45,9 @@ public class AddActivity extends AppCompatActivity {
             String password = passwordInput.getText().toString().trim();
 
             addViewModel.addEntry(name, email, password);
+            Intent intent = new Intent(AddActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         back_button.setOnClickListener(v -> {

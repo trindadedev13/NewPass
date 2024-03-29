@@ -64,6 +64,10 @@ public class UpdateActivity extends AppCompatActivity {
 
             updateViewModel.updateEntry(entry, name, email, password);
 
+            Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+
         });
 
         deleteButton.setOnClickListener(v -> {
