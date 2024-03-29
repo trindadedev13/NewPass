@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
 import com.gero.newpass.model.utilities.StringUtility;
+import com.gero.newpass.model.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.LoginViewModel;
 import com.gero.newpass.databinding.ActivityLoginBinding;
 
@@ -39,9 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        changeBarsColor(R.color.background_primary);
-
-        initView();
+        SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
         loginTextViewName = binding.loginTwName;
         loginTextViewPassword = binding.loginTwPassword;
@@ -122,23 +121,5 @@ public class LoginActivity extends AppCompatActivity {
             String passwordInput = loginTextViewPassword.getText().toString();
             loginViewModel.createUser(nameInput, passwordInput, sharedPreferences);
         });
-    }
-
-    private void initView() {
-    }
-
-    private void changeBarsColor(int color) {
-
-        try {
-            Window window = getWindow();
-            View decor = getWindow().getDecorView();
-            decor.setSystemUiVisibility(0);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, (color)));
-            window.setNavigationBarColor(ContextCompat.getColor(this, (color)));
-
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("The provided color is invalid.");
-        }
     }
 }

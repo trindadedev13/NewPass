@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityAddBinding;
+import com.gero.newpass.model.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.AddViewModel;
 
 public class AddActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityAddBinding binding = ActivityAddBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        changeBarsColor(R.color.background_primary);
+        SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
         addViewModel = new ViewModelProvider(this).get(AddViewModel.class);
 
@@ -60,20 +61,5 @@ public class AddActivity extends AppCompatActivity {
         // Observe any feedback messages from the ViewModel
         addViewModel.getMessageLiveData().observe(this, message ->
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
-    }
-
-    private void changeBarsColor(int color) {
-
-        try {
-            Window window = getWindow();
-            View decor = getWindow().getDecorView();
-            decor.setSystemUiVisibility(0);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, (color)));
-            window.setNavigationBarColor(ContextCompat.getColor(this, (color)));
-
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("The provided color is invalid.");
-        }
     }
 }

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
 import com.gero.newpass.model.UserData;
 import com.gero.newpass.view.activities.UpdateActivity;
@@ -24,15 +23,13 @@ import java.util.List;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private final Context context;
-    private List<UserData> userDataList;
+    private final List<UserData> userDataList;
+    private final Activity activity;
 
-    public CustomAdapter(MainActivity context, List<UserData> userDataList) {
+    public CustomAdapter(Activity activity, Context context, List<UserData> userDataList) {
+        this.activity = activity;
         this.context = context;
-        if (userDataList == null) {
-            this.userDataList = new ArrayList<>();
-        } else {
-            this.userDataList = userDataList;
-        }
+        this.userDataList = userDataList;
     }
 
     @NonNull
@@ -57,7 +54,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         String name = userData.getName();
         String email = userData.getEmail();
 
-
         String tw;
         if (name.length() > 2) {
             tw = name.substring(0, 2);
@@ -75,22 +71,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             intent.putExtra("name", userData.getName());
             intent.putExtra("email", userData.getEmail());
             intent.putExtra("password", userData.getPassword());
-            ((Activity) context).startActivityForResult(intent, 1);
+            activity.startActivityForResult(intent, 1);
         });
     }
 
-    /**
-     * Get the number of password saved in the database
-     * @return the number of password saved in the database
-     */
+
     @Override
     public int getItemCount() {
         return userDataList.size();
-    }
-
-    public void setUserList(List<UserData> userDataList) {
-        this.userDataList = userDataList;
-        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

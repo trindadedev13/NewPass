@@ -21,6 +21,7 @@ import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.model.encryption.EncryptionHelper;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityUpdateBinding;
+import com.gero.newpass.model.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.UpdateViewModel;
 
 public class UpdateActivity extends AppCompatActivity {
@@ -34,7 +35,7 @@ public class UpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityUpdateBinding binding = ActivityUpdateBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        changeBarsColor(R.color.background_primary);
+        SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
         updateViewModel = new ViewModelProvider(this).get(UpdateViewModel.class);
 
@@ -125,20 +126,5 @@ public class UpdateActivity extends AppCompatActivity {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("Text copied to the clipboard", text);
         clipboardManager.setPrimaryClip(clipData);
-    }
-
-    private void changeBarsColor(int color) {
-
-        try {
-            Window window = getWindow();
-            View decor = getWindow().getDecorView();
-            decor.setSystemUiVisibility(0);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, (color)));
-            window.setNavigationBarColor(ContextCompat.getColor(this, (color)));
-
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("The provided color is invalid.");
-        }
     }
 }
