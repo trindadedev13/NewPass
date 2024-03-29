@@ -66,13 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_EMAIL, email);
         cv.put(COLUMN_PASSWORD, encryptedPassword);
 
-        long result = db.insert(TABLE_NAME, null, cv);
-
-        if (result == -1) {
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-        }
+        db.insert(TABLE_NAME, null, cv);
     }
 
     public Cursor readAllData() {

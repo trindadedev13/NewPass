@@ -23,9 +23,9 @@ public class AddViewModel extends ViewModel {
     public void addEntry(String name, String email, String password) {
 
             if (
-                    name.length() >= 4 && name.length() <= 10 &&                     // name    [4, 10]
+                    !name.isEmpty() && name.length() <= 10 &&                        // name    [1, 10]
                             email.length() >= 4 && email.length() <= 30 &&           // email   [4, 30]
-                            password.length() >= 4 && password.length() <= 15        // psw     [4, 15]
+                            password.length() >= 4 && password.length() <= 20        // psw     [4, 20]
             ) {
 
                 if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
@@ -33,18 +33,18 @@ public class AddViewModel extends ViewModel {
 
                 } else  {
                     databaseHelper.addEntry(name, email, password);
-                    messageLiveData.setValue("Entry added successfully");
+                    messageLiveData.setValue("Account added successfully");
                 }
 
             } else {
-                if (name.length() < 4 || name.length() > 10) {
-                    messageLiveData.setValue("Name should be 4 to 10 characters long!");
+                if (name.isEmpty() || name.length() > 10) {
+                    messageLiveData.setValue("Name should be 1 to 10 characters long!");
 
                 } else if (email.length() < 4 || email.length() > 30) {
                     messageLiveData.setValue("Email should be 4 to 30 characters long!");
 
                 } else {
-                    messageLiveData.setValue("Password should be 4 to 15 characters long!");
+                    messageLiveData.setValue("Password should be 4 to 20 characters long!");
                 }
             }
     }
