@@ -3,6 +3,8 @@ package com.gero.newpass.Activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,8 @@ import com.gero.newpass.model.database.DatabaseHelper;
 import com.gero.newpass.model.database.DatabaseServiceLocator;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityMainBinding;
+import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
+import com.gero.newpass.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper myDB;
     private ImageView empty_imageview;
     private List<UserData> userDataList;
+    private MainViewModel mainViewModel;
 
 
     @SuppressLint("SetTextI18n")
@@ -46,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         changeBarsColor(R.color.background_primary);
 
+        DatabaseHelper myDB = DatabaseServiceLocator.getDatabaseHelper();
+        if (myDB == null) {
+            myDB = new DatabaseHelper(getApplicationContext());
+            DatabaseServiceLocator.setDatabaseHelper(myDB);
+        }
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+
         RecyclerView recyclerView = binding.recyclerView;
         ImageButton buttonGenerate = binding.buttonGenerate;
         ImageButton buttonAdd = binding.buttonAdd;
@@ -54,18 +68,26 @@ public class MainActivity extends AppCompatActivity {
         no_data = binding.noData;
 
 
-        userDataList = new ArrayList<>();
-
-
-        DatabaseServiceLocator.init(getApplicationContext());
-        myDB = DatabaseServiceLocator.getDatabaseHelper();
-        storeDataInArrays();
-
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, userDataList);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         count.setText("["+ customAdapter.getItemCount() +"]");
+
+        mainViewModel.getUserDataList().observe(this, new Observer<List<UserData>>() {
+            @Override
+            public void onChanged(List<UserData> userDataList) {
+                customAdapter.setUserList(userDataList);
+                count.setText("[" + userDataList.size() + "]");
+                if (userDataList.isEmpty()) {
+                    empty_imageview.setVisibility(View.VISIBLE);
+                    no_data.setVisibility(View.VISIBLE);
+                } else {
+                    empty_imageview.setVisibility(View.INVISIBLE);
+                    no_data.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         buttonGenerate.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GeneratePasswordActivity.class);

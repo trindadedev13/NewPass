@@ -18,16 +18,21 @@ import com.gero.newpass.R;
 import com.gero.newpass.model.UserData;
 import com.gero.newpass.view.activities.UpdateActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private final Context context;
-    private final List<UserData> userDataList;
+    private List<UserData> userDataList;
 
     public CustomAdapter(MainActivity context, List<UserData> userDataList) {
         this.context = context;
-        this.userDataList = userDataList;
+        if (userDataList == null) {
+            this.userDataList = new ArrayList<>();
+        } else {
+            this.userDataList = userDataList;
+        }
     }
 
     @NonNull
@@ -81,6 +86,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public int getItemCount() {
         return userDataList.size();
+    }
+
+    public void setUserList(List<UserData> userDataList) {
+        this.userDataList = userDataList;
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

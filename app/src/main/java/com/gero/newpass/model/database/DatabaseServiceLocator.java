@@ -17,5 +17,9 @@ public class DatabaseServiceLocator {
     public static DatabaseHelper getDatabaseHelper() {
         return databaseHelper;
     }
+
+    public static void setDatabaseHelper(DatabaseHelper dbHelper) {
+        databaseHelper = dbHelper;
+    }
 }
 
