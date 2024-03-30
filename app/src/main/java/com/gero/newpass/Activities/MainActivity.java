@@ -18,6 +18,7 @@ import com.gero.newpass.model.UserData;
 import com.gero.newpass.model.utilities.SystemBarColorHelper;
 import com.gero.newpass.view.activities.AddActivity;
 import com.gero.newpass.view.activities.GeneratePasswordActivity;
+import com.gero.newpass.view.activities.SettingsActivity;
 import com.gero.newpass.view.adapters.CustomAdapter;
 import com.gero.newpass.model.database.DatabaseHelper;
 import com.gero.newpass.model.database.DatabaseServiceLocator;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<UserData> userDataList;
     private ImageView empty_imageview;
     private RecyclerView recyclerView;
-    private ImageButton buttonGenerate, buttonAdd;
+    private ImageButton buttonGenerate, buttonAdd, buttonSettings;
 
 
     @SuppressLint("SetTextI18n")
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
         buttonAdd.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
+            startActivity(intent);
+        });
+
+        buttonSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
     }
@@ -106,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = binding.recyclerView;
         buttonGenerate = binding.buttonGenerate;
         buttonAdd = binding.buttonAdd;
+        buttonSettings = binding.buttonSettings;
         count = binding.textViewCount;
         empty_imageview = binding.emptyImageview;
         noData = binding.noData;

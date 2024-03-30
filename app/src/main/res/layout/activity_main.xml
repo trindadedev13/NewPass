@@ -21,6 +21,21 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
+        android:id="@+id/button_Settings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@android:color/transparent"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_settings"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_1" />
+
+
+    <ImageButton
         android:id="@+id/button_Add"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -96,26 +111,26 @@
         android:id="@+id/empty_imageview"
         android:layout_width="120dp"
         android:layout_height="107dp"
+        android:alpha="0.1"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recyclerView"
         app:layout_constraintVertical_bias="0.432"
-        app:srcCompat="@drawable/icon_empty"
-        android:alpha="0.1"
-        android:visibility="gone"/>
+        app:srcCompat="@drawable/icon_empty" />
 
     <TextView
         android:id="@+id/no_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:alpha="0.2"
+        android:fontFamily="@font/jetbrainsmonoregular"
         android:text="[No data]"
         android:textColor="@color/text_primary"
-        android:alpha="0.2"
         android:visibility="gone"
-        android:fontFamily="@font/jetbrainsmonoregular"
         app:layout_constraintEnd_toEndOf="@+id/recyclerView"
         app:layout_constraintStart_toStartOf="@+id/recyclerView"
         app:layout_constraintTop_toBottomOf="@+id/empty_imageview" />
@@ -149,15 +164,12 @@
         app:layout_constraintGuide_percent="0.93" />
 
 
-
-
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.02" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_3"
@@ -186,5 +198,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
