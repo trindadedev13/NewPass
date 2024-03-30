@@ -27,11 +27,10 @@ public class LoginViewModel extends ViewModel {
     public void loginUser(String password, EncryptedSharedPreferences sharedPreferences) {
 
         String savedPasswordSharedPreferences = sharedPreferences.getString("password", "");
-        String savedNameSharedPreferences = sharedPreferences.getString("name", "");
 
         if (savedPasswordSharedPreferences.equals(password)) {
             loginSuccessLiveData.setValue(true);
-            loginMessageLiveData.setValue("Login done for: " + savedNameSharedPreferences);
+            loginMessageLiveData.setValue("Login done");
         } else {
             loginSuccessLiveData.setValue(false);
             loginMessageLiveData.setValue("Access Denied");
@@ -40,19 +39,18 @@ public class LoginViewModel extends ViewModel {
 
 
 
-    public void createUser(String name, String password, EncryptedSharedPreferences sharedPreferences) {
+    public void createUser(String password, EncryptedSharedPreferences sharedPreferences) {
 
-        if (name.length() >= 4 && name.length() <= 10 && password.length() >= 4) {
+        if (password.length() >= 4) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("password", password);
-            editor.putString("name", name);
             editor.apply();
 
             loginSuccessLiveData.setValue(true);
-            loginMessageLiveData.setValue("User " + name + " created");
+            loginMessageLiveData.setValue("User created successfully!");
         } else {
             loginSuccessLiveData.setValue(false);
-            loginMessageLiveData.setValue("Username must be between 4 and 10 characters, and password must be at least 4 characters long.");
+            loginMessageLiveData.setValue("Password must be at least 4 characters long!");
         }
     }
 }
