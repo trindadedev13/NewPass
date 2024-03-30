@@ -26,22 +26,26 @@ public class UpdateViewModel extends ViewModel {
 
         String encryptedPassword = EncryptionHelper.encrypt(password);
 
+        int nameMaxLen = 30;
+        int emailMaxLen = 30;
+        int passwordMaxLen = 30;
+
         if (
-                name.length() >= 4 && name.length() <= 10 &&                     // name    [4, 10]
-                        email.length() >= 4 && email.length() <= 30 &&           // email   [4, 30]
-                        password.length() >= 4 && password.length() <= 15        // psw     [4, 15]
+                !name.isEmpty() && name.length() <= nameMaxLen &&
+                        email.length() >= 4 && email.length() <= emailMaxLen &&
+                        password.length() >= 4 && password.length() <= passwordMaxLen
         ) {
             databaseHelper.updateData(entry, name, email, encryptedPassword);
 
         } else {
-            if (name.length() < 4 || name.length() > 10) {
-                messageLiveData.setValue("Name should be 4 to 10 characters long!");
+            if (name.isEmpty() || name.length() > nameMaxLen) {
+                messageLiveData.setValue("Name should be 1 to "+ nameMaxLen +" characters long!");
 
-            } else if (email.length() < 4 || email.length() > 30) {
-                messageLiveData.setValue("Email should be 4 to 30 characters long!");
+            } else if (email.length() < 4 || email.length() > emailMaxLen) {
+                messageLiveData.setValue("Email should be 4 to " + emailMaxLen +" characters long!");
 
             } else {
-                messageLiveData.setValue("Password should be 4 to 15 characters long!");
+                messageLiveData.setValue("Password should be 4 to " + passwordMaxLen + " characters long!");
             }
         }
     }

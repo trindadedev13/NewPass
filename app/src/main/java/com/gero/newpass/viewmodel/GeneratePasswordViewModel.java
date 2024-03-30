@@ -14,10 +14,10 @@ public class GeneratePasswordViewModel extends ViewModel {
     private final MutableLiveData<Boolean> uppercaseStateLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> numberStateLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> specialeStateLiveData = new MutableLiveData<>();
-    private boolean uppercase = false;
-    private boolean number = false;
+    private boolean uppercase = true;
+    private boolean number = true;
     private boolean special = false;
-    private int length = 8;
+    private int length = 14;
 
     public GeneratePasswordViewModel() {
         generatePassword();
