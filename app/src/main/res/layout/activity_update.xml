@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.UpdateActivity"
-    android:background="@color/background_primary">
+    android:background="@color/background_primary"
+    tools:context=".view.activities.UpdateActivity">
 
     <ImageView
         android:id="@+id/background_inputbox_1"
@@ -27,8 +27,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_4"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
-        app:layout_constraintTop_toBottomOf="@+id/background_inputbox_1">
-    </ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/background_inputbox_1"></ImageView>
 
     <ImageView
         android:id="@+id/background_inputbox_3"
@@ -38,22 +37,21 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_7"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
-        app:layout_constraintTop_toBottomOf="@+id/background_inputbox_2">
-    </ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/background_inputbox_2"></ImageView>
 
     <EditText
         android:id="@+id/name_input2"
         android:layout_width="287dp"
         android:layout_height="58dp"
+        android:backgroundTint="@color/background_secondary"
         android:ems="10"
         android:fontFamily="@font/jetbrainsmonoregular"
         android:hint="Name"
-        android:paddingBottom="22dp"
-        android:textSize="16dp"
         android:inputType="text"
+        android:paddingBottom="22dp"
         android:textColor="@color/text_primary"
-        android:backgroundTint="@color/background_secondary"
         android:textColorHint="@color/text_primary"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/background_inputbox_1"
         app:layout_constraintEnd_toEndOf="@+id/background_inputbox_1"
         app:layout_constraintStart_toStartOf="@+id/background_inputbox_1"
@@ -63,15 +61,15 @@
         android:id="@+id/email_input2"
         android:layout_width="287dp"
         android:layout_height="58dp"
+        android:backgroundTint="@color/background_secondary"
         android:ems="10"
-        android:textSize="16dp"
         android:fontFamily="@font/jetbrainsmonoregular"
         android:hint="Email"
         android:inputType="text"
         android:paddingBottom="22dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_primary"
-        android:backgroundTint="@color/background_secondary"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/background_inputbox_2"
         app:layout_constraintEnd_toEndOf="@+id/background_inputbox_2"
         app:layout_constraintHorizontal_bias="0.495"
@@ -82,15 +80,15 @@
         android:id="@+id/password_input2"
         android:layout_width="287dp"
         android:layout_height="58dp"
-        android:ems="10"
-        android:textSize="16dp"
-        android:fontFamily="@font/jetbrainsmonoregular"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_primary"
         android:backgroundTint="@color/background_secondary"
-        android:paddingBottom="22dp"
+        android:ems="10"
+        android:fontFamily="@font/jetbrainsmonoregular"
         android:hint="Password"
         android:inputType="text"
+        android:paddingBottom="22dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_primary"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/background_inputbox_3"
         app:layout_constraintEnd_toEndOf="@+id/background_inputbox_3"
         app:layout_constraintStart_toStartOf="@+id/background_inputbox_3"
@@ -145,7 +143,19 @@
         android:src="@drawable/btn_back"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_1">
+
     </ImageButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoextrabold"
+        android:text="Update"
+        android:textColor="@color/text_primary"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col_1"
@@ -202,29 +212,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.60" />
+        app:layout_constraintGuide_percent="0.65" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
