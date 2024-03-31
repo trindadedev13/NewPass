@@ -2,6 +2,7 @@ package com.gero.newpass.view.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -62,6 +63,28 @@ public class SettingsActivity extends AppCompatActivity {
             buttonHapticFeedBack.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), imageResource));
         });
 
+
+
+        IVGithub.setOnClickListener(v -> {
+            String url = "https://github.com/6eero/NewPass";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        });
+
+        IVShare.setOnClickListener(v -> {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Unlock a world of security with NewPass – your ultimate password guardian. Explore it now: https://github.com/6eero/NewPass/releases");
+            startActivity(Intent.createChooser(shareIntent, "Share with..."));
+        });
+
+        IVContact.setOnClickListener(v -> {
+            String url = "https://t.me/geroED";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        });
 
     }
 
