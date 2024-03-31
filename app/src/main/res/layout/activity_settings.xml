@@ -218,7 +218,7 @@
         app:srcCompat="@drawable/settings_entry_bg" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView_github"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_10"
@@ -228,7 +228,7 @@
         app:srcCompat="@drawable/settings_entry_bg" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView_share"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_11"
@@ -238,7 +238,7 @@
         app:srcCompat="@drawable/settings_entry_bg" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageView_contact"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_12"

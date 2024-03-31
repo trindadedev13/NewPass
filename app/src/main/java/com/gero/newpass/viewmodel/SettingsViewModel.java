@@ -1,5 +1,6 @@
 package com.gero.newpass.viewmodel;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -10,7 +11,7 @@ public class SettingsViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> darkThemeStateLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> hapticFeedbackStateLiveData = new MutableLiveData<>();
-    private boolean darkTheme = true;
+    private boolean darkTheme = false;
     private boolean hapticFeedback = false;
 
     public SettingsViewModel() {
@@ -26,13 +27,28 @@ public class SettingsViewModel extends ViewModel {
         return hapticFeedbackStateLiveData;
     }
 
-    public void toggleDarkTheme() {
-        darkTheme = !darkTheme;
-        darkThemeStateLiveData.setValue(darkTheme);
+    public void toggleDarkTheme(SharedPreferences sharedPreferences) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean darkThemeState = sharedPreferences.getBoolean("darkTheme", false);
+
+        //Log.i("283957", "value in the shared pref before clicking the button: " + darkThemeState);
+
+        darkThemeState = !darkThemeState;
+        editor.putBoolean("darkTheme", darkThemeState);
+        editor.apply();
+        darkThemeStateLiveData.setValue(darkThemeState);
+
+        //darkThemeState = sharedPreferences.getBoolean("darkTheme", false);
+        //Log.i("283957", "value in the shared pref after clicking the button: " + darkThemeState);
     }
 
-    public void toggleHapticFeedback() {
+    public void toggleHapticFeedback(SharedPreferences sharedPreferences) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean darkThemeState = sharedPreferences.getBoolean("darkTheme", false);
+
         hapticFeedback = !hapticFeedback;
+        editor.putBoolean("hapticFeedback", darkThemeState);
+        editor.apply();
         hapticFeedbackStateLiveData.setValue(hapticFeedback);
     }
 }
