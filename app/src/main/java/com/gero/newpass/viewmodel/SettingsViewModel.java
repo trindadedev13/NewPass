@@ -44,10 +44,10 @@ public class SettingsViewModel extends ViewModel {
 
     public void toggleHapticFeedback(SharedPreferences sharedPreferences) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        boolean darkThemeState = sharedPreferences.getBoolean("darkTheme", false);
+        boolean hapticFeedback = sharedPreferences.getBoolean("darkTheme", false);
 
         hapticFeedback = !hapticFeedback;
-        editor.putBoolean("hapticFeedback", darkThemeState);
+        editor.putBoolean("hapticFeedback", hapticFeedback);
         editor.apply();
         hapticFeedbackStateLiveData.setValue(hapticFeedback);
     }

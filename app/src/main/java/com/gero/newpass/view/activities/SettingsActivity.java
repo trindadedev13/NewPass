@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -17,8 +16,6 @@ import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivitySettingsBinding;
 import com.gero.newpass.model.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.SettingsViewModel;
-
-import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
