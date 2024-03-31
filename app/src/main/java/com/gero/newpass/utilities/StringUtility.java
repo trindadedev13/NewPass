@@ -1,4 +1,4 @@
-package com.gero.newpass.model.utilities;
+package com.gero.newpass.utilities;
 
 public class StringUtility {
     private static String sharedString;

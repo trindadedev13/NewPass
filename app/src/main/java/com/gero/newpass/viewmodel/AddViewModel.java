@@ -1,7 +1,7 @@
 package com.gero.newpass.viewmodel;
 
-import com.gero.newpass.model.database.DatabaseHelper;
-import com.gero.newpass.model.database.DatabaseServiceLocator;
+import com.gero.newpass.database.DatabaseHelper;
+import com.gero.newpass.database.DatabaseServiceLocator;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

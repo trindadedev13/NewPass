@@ -6,10 +6,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -17,14 +13,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityGeneratePasswordBinding;
-import com.gero.newpass.model.utilities.SystemBarColorHelper;
+import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
 
 public class GeneratePasswordActivity extends AppCompatActivity {

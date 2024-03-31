@@ -19,7 +19,7 @@
             android:name=".view.activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".view.activities.MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.activities.UpdateActivity"

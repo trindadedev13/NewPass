@@ -9,10 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityAddBinding;
-import com.gero.newpass.model.utilities.SystemBarColorHelper;
+import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.AddViewModel;
 
 public class AddActivity extends AppCompatActivity {

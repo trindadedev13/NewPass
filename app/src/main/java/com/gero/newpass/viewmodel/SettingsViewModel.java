@@ -2,6 +2,7 @@ package com.gero.newpass.viewmodel;
 
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -31,24 +32,25 @@ public class SettingsViewModel extends ViewModel {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean darkThemeState = sharedPreferences.getBoolean("darkTheme", false);
 
-        //Log.i("283957", "value in the shared pref before clicking the button: " + darkThemeState);
-
         darkThemeState = !darkThemeState;
         editor.putBoolean("darkTheme", darkThemeState);
         editor.apply();
+
         darkThemeStateLiveData.setValue(darkThemeState);
 
-        //darkThemeState = sharedPreferences.getBoolean("darkTheme", false);
-        //Log.i("283957", "value in the shared pref after clicking the button: " + darkThemeState);
+        /* TODO: Enable switch theme */
     }
 
     public void toggleHapticFeedback(SharedPreferences sharedPreferences) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        boolean hapticFeedback = sharedPreferences.getBoolean("darkTheme", false);
+        boolean hapticFeedback = sharedPreferences.getBoolean("hapticFeedback", false);
 
         hapticFeedback = !hapticFeedback;
         editor.putBoolean("hapticFeedback", hapticFeedback);
         editor.apply();
+
         hapticFeedbackStateLiveData.setValue(hapticFeedback);
+
+        /* TODO: Enable haptic feedback */
     }
 }

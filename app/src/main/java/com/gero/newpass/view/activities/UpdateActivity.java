@@ -2,27 +2,21 @@ package com.gero.newpass.view.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 
-import com.gero.newpass.Activities.MainActivity;
-import com.gero.newpass.databinding.ActivityLoginBinding;
-import com.gero.newpass.model.encryption.EncryptionHelper;
+import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivityUpdateBinding;
-import com.gero.newpass.model.utilities.SystemBarColorHelper;
+import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.UpdateViewModel;
 
 public class UpdateActivity extends AppCompatActivity {

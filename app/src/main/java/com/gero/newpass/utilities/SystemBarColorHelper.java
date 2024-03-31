@@ -1,4 +1,4 @@
-package com.gero.newpass.model.utilities;
+package com.gero.newpass.utilities;
 
 import android.content.Context;
 import android.view.View;

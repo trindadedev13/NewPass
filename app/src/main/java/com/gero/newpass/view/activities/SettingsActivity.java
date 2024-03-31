@@ -4,17 +4,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.gero.newpass.Activities.MainActivity;
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.ActivitySettingsBinding;
-import com.gero.newpass.model.utilities.SystemBarColorHelper;
+import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.SettingsViewModel;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -45,8 +46,10 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
 
+        buttonDarkTheme.setVisibility(View.GONE);
+        buttonHapticFeedBack.setVisibility(View.GONE);
 
-
+/*
         buttonDarkTheme.setOnClickListener(v -> settingsViewModel.toggleDarkTheme(sharedPreferences));
         buttonHapticFeedBack.setOnClickListener(v -> settingsViewModel.toggleHapticFeedback(sharedPreferences));
 
@@ -59,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
             int imageResource = (sharedPreferences.getBoolean("hapticFeedback", false)) ? R.drawable.btn_yes : R.drawable.btn_no;
             buttonHapticFeedBack.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), imageResource));
         });
+ */
 
 
 

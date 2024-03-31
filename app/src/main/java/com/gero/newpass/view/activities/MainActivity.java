@@ -1,4 +1,4 @@
-package com.gero.newpass.Activities;
+package com.gero.newpass.view.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +14,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gero.newpass.model.UserData;
-import com.gero.newpass.model.utilities.SystemBarColorHelper;
-import com.gero.newpass.view.activities.AddActivity;
-import com.gero.newpass.view.activities.GeneratePasswordActivity;
-import com.gero.newpass.view.activities.SettingsActivity;
-import com.gero.newpass.view.adapters.CustomAdapter;
-import com.gero.newpass.model.database.DatabaseHelper;
-import com.gero.newpass.model.database.DatabaseServiceLocator;
 import com.gero.newpass.R;
+import com.gero.newpass.model.UserData;
+import com.gero.newpass.utilities.SystemBarColorHelper;
+import com.gero.newpass.view.adapters.CustomAdapter;
+import com.gero.newpass.database.DatabaseHelper;
+import com.gero.newpass.database.DatabaseServiceLocator;
 import com.gero.newpass.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;

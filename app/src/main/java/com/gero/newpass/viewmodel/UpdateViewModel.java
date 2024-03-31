@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gero.newpass.model.database.DatabaseHelper;
-import com.gero.newpass.model.database.DatabaseServiceLocator;
-import com.gero.newpass.model.encryption.EncryptionHelper;
+import com.gero.newpass.database.DatabaseHelper;
+import com.gero.newpass.database.DatabaseServiceLocator;
+import com.gero.newpass.encryption.EncryptionHelper;
 
 public class UpdateViewModel extends ViewModel {
 
