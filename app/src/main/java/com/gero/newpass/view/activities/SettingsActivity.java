@@ -46,10 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
 
-        buttonDarkTheme.setVisibility(View.GONE);
-        buttonHapticFeedBack.setVisibility(View.GONE);
 
-/*
         buttonDarkTheme.setOnClickListener(v -> settingsViewModel.toggleDarkTheme(sharedPreferences));
         buttonHapticFeedBack.setOnClickListener(v -> settingsViewModel.toggleHapticFeedback(sharedPreferences));
 
@@ -62,7 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
             int imageResource = (sharedPreferences.getBoolean("hapticFeedback", false)) ? R.drawable.btn_yes : R.drawable.btn_no;
             buttonHapticFeedBack.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), imageResource));
         });
- */
 
 
 

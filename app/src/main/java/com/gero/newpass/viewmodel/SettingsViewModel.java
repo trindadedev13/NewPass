@@ -39,6 +39,15 @@ public class SettingsViewModel extends ViewModel {
         darkThemeStateLiveData.setValue(darkThemeState);
 
         /* TODO: Enable switch theme */
+        if (darkThemeState) {
+
+            // Switch to dak mode
+            Log.i("283957", "dark theme");
+        } else {
+
+            // Switch to light mode
+            Log.i("283957", "light theme");
+        }
     }
 
     public void toggleHapticFeedback(SharedPreferences sharedPreferences) {
