@@ -24,7 +24,7 @@ public class UpdateActivity extends AppCompatActivity {
     private EditText name_input, email_input, password_input;
     private String entry, name, email, password;
     private UpdateViewModel updateViewModel;
-    private ImageButton updateButton, deleteButton, copyButton, backButton;
+    private ImageButton updateButton, deleteButton, copyButtonPassword, copyButtonEmail, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +71,14 @@ public class UpdateActivity extends AppCompatActivity {
 
         });
 
-        copyButton.setOnClickListener(v -> {
-            copyToClipboard(password_input.getText().toString());
+        copyButtonPassword.setOnClickListener(v -> {
+            copyToClipboard(password_input.getText().toString().trim());
+            Toast.makeText(UpdateActivity.this, "Password copied to the clipboard", Toast.LENGTH_SHORT).show();
+        });
 
-            Toast.makeText(UpdateActivity.this, "Text copied to the clipboard", Toast.LENGTH_SHORT).show();
+        copyButtonEmail.setOnClickListener(v -> {
+            copyToClipboard(email_input.getText().toString().trim());
+            Toast.makeText(UpdateActivity.this, "Email copied to the clipboard", Toast.LENGTH_SHORT).show();
         });
 
         backButton.setOnClickListener(v -> {
@@ -82,9 +86,6 @@ public class UpdateActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
-
-
     }
 
     void getAndSetIntentData() {
@@ -125,6 +126,7 @@ public class UpdateActivity extends AppCompatActivity {
         updateButton = binding.updateButton;
         backButton = binding.backButton;
         deleteButton = binding.deleteButton;
-        copyButton = binding.copyButton;
+        copyButtonPassword = binding.copyButtonPassword;
+        copyButtonEmail = binding.copyButtonEmail;
     }
 }
