@@ -42,12 +42,25 @@
         android:backgroundTint="@android:color/transparent"
         android:padding="1dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/btn_add"
+        android:src="@drawable/btn"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_4"
         app:layout_constraintEnd_toStartOf="@+id/_centre_sx"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_3"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="[add]"
+        android:textColor="@color/background_primary"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_Add"
+        app:layout_constraintEnd_toEndOf="@+id/button_Add"
+        app:layout_constraintStart_toStartOf="@+id/button_Add"
+        app:layout_constraintTop_toTopOf="@+id/button_Add" />
 
     <ImageButton
         android:id="@+id/button_Generate"
@@ -56,11 +69,24 @@
         android:backgroundTint="@android:color/transparent"
         android:padding="1dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/btn_generate"
+        android:src="@drawable/btn2"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_4"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
         app:layout_constraintStart_toStartOf="@+id/_centre_dx"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="[generate]"
+        android:textColor="@color/text_primary"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_Generate"
+        app:layout_constraintEnd_toEndOf="@+id/button_Generate"
+        app:layout_constraintStart_toStartOf="@+id/button_Generate"
+        app:layout_constraintTop_toTopOf="@+id/button_Generate" />
 
     <TextView
         android:id="@+id/textView_All"
