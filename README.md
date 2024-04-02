@@ -15,7 +15,7 @@
 <br>
 
 <p align="right">
-   <img src="https://github.com/6eero/NewPass/assets/114809573/da89a98d-585b-443f-a2ee-6fbb592fbad5" title="UI">
+   <img src="https://github.com/6eero/NewPass/assets/114809573/72a2d172-8b44-4bf9-bc70-573284ea1e1a" title="UI">
 </p>
 
 <br>
