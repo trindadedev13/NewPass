@@ -35,6 +35,16 @@ NewPass is a secure password management application designed to generate and sto
 
 - **User-Friendly Interface**: NewPass features an intuitive and user-friendly interface, making it easy to generate, view, and manage your passwords. The app offers convenient options for copying passwords to the clipboard and securely sharing them with other applications.
 
+## 📸 App Screenshots
+<table>
+  <tr>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/17e31b41-2da1-455e-940b-ab41342ecb93" alt="Screenshot 1"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/638a1b08-3fe4-46d0-82c8-7e1ed29c3082" alt="Screenshot 2"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/b07d9717-65a3-4c2a-bb8f-ecaf7d94516f" alt="Screenshot 3"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/2751be07-78ab-4854-b929-bfcf20a98d91" alt="Screenshot 4"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/14c5866e-a251-42f6-9560-dafcacab0f14" alt="Screenshot 5"></td>
+  </tr>
+</table>
 
 ## ⬇️ Download 
 [<img src="https://s1.ax1x.com/2023/01/12/pSu1a36.png" alt="Get it on GitHub" height="80">](https://github.com/6eero/NewPass/releases)
@@ -54,7 +64,7 @@ git clone https://github.com/6eero/NewPass.git
 If you wish to contribute to the NewPass project or report bugs, we encourage you to do so through the GitHub issue system. I accept and appreciate community contributions to continually improve the application.
 
 ## ⚒️ Todo
-- [ ] Refactor code to use MVVM design pattern.
+- [x] Refactor code to use MVVM design pattern.
 - [x] Fix small screen layout display issue.
 - [x] Prevent adding duplicate entries to the database.
 - [x] Set maximum and minimum length constraints on fields before inserting/updating entries in the database.
