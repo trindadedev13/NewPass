@@ -76,3 +76,6 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 
 ## 📜 License
 The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please refer to the [LICENSE](https://github.com/6eero/NewPass/blob/master/LICENSE) file for more information on the license.
+
+## 💰 Buy me a coffe
+BTC: bc1qlkm4wgtr0z3y72w9ag90vyejy895fc3fj3djtx or [PayPal](https://www.paypal.com/paypalme/geeero)
