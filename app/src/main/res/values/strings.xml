@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NewPass</string>
+
+<!--    Login Activity-->
+    <string name="unlock_newpass_button_text">[unlock NewPass]</string>
+    <string name="create_password_button_text">[create password]</string>
+    <string name="welcome_newpass_text">Welcome to\nNewpass!</string>
+    <string name="welcome_back_newpass_text">Welcome back\nto NewPass!</string>
 </resources>
