@@ -8,6 +8,7 @@ import androidx.security.crypto.MasterKey;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -41,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
         initViews(binding);
 
-        textViewRegisterOrUnlock.setText("[create password]");
-        welcomeTextView.setText("Welcome to\nNewpass!");
+        textViewRegisterOrUnlock.setText(getString(R.string.create_password_button_text));
+        welcomeTextView.setText(getString(R.string.welcome_newpass_text));
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
@@ -77,12 +78,18 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         String password = sharedPreferences.getString("password", "");
+        Boolean isPasswordEmpty = password.isEmpty();
+        if (!isPasswordEmpty) {
+            textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
+            welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
 
-        if (!password.isEmpty()){
-            textViewRegisterOrUnlock.setText("[unlock NewPass]");
-            welcomeTextView.setText("Welcome back\nto NewPass!");
+        }
+        buttonRegisterOrUnlockListener(buttonRegisterOrUnlock, isPasswordEmpty);
+    }
 
-            buttonRegisterOrUnlock.setOnClickListener(v -> {
+    public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
+        if (!isPasswordEmpty) {
+            view.setOnClickListener(v -> {
                 String passwordInput = passwordEntry.getText().toString();
                 loginViewModel.loginUser(passwordInput, sharedPreferences);
             });
@@ -92,8 +99,6 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.createUser(passwordInput, sharedPreferences);
             });
         }
-
-
     }
 
     private void initViews(ActivityLoginBinding binding) {
