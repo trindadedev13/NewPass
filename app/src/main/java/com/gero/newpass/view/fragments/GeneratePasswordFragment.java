@@ -1,42 +1,55 @@
-package com.gero.newpass.view.activities;
+package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.gero.newpass.R;
-import com.gero.newpass.databinding.ActivityGeneratePasswordBinding;
-import com.gero.newpass.utilities.SystemBarColorHelper;
+import com.gero.newpass.databinding.FragmentGeneratePasswordBinding;
+import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
 
-public class GeneratePasswordActivity extends AppCompatActivity {
+
+public class GeneratePasswordFragment extends Fragment {
 
     private GeneratePasswordViewModel generatePasswordViewModel;
     private SeekBar seekBar;
     private TextView textViewLength, textViewPassword;
     private ImageButton buttonUppercase, buttonNumber, buttonSpecial;
     private ImageButton buttonRegenerate, backButton;
+    private FragmentGeneratePasswordBinding binding;
 
-    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ActivityGeneratePasswordBinding binding = ActivityGeneratePasswordBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentGeneratePasswordBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initViews(binding);
         generatePasswordViewModel = new ViewModelProvider(this).get(GeneratePasswordViewModel.class);
 
@@ -53,12 +66,10 @@ public class GeneratePasswordActivity extends AppCompatActivity {
         });
 
 
-
         textViewPassword.setOnClickListener(v -> {
             copyToClipboard(textViewPassword.getText().toString());
-            Toast.makeText(GeneratePasswordActivity.this, "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), "Text copied to clipboard", Toast.LENGTH_SHORT).show();
         });
-
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -81,45 +92,43 @@ public class GeneratePasswordActivity extends AppCompatActivity {
         });
 
 
-
         buttonUppercase.setOnClickListener(v -> generatePasswordViewModel.toggleUppercase());
         buttonNumber.setOnClickListener(v -> generatePasswordViewModel.toggleNumber());
         buttonSpecial.setOnClickListener(v -> generatePasswordViewModel.toggleSpecial());
 
-        generatePasswordViewModel.getUppercaseStateLiveData().observe(this, uppercaseState -> {
+        generatePasswordViewModel.getUppercaseStateLiveData().observe(getViewLifecycleOwner(), uppercaseState -> {
             int imageResource = (uppercaseState) ? R.drawable.btn_yes : R.drawable.btn_no;
-            buttonUppercase.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), imageResource));
+            buttonUppercase.setImageDrawable(ContextCompat.getDrawable(this.requireActivity().getApplicationContext(), imageResource));
         });
 
-        generatePasswordViewModel.getNumberStateLiveData().observe(this, numberState -> {
+        generatePasswordViewModel.getNumberStateLiveData().observe(getViewLifecycleOwner(), numberState -> {
             int imageResource = (numberState) ? R.drawable.btn_yes : R.drawable.btn_no;
-            buttonNumber.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), imageResource));
+            buttonNumber.setImageDrawable(ContextCompat.getDrawable(this.requireActivity().getApplicationContext(), imageResource));
         });
 
-        generatePasswordViewModel.getSpecialStateLiveData().observe(this, specialState -> {
+        generatePasswordViewModel.getSpecialStateLiveData().observe(getViewLifecycleOwner(), specialState -> {
             int imageResource = (specialState) ? R.drawable.btn_yes : R.drawable.btn_no;
-            buttonSpecial.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), imageResource));
+            buttonSpecial.setImageDrawable(ContextCompat.getDrawable(this.requireActivity().getApplicationContext(), imageResource));
         });
 
-
+        Activity activity = this.getActivity();
 
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(GeneratePasswordActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (activity instanceof MainViewActivity) {
+                ((MainViewActivity) activity).onBackPressed();
+            }
         });
     }
 
-
     private void copyToClipboard(String text) {
 
-        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clipboardManager = (ClipboardManager) this.requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("Text copied to clipboard", text);
         clipboardManager.setPrimaryClip(clipData);
     }
 
 
-    private void initViews(ActivityGeneratePasswordBinding binding) {
+    private void initViews(FragmentGeneratePasswordBinding binding) {
         seekBar = binding.seekBar;
         textViewLength = binding.textViewLenghtValue;
         textViewPassword = binding.textViewPassword;

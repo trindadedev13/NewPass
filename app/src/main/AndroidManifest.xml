@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="false"
@@ -15,16 +15,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".view.activities.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activities.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activities.UpdateActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activities.AddActivity"
+            android:name=".view.activities.MainViewActivity"
             android:exported="false" />
         <activity
             android:name=".view.activities.LoginActivity"
@@ -35,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.GeneratePasswordActivity" />
     </application>
 
 </manifest>

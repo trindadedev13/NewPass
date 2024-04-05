@@ -1,35 +1,51 @@
-package com.gero.newpass.view.activities;
+package com.gero.newpass.view.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.gero.newpass.databinding.FragmentSettingsBinding;
+import com.gero.newpass.view.activities.MainViewActivity;
 
-import com.gero.newpass.R;
-import com.gero.newpass.databinding.ActivitySettingsBinding;
-import com.gero.newpass.utilities.SystemBarColorHelper;
 
-public class SettingsActivity extends AppCompatActivity {
-
+public class SettingsFragment extends Fragment {
     private ImageButton buttonBack;
     private ImageView IVGithub, IVShare, IVContact;
+    private FragmentSettingsBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ActivitySettingsBinding binding = ActivitySettingsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         initViews(binding);
 
+        Activity activity = this.getActivity();
+
         buttonBack.setOnClickListener(v -> {
-            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (activity instanceof MainViewActivity) {
+                ((MainViewActivity) activity).onBackPressed();
+            }
         });
 
         IVGithub.setOnClickListener(v -> {
@@ -52,10 +68,9 @@ public class SettingsActivity extends AppCompatActivity {
             intent.setData(Uri.parse(url));
             startActivity(intent);
         });
-
     }
 
-    private void initViews(ActivitySettingsBinding binding) {
+    private void initViews(FragmentSettingsBinding binding) {
         buttonBack = binding.backButton;
         IVGithub = binding.imageViewGithub;
         IVShare = binding.imageViewShare;
