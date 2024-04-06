@@ -12,12 +12,18 @@ public class AddViewModel extends ViewModel {
     private final DatabaseHelper databaseHelper;
     private final MutableLiveData<String> messageLiveData = new MutableLiveData<>();
 
+    private final MutableLiveData<Boolean> successLiveData = new MutableLiveData<>();
+
     public AddViewModel() {
         databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
     }
 
     public LiveData<String> getMessageLiveData() {
         return messageLiveData;
+    }
+
+    public LiveData<Boolean> getSuccessLiveData() {
+        return successLiveData;
     }
 
     public void addEntry(String name, String email, String password) {
@@ -34,13 +40,16 @@ public class AddViewModel extends ViewModel {
 
                 if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
                     messageLiveData.setValue("This account already exists!");
+                    successLiveData.setValue(false);
 
                 } else  {
                     databaseHelper.addEntry(name, email, password);
                     messageLiveData.setValue("Account added successfully");
+                    successLiveData.setValue(true);
                 }
 
             } else {
+                successLiveData.setValue(false);
                 if (name.isEmpty() || name.length() > NAME_MAX_LENGTH) {
                     messageLiveData.setValue("Name should be 1 to "+ NAME_MAX_LENGTH +" characters long!");
 

@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             String savedPasswordSharedPreferences = sharedPreferences.getString("password", "");
 
             if (success) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainViewActivity.class);
                 StringUtility.setSharedString(savedPasswordSharedPreferences);
                 startActivity(intent);
                 finish();

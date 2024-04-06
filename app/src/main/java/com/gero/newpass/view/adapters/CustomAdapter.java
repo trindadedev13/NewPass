@@ -3,7 +3,7 @@ package com.gero.newpass.view.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gero.newpass.R;
 import com.gero.newpass.model.UserData;
-import com.gero.newpass.view.activities.UpdateActivity;
+import com.gero.newpass.view.fragments.UpdatePasswordFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,12 +69,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.row_email_txt.setText(email);
 
         holder.mainLayout.setOnClickListener(view -> {
-            Intent intent = new Intent(context, UpdateActivity.class);
-            intent.putExtra("entry", userData.getId());
-            intent.putExtra("name", userData.getName());
-            intent.putExtra("email", userData.getEmail());
-            intent.putExtra("password", userData.getPassword());
-            activity.startActivityForResult(intent, 1);
+
+            UpdatePasswordFragment updatePasswordFragment = new UpdatePasswordFragment();
+            Bundle args = new Bundle();
+            args.putString("entry", userData.getId());
+            args.putString("name", userData.getName());
+            args.putString("email", userData.getEmail());
+            args.putString("password", userData.getPassword());
+            updatePasswordFragment.setArguments(args);
+
+            FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, updatePasswordFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
     }
 
