@@ -36,7 +36,6 @@ public class MainViewFragment extends Fragment {
     private ArrayList<UserData> userDataList;
     private ImageView empty_imageview;
     private RecyclerView recyclerView;
-
     private ImageButton buttonGenerate, buttonAdd, buttonSettings;
 
 

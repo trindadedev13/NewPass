@@ -36,8 +36,11 @@ public class MainViewActivity extends AppCompatActivity {
     }
 
     public void openFragment(Fragment fragment) {
+
         // Perform the fragment transaction and add it to the back stack
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                        R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
