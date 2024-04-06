@@ -80,9 +80,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
             FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment_container, updatePasswordFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            transaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left, R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.fragment_container, updatePasswordFragment)
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 

@@ -79,13 +79,14 @@ public class MainViewFragment extends Fragment {
         super.onResume();
         getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
             String result = bundle.getString("resultKey");
-//            Updating UI after update
+            // Updating UI after update
             if (Objects.equals(result, "1")) {
                 populateUI();
             }
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void populateUI() {
         userDataList = new ArrayList<>();
         myDB = new DatabaseHelper(requireActivity());
