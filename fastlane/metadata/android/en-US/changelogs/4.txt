@@ -1,0 +1,11 @@
+Added:
+- Implemented a settings menu.
+- Introduced a settings button in the MainActivity.
+- Increased character limits for username, email, and password fields.
+- Auto hide password while typing on login screen
+
+Improved:
+- Enhanced security: EncryptionHelper no longer logs plaintext and keys.
+- Refactored the codebase to adhere to the MVVM pattern.
+- Improved password generation by switching to java.security.SecureRandom.
+- Made various UI enhancements for better user experience.
