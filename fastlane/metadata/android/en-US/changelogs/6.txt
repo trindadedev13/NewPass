@@ -1,0 +1,9 @@
+Added:
+- Implemented animations for smoother fragment transitions.
+
+Fixes:
+- Resolved the issue of improper back navigation. - Fixed Ul issues in the "Generate Password" fragment.
+- Corrected the display of a small white line on the fragment edge during animations.
+
+Improved:
+- Moved some strings the Login Activity to strings.xml for better localization
