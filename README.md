@@ -10,6 +10,7 @@
     <img alt="GitHub" src="https://img.shields.io/github/license/Ashinch/ReadYou?color=D0BCFF&style=flat-square">
     <img alt="Version" src="https://img.shields.io/github/v/release/6eero/NewPass?color=D0BCFF&label=version&style=flat-square">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/6eero/NewPass?color=D0BCFF&style=flat-square">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/stars/6eero/NewPass?style=social">
 </div>
 
 <br>
@@ -17,12 +18,13 @@
 <p align="right">
    <img src="https://github.com/6eero/NewPass/assets/114809573/72a2d172-8b44-4bf9-bc70-573284ea1e1a" title="UI">
 </p>
-
 <br>
 
 # 📍Intro
 NewPass is a secure password management application designed to generate and store strong passwords locally on your device. With NewPass, you can create highly secure passwords for your accounts and services without the need to remember them.
-
+> To support our free open source project, please give it a star. ⭐
+> This means a lot to us. Thank you so much! [![GitHub Repo stars](https://img.shields.io/github/stars/6eero/NewPass?style=social)](https://github.com/6eero/NewPass/stargazers)
+<br>
 
 ## 🗝️ Key Features:
 - **Password Generation**: NewPass provides a robust password generator that allows you to create complex and secure passwords tailored to your specific requirements. You can customize the length and the character set (Uppercase, Numbers and Special).
@@ -34,6 +36,7 @@ NewPass is a secure password management application designed to generate and sto
 - **SQLite Chiper**: NewPass utilizes SQLCipher, an extension for SQLite databases, to bolster security further by encrypting entirely the database, ensuring robust protection against unauthorized access. The encryption key is chosen by the user upon the first launch of the app, and it remains saved and encrypted in an EncryptedSharedPreferences. It is then requested every time the app is launched. 
 
 - **User-Friendly Interface**: NewPass features an intuitive and user-friendly interface, making it easy to generate, view, and manage your passwords. The app offers convenient options for copying passwords to the clipboard and securely sharing them with other applications.
+<br>
 
 ## 📸 App Screenshots
 <table>
@@ -45,11 +48,12 @@ NewPass is a secure password management application designed to generate and sto
     <td><img src="https://github.com/6eero/NewPass/assets/114809573/14c5866e-a251-42f6-9560-dafcacab0f14" alt="Screenshot 5"></td>
   </tr>
 </table>
+<br>
 
 ## ⬇️ Download 
 [<img src="https://s1.ax1x.com/2023/01/12/pSu1a36.png" alt="Get it on GitHub" height="80">](https://github.com/6eero/NewPass/releases)
 [<img src="https://github.com/6eero/NewPass/assets/114809573/113b2ce8-fd57-490e-bce0-9db1e55f52ba" alt="Get it on aaaa" height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.gero.newpass/)
-
+<br>
 
 ## 🧱 Build
 1. First you need to get the source code of NewPaass.
@@ -59,23 +63,26 @@ git clone https://github.com/6eero/NewPass.git
 2. Open the project in [Android Studio](https://developer.android.com/studio).
 3. When you click the `▶ Run` button, it will be built automatically.
 4. Launch NewPass.
+<br>
 
 ## 🫱🏻‍🫲🏼 Contributions and Development
 If you wish to contribute to the NewPass project or report bugs, we encourage you to do so through the GitHub issue system. I accept and appreciate community contributions to continually improve the application.
 
-## ⚒️ Todo
-- [x] Refactor code to use MVVM design pattern.
-- [x] Fix small screen layout display issue.
-- [x] Prevent adding duplicate entries to the database.
-- [x] Set maximum and minimum length constraints on fields before inserting/updating entries in the database.
-- [x] Fix random crashes with multiple users.
-- [x] Improve the login GUI.
-- [x] Add a login menu to unlock the application.
-- [x] Currently the encryption key and IV vector are hardcoded into the source code. I have to find a way to mask them.
-- [x] Add encryption: The app does not currently provide secrecy restrictions on entered passwords.
+### Contributors Wall:
+
+<a href="https://github.com/6eero/NewPass/graphs/contributors">
+  <img alt="contributors graph" src="https://contrib.rocks/image?repo=6eero/NewPass" />
+</a>
+<br>
+
+### Need help?
+
+[![Telegram chat](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/geroed)
+<br>
 
 ## 📜 License
 The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please refer to the [LICENSE](https://github.com/6eero/NewPass/blob/master/LICENSE) file for more information on the license.
+<br>
 
 ## 💰 Buy me a coffe
 BTC: bc1qlkm4wgtr0z3y72w9ag90vyejy895fc3fj3djtx or [PayPal](https://www.paypal.com/paypalme/geeero)
