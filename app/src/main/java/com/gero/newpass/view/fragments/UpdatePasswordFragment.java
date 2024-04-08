@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentUpdatePasswordBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 
@@ -37,8 +38,7 @@ public class UpdatePasswordFragment extends Fragment {
     private ImageButton updateButton, deleteButton, copyButtonPassword, copyButtonEmail, backButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -80,9 +80,9 @@ public class UpdatePasswordFragment extends Fragment {
 
         deleteButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setTitle("Delete " + name + " ?");
-            builder.setMessage("Are you sure you want to delete " + name + " ?");
-            builder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            builder.setTitle(getString(R.string.update_alertdialog_title) + name + " ?");
+            builder.setMessage(getString(R.string.update_alertdialog_are_you_sure_you_want_to_delete) + name + " ?");
+            builder.setPositiveButton(R.string.update_alertdialog_yes, (dialogInterface, i) -> {
                 updateViewModel.deleteEntry(entry);
                 if (activity instanceof MainViewActivity) {
                     Bundle result = new Bundle();
@@ -92,7 +92,7 @@ public class UpdatePasswordFragment extends Fragment {
                     ((MainViewActivity) activity).onBackPressed();
                 }
             });
-            builder.setNegativeButton("No", (dialogInterface, i) -> {
+            builder.setNegativeButton(R.string.update_alertdialog_no, (dialogInterface, i) -> {
 
             });
             builder.create().show();
@@ -101,12 +101,12 @@ public class UpdatePasswordFragment extends Fragment {
 
         copyButtonPassword.setOnClickListener(v -> {
             copyToClipboard(password_input.getText().toString().trim());
-            Toast.makeText(this.getContext(), "Password copied to the clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), R.string.update_password_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
 
         copyButtonEmail.setOnClickListener(v -> {
             copyToClipboard(email_input.getText().toString().trim());
-            Toast.makeText(this.getContext(), "Email copied to the clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), R.string.update_email_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
 
         backButton.setOnClickListener(v -> {
@@ -128,7 +128,7 @@ public class UpdatePasswordFragment extends Fragment {
             email = args.getString("email");
             password = args.getString("password");
         } else {
-            Toast.makeText(this.getContext(), "No data.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), R.string.update_no_data, Toast.LENGTH_SHORT).show();
         }
     }
 

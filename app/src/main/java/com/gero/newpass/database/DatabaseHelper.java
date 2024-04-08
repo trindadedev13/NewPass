@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.utilities.StringUtility;
 
@@ -95,9 +96,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.update(TABLE_NAME, cv, "id=?", new String[]{row_id});
         if(result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.dbhelper_failed, Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.dbhelper_updated_successfully, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -107,9 +108,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
         long result = db.delete(TABLE_NAME, "id=?", new String[]{row_id});
         if(result == -1){
-            Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.dbhelper_failed_to_delete, Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.dbhelper_successfully_deleted, Toast.LENGTH_SHORT).show();
         }
     }
 

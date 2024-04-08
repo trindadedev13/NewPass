@@ -51,6 +51,21 @@
     <string name="update_password">Password</string>
     <string name="update_btn_update">[update]</string>
     <string name="update_btn_delete">[delete]</string>
+    <string name="dbhelper_failed">Failed</string>
+    <string name="dbhelper_updated_successfully">Updated Successfully!</string>
+    <string name="dbhelper_failed_to_delete">Failed to Delete.</string>
+    <string name="dbhelper_successfully_deleted">Successfully Deleted.</string>
+    <string name="generate_text_copied_to_clipboard">Text copied to clipboard</string>
+    <string name="settings_share_text">Unlock a world of security with NewPass – your ultimate password guardian. Explore it now: https://github.com/6eero/NewPass/releases</string>
+    <string name="update_alertdialog_title">"Delete "</string>
+    <string name="update_alertdialog_are_you_sure_you_want_to_delete">"Are you sure you want to delete "</string>
+    <string name="update_alertdialog_yes">Yes</string>
+    <string name="update_alertdialog_no">No</string>
+    <string name="update_password_copied_to_the_clipboard">Password copied to the clipboard</string>
+    <string name="update_email_copied_to_the_clipboard">Email copied to the clipboard</string>
+    <string name="update_no_data">No data.</string>
+    <string name="account_already_exists">This account already exists!</string>
+    <string name="account_added_successfully">Account added successfully</string>
 
 
 </resources>

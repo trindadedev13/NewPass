@@ -39,8 +39,7 @@ public class GeneratePasswordFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentGeneratePasswordBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -57,18 +56,15 @@ public class GeneratePasswordFragment extends Fragment {
 
         generatePasswordViewModel.generatePassword();
 
-        generatePasswordViewModel.getPasswordLiveData().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String newPassword) {
-                textViewPassword.setText(newPassword);
-                textViewLength.setText("[" + String.valueOf(newPassword.length()) + "]");
-            }
+        generatePasswordViewModel.getPasswordLiveData().observe(getViewLifecycleOwner(), newPassword -> {
+            textViewPassword.setText(newPassword);
+            textViewLength.setText("[" + newPassword.length() + "]");
         });
 
 
         textViewPassword.setOnClickListener(v -> {
             copyToClipboard(textViewPassword.getText().toString());
-            Toast.makeText(this.getContext(), "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), R.string.generate_text_copied_to_clipboard, Toast.LENGTH_SHORT).show();
         });
 
 
@@ -77,7 +73,7 @@ public class GeneratePasswordFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 generatePasswordViewModel.setPasswordLength(progress);
 
-                textViewLength.setText("[" + String.valueOf(progress) + "]");
+                textViewLength.setText("[" + progress + "]");
             }
 
             @Override

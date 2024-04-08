@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.view.activities.MainViewActivity;
 
@@ -26,8 +27,7 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -58,7 +58,7 @@ public class SettingsFragment extends Fragment {
         IVShare.setOnClickListener(v -> {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Unlock a world of security with NewPass – your ultimate password guardian. Explore it now: https://github.com/6eero/NewPass/releases");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.settings_share_text));
             startActivity(Intent.createChooser(shareIntent, "Share with..."));
         });
 
