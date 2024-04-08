@@ -6,8 +6,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -28,7 +26,6 @@ import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.view.activities.MainViewActivity;
 
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -100,13 +97,7 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 dialog.dismiss();
 
-                //TODO: move the following in a new classe (same for the lines in LoginActivity)
-                Locale locale = new Locale(selectedLanguage);
-                Locale.setDefault(locale);
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                configuration.setLocale(locale);
-                resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+                //TODO: refresh UI
 
             });
             builder.setNegativeButton(R.string.update_alertdialog_no, (dialogInterface, i) -> {
