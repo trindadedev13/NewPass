@@ -43,6 +43,7 @@
     <string name="settings_about">[about]</string>
     <string name="settings_share_newpass">Share NewPass</string>
     <string name="settings_contact_me">Contact Me</string>
+    <string name="settings_change_language">Change language</string>
 
     <!--update.xml-->
     <string name="update_update">Update</string>
@@ -66,7 +67,7 @@
     <string name="update_no_data">No data.</string>
     <string name="account_already_exists">This account already exists!</string>
     <string name="account_added_successfully">Account added successfully</string>
-    <string name="settings_change_language">Change language</string>
+
 
 
 </resources>

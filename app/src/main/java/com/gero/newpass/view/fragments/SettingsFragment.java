@@ -1,24 +1,35 @@
 package com.gero.newpass.view.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.view.activities.MainViewActivity;
+
+import java.util.Locale;
+import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
@@ -71,6 +82,37 @@ public class SettingsFragment extends Fragment {
 
         IVLanguage.setOnClickListener(v -> {
 
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("SharedPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            final String[] languages = getResources().getStringArray(R.array.language_options);
+
+            String currentLanguage = sharedPreferences.getString("language", "");
+            Log.i("234523", "current: " + currentLanguage);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.requireContext());
+            builder.setTitle("Select your language");
+            builder.setSingleChoiceItems(languages, -1, (dialog, which) -> {
+                String selectedLanguage = languages[which];
+
+                Log.i("234523", "switching to " + selectedLanguage.toLowerCase().substring(0,2));
+                editor.putString("language", selectedLanguage.toLowerCase().substring(0,2));
+                editor.apply();
+                dialog.dismiss();
+
+                //TODO: move the following in a new classe (same for the lines in LoginActivity)
+                Locale locale = new Locale(selectedLanguage);
+                Locale.setDefault(locale);
+                Resources resources = getResources();
+                Configuration configuration = resources.getConfiguration();
+                configuration.setLocale(locale);
+                resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+            });
+            builder.setNegativeButton(R.string.update_alertdialog_no, (dialogInterface, i) -> {
+
+            });
+            builder.create().show();
         });
     }
 

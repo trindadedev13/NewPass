@@ -7,7 +7,11 @@ import androidx.security.crypto.MasterKey;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +26,7 @@ import com.gero.newpass.databinding.ActivityLoginBinding;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
+
+        setLocale(getPreferredLanguage());
 
         initViews(binding);
 
@@ -106,5 +113,28 @@ public class LoginActivity extends AppCompatActivity {
         welcomeTextView = binding.welcomeLoginTw;
         buttonRegisterOrUnlock = binding.registerOrUnlockButton;
         textViewRegisterOrUnlock = binding.registerOrUnlockTextView;
+    }
+
+    private String getPreferredLanguage() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("SharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (sharedPreferences.getString("language", "").isEmpty()) {
+            String languageOfTheDevice = Locale.getDefault().getLanguage();
+            editor.putString("language", languageOfTheDevice);
+            editor.apply();
+        }
+
+        return sharedPreferences.getString("language", "");
+    }
+
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 }
