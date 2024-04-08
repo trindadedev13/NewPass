@@ -23,7 +23,7 @@ import com.gero.newpass.view.activities.MainViewActivity;
 
 public class SettingsFragment extends Fragment {
     private ImageButton buttonBack;
-    private ImageView IVGithub, IVShare, IVContact;
+    private ImageView IVGithub, IVShare, IVContact, IVLanguage;
     private FragmentSettingsBinding binding;
 
     @Override
@@ -68,6 +68,10 @@ public class SettingsFragment extends Fragment {
             intent.setData(Uri.parse(url));
             startActivity(intent);
         });
+
+        IVLanguage.setOnClickListener(v -> {
+
+        });
     }
 
     private void initViews(FragmentSettingsBinding binding) {
@@ -75,5 +79,6 @@ public class SettingsFragment extends Fragment {
         IVGithub = binding.imageViewGithub;
         IVShare = binding.imageViewShare;
         IVContact = binding.imageViewContact;
+        IVLanguage = binding.imageViewLanguage;
     }
 }

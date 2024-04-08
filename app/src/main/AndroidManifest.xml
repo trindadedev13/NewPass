@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:targetApi="31"
-        android:hardwareAccelerated="true">
+        tools:targetApi="tiramisu"
+        android:hardwareAccelerated="true"
+        android:localeConfig="@xml/locales_config">
         <activity
             android:name=".view.activities.MainViewActivity"
             android:windowSoftInputMode="adjustPan"

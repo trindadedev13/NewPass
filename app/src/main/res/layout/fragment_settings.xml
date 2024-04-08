@@ -106,6 +106,13 @@
         app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_row_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -198,6 +205,16 @@
         app:srcCompat="@drawable/settings_entry_bg" />
 
     <ImageView
+        android:id="@+id/imageView_language"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_9"
+        app:srcCompat="@drawable/settings_entry_bg" />
+
+    <ImageView
         android:id="@+id/imageView9"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -226,6 +243,16 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_col_2"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_8"
         app:srcCompat="@drawable/settings_icon_telegram" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_9"
+        app:srcCompat="@drawable/settings_icon_language" />
 
     <TextView
         android:id="@+id/textView3"
@@ -262,5 +289,17 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_9"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_8" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="@string/settings_change_language"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_10"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
