@@ -1,7 +1,5 @@
 package com.gero.newpass.view.fragments;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -23,10 +20,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.gero.newpass.R;
+import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
-import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
-
 
 
 public class SettingsFragment extends Fragment {
@@ -86,24 +82,14 @@ public class SettingsFragment extends Fragment {
         //Dark mode toggle button listener
         binding.toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked && !isDarkModeSet) {
-                AppCompatDelegate
-                        .setDefaultNightMode(
-                                AppCompatDelegate
-                                        .MODE_NIGHT_YES);
-                editor.putBoolean(
-                        "isDarkModeOn", true);
-                editor.apply();
+                SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(
+                        this.requireActivity().getApplicationContext());
             } else if (!isChecked && isDarkModeSet) {
-                AppCompatDelegate
-                        .setDefaultNightMode(
-                                AppCompatDelegate
-                                        .MODE_NIGHT_NO);
-                editor.putBoolean(
-                        "isDarkModeOn", false);
-                editor.apply();
+                SharedPreferencesHelper.setAndEditSharedPrefForLightMode(
+                        this.requireActivity().getApplicationContext());
             }
             if (activity instanceof MainViewActivity) {
-                ((MainViewActivity) activity).updateNavigationBarColor(isChecked);
+                SharedPreferencesHelper.updateNavigationBarColor(isChecked, activity);
             }
         });
 
@@ -119,8 +105,8 @@ public class SettingsFragment extends Fragment {
             builder.setSingleChoiceItems(languages, -1, (dialog, which) -> {
                 String selectedLanguage = languages[which];
 
-                Log.i("234523", "switching to " + selectedLanguage.toLowerCase().substring(0,2));
-                editor.putString("language", selectedLanguage.toLowerCase().substring(0,2));
+                Log.i("234523", "switching to " + selectedLanguage.toLowerCase().substring(0, 2));
+                editor.putString(SharedPreferencesHelper.LANG_PREF_FLAG, selectedLanguage.toLowerCase().substring(0, 2));
                 editor.apply();
                 dialog.dismiss();
 
@@ -141,10 +127,10 @@ public class SettingsFragment extends Fragment {
         IVContact = binding.imageViewContact;
         IVLanguage = binding.imageViewLanguage;
 
-        //Dark mode toggle initialization, and language mode
-        sharedPreferences = EncryptionHelper.getSharedPreferences(this.requireActivity().getApplicationContext());
+        //shared preferences for language mode
+        sharedPreferences = SharedPreferencesHelper.getSharedPreferences(this.requireActivity().getApplicationContext());
 
-        isDarkModeSet = sharedPreferences.getBoolean("isDarkModeOn", true);
+        isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(this.requireActivity().getApplicationContext());
 
         binding.toggleDarkMode.setChecked(isDarkModeSet);
     }

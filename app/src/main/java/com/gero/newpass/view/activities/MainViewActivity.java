@@ -1,28 +1,29 @@
 package com.gero.newpass.view.activities;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 
+import com.gero.newpass.ContextWrapper.NewPassContextWrapper;
+import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.database.DatabaseServiceLocator;
 import com.gero.newpass.databinding.ActivityMainViewBinding;
 
 import com.gero.newpass.R;
-import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.view.fragments.MainViewFragment;
+
+import java.util.Locale;
 
 public class MainViewActivity extends AppCompatActivity {
 
     private ActivityMainViewBinding binding;
-
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +47,7 @@ public class MainViewActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        sharedPreferences = EncryptionHelper.getSharedPreferences(this.getApplicationContext());
-        //Checking if dark mode is set or not from shared  preferences, default value being True
-        Boolean isDarkModeSet = sharedPreferences.getBoolean("isDarkModeOn", true);
-        if (isDarkModeSet) {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_YES);
-        }
-        else {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_NO);
-        }
-        updateNavigationBarColor(isDarkModeSet);
+        SharedPreferencesHelper.toggleDarkLightModeUI(this);
     }
 
     public void openFragment(Fragment fragment) {
@@ -86,17 +72,16 @@ public class MainViewActivity extends AppCompatActivity {
         }
     }
 
-    public void updateNavigationBarColor(Boolean isDarkMode){
-        Window window = getWindow();
-        if (isDarkMode) {
-            // Set dark color for navigation bar
-            window.setNavigationBarColor(getResources().getColor(R.color.navigationbar_dark_mode));
-        } else {
-            // Set light color for navigation bar
-            window.setNavigationBarColor(getResources().getColor(R.color.navigationbar_light_mode));
-            // Additionally, if your navigation bar icons are not visible against the light background, you can make them dark:
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-        }
+    @Override
+    protected void attachBaseContext(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesHelper.SHARED_PREF_FLAG, MODE_PRIVATE);
+        String language = sharedPreferences.getString(SharedPreferencesHelper.LANG_PREF_FLAG, "en");
+        super.attachBaseContext(NewPassContextWrapper.wrap(context, language));
+        Locale locale = new Locale(language);
+        Resources resources = getBaseContext().getResources();
+        Configuration conf = resources.getConfiguration();
+        conf.locale = locale;
+        resources.updateConfiguration(conf, resources.getDisplayMetrics());
     }
 
 }

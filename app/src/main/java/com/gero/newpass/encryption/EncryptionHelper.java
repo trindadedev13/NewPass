@@ -1,7 +1,6 @@
 package com.gero.newpass.encryption;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
@@ -145,11 +144,6 @@ public class EncryptionHelper {
             }
         }
         return encryptedSharedPreferences;
-    }
-
-    public static synchronized SharedPreferences getSharedPreferences(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
-        return sharedPreferences;
     }
 
 }
