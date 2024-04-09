@@ -79,6 +79,7 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 
 [![Telegram chat](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/geroed)
 <br>
+<br>
 
 ## ⚒️ To-do
 - [ ] Allow exporting/importing backups compatible with KeePass database.
@@ -90,6 +91,7 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 
 ## 📜 License
 The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please refer to the [LICENSE](https://github.com/6eero/NewPass/blob/master/LICENSE) file for more information on the license.
+<br>
 <br>
 
 ## 💰 Buy me a coffe
