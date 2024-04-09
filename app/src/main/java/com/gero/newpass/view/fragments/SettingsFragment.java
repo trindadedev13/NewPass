@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -20,19 +21,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
+import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 
-import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
     private ImageButton buttonBack;
     private ImageView IVGithub, IVShare, IVContact, IVLanguage;
     private FragmentSettingsBinding binding;
+
+    private SharedPreferences sharedPreferences;
+
+    private Boolean isDarkModeSet;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,10 +81,33 @@ public class SettingsFragment extends Fragment {
             startActivity(intent);
         });
 
-        IVLanguage.setOnClickListener(v -> {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("SharedPref", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+        //Dark mode toggle button listener
+        binding.toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked && !isDarkModeSet) {
+                AppCompatDelegate
+                        .setDefaultNightMode(
+                                AppCompatDelegate
+                                        .MODE_NIGHT_YES);
+                editor.putBoolean(
+                        "isDarkModeOn", true);
+                editor.apply();
+            } else if (!isChecked && isDarkModeSet) {
+                AppCompatDelegate
+                        .setDefaultNightMode(
+                                AppCompatDelegate
+                                        .MODE_NIGHT_NO);
+                editor.putBoolean(
+                        "isDarkModeOn", false);
+                editor.apply();
+            }
+            if (activity instanceof MainViewActivity) {
+                ((MainViewActivity) activity).updateNavigationBarColor(isChecked);
+            }
+        });
+
+        IVLanguage.setOnClickListener(v -> {
 
             final String[] languages = getResources().getStringArray(R.array.language_options);
 
@@ -113,5 +140,12 @@ public class SettingsFragment extends Fragment {
         IVShare = binding.imageViewShare;
         IVContact = binding.imageViewContact;
         IVLanguage = binding.imageViewLanguage;
+
+        //Dark mode toggle initialization, and language mode
+        sharedPreferences = EncryptionHelper.getSharedPreferences(this.requireActivity().getApplicationContext());
+
+        isDarkModeSet = sharedPreferences.getBoolean("isDarkModeOn", true);
+
+        binding.toggleDarkMode.setChecked(isDarkModeSet);
     }
 }

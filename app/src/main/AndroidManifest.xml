@@ -19,6 +19,7 @@
         <activity
             android:name=".view.activities.MainViewActivity"
             android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:name=".view.activities.LoginActivity"

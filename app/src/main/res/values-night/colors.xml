@@ -9,13 +9,14 @@
     <color name="text_secondary">#525252</color>
     <color name="accent">#FEED55</color>
     -->
-<!--For light mode-->
-    <color name="background_login">#FFFFFF</color>
-    <color name="background_primary">#FFFFFF</color>
-    <color name="background_secondary">#dee0d9</color>
-    <color name="text_primary">#141218</color>
+<!--For dark mode-->
+    <!--For dark mode-->
+    <color name="background_login">#141218</color>
+    <color name="background_primary">#141218</color>
+    <color name="background_secondary">#211F26</color>
+    <color name="text_primary">#CAC4D0</color>
     <color name="text_secondary">#494949</color>
-    <color name="accent">#a286e3</color>
+    <color name="accent">#D0BCFF</color>
 
 <!--    For toggle button-->
     <color name="colorOn">#D0BCFF</color>
