@@ -40,8 +40,8 @@
 
     <!--settings.xml-->
     <string name="settings_settings">Impostazioni</string>
-    <string name="settings_about">[Aspetto]</string>
-    <string name="settings_other">[Altro]</string>
+    <string name="settings_about">[aspetto]</string>
+    <string name="settings_other">[altro]</string>
     <string name="settings_share_newpass">Condividi NewPass</string>
     <string name="settings_contact_me">Contattami su Telegram</string>
     <string name="settings_change_language">Cambia lingua</string>

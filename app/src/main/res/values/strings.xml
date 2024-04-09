@@ -41,7 +41,7 @@
     <!--settings.xml-->
     <string name="settings_settings">Settings</string>
     <string name="settings_about">[look &amp; feel]</string>
-    <string name="settings_other">[Other]</string>
+    <string name="settings_other">[other]</string>
     <string name="settings_share_newpass">Share NewPass</string>
     <string name="settings_contact_me">Contact Me</string>
     <string name="settings_change_language">Change language</string>
