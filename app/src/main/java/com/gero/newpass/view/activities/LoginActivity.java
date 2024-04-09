@@ -1,6 +1,7 @@
 package com.gero.newpass.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
@@ -13,12 +14,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gero.newpass.R;
+import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.utilities.StringUtility;
 import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.viewmodel.LoginViewModel;
@@ -33,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEntry;
     private ImageButton buttonRegisterOrUnlock;
     private TextView welcomeTextView, textViewRegisterOrUnlock;
-    private EncryptedSharedPreferences sharedPreferences;
+    private EncryptedSharedPreferences encryptedSharedPreferences;
+    private SharedPreferences sharedPreferences;
     private LoginViewModel loginViewModel;
 
 
@@ -44,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
+
+        sharedPreferences = EncryptionHelper.getSharedPreferences(getApplicationContext());
 
         setLocale(getPreferredLanguage());
 
@@ -57,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginMessageLiveData().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
 
         loginViewModel.getLoginSuccessLiveData().observe(this, success -> {
-            String savedPasswordSharedPreferences = sharedPreferences.getString("password", "");
+            String savedPasswordSharedPreferences = encryptedSharedPreferences.getString("password", "");
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainViewActivity.class);
@@ -67,24 +73,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(getApplicationContext());
 
-        try {
-            MasterKey masterKey = new MasterKey.Builder(this)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
+        setDarkMode();
 
-            sharedPreferences = (EncryptedSharedPreferences) EncryptedSharedPreferences.create(
-                    this,
-                    "loginkey",
-                    masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
-        } catch (GeneralSecurityException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        String password = sharedPreferences.getString("password", "");
+        String password = encryptedSharedPreferences.getString("password", "");
         Boolean isPasswordEmpty = password.isEmpty();
         if (!isPasswordEmpty) {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
@@ -98,12 +91,12 @@ public class LoginActivity extends AppCompatActivity {
         if (!isPasswordEmpty) {
             view.setOnClickListener(v -> {
                 String passwordInput = passwordEntry.getText().toString();
-                loginViewModel.loginUser(passwordInput, sharedPreferences);
+                loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
             });
         } else {
             buttonRegisterOrUnlock.setOnClickListener(v -> {
                 String passwordInput = passwordEntry.getText().toString();
-                loginViewModel.createUser(passwordInput, sharedPreferences);
+                loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
             });
         }
     }
@@ -115,9 +108,38 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegisterOrUnlock = binding.registerOrUnlockTextView;
     }
 
-    private String getPreferredLanguage() {
+    private void setDarkMode() {
+        //Checking if dark mode is set or not from shared  preferences, default value being True
+        Boolean isDarkModeSet = sharedPreferences.getBoolean("isDarkModeOn", true);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("SharedPref", MODE_PRIVATE);
+        if (isDarkModeSet) {
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+        }
+        updateNavigationBarColor(isDarkModeSet);
+    }
+
+    private void updateNavigationBarColor(Boolean isDarkMode) {
+        Window window = getWindow();
+        if (isDarkMode) {
+            // Set dark color for navigation bar
+            window.setNavigationBarColor(getResources().getColor(R.color.navigationbar_dark_mode));
+        } else {
+            // Set light color for navigation bar
+            window.setNavigationBarColor(getResources().getColor(R.color.navigationbar_light_mode));
+            // Additionally, if your navigation bar icons are not visible against the light background, you can make them dark:
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
+    }
+
+    private String getPreferredLanguage() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if (sharedPreferences.getString("language", "").isEmpty()) {

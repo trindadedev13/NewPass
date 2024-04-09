@@ -2,12 +2,12 @@ package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,13 +18,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentMainViewBinding;
-import com.gero.newpass.model.UserData;
+
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.CustomAdapter;
+import com.gero.newpass.viewmodel.MainViewModel;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -32,11 +31,10 @@ public class MainViewFragment extends Fragment {
 
     private FragmentMainViewBinding binding;
     private TextView noData, count;
-    private DatabaseHelper myDB;
-    private ArrayList<UserData> userDataList;
     private ImageView empty_imageview;
     private RecyclerView recyclerView;
     private ImageButton buttonGenerate, buttonAdd, buttonSettings;
+    private MainViewModel mainViewModel;
 
 
     @Override
@@ -50,6 +48,8 @@ public class MainViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         initViews();
 
@@ -87,16 +87,15 @@ public class MainViewFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void populateUI() {
-        userDataList = new ArrayList<>();
-        myDB = new DatabaseHelper(requireActivity());
+        mainViewModel.storeDataInArrays();
 
-        storeDataInArrays();
+        mainViewModel.getUserDataList().observe(getViewLifecycleOwner(), userDataList -> {
+            CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), userDataList);
+            recyclerView.setAdapter(customAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), userDataList);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        count.setText("[" + customAdapter.getItemCount() + "]");
+            count.setText("[" + customAdapter.getItemCount() + "]");
+        });
     }
 
     private void initViews() {
@@ -107,30 +106,6 @@ public class MainViewFragment extends Fragment {
         count = binding.textViewCount;
         empty_imageview = binding.emptyImageview;
         noData = binding.noData;
-    }
-
-    void storeDataInArrays() {
-
-        Cursor cursor = myDB.readAllData();
-
-        if (cursor.getCount() == 0) {
-            empty_imageview.setVisibility((View.VISIBLE));
-            noData.setVisibility((View.VISIBLE));
-        } else {
-
-            while (cursor.moveToNext()) {
-                UserData userData = new UserData(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3)
-                );
-                userDataList.add(userData);
-            }
-
-            empty_imageview.setVisibility((View.INVISIBLE));
-            noData.setVisibility((View.INVISIBLE));
-        }
     }
 
 }

@@ -1,8 +1,13 @@
 package com.gero.newpass.encryption;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
+
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
 
 import java.security.KeyStore;
 import java.util.Arrays;
@@ -14,6 +19,8 @@ import javax.crypto.spec.IvParameterSpec;
 
 
 public class EncryptionHelper {
+
+    private static EncryptedSharedPreferences encryptedSharedPreferences = null;
     private static final String MODE = "AES/CBC/PKCS7Padding";
     private static final String KEY_ALIAS = "MyAesKey";
 
@@ -22,7 +29,7 @@ public class EncryptionHelper {
      *
      * @param plainText The plaintext string to be encrypted.
      * @return A Base64-encoded string containing the encrypted data concatenated with the initialization vector (IV),
-     *         or null if an error occurs during encryption.
+     * or null if an error occurs during encryption.
      */
     public static String encrypt(String plainText) {
 
@@ -89,7 +96,7 @@ public class EncryptionHelper {
      * Retrieves or generates an AES key from the keystore.
      *
      * @return The AES key retrieved from the keystore, or a newly generated key if it doesn't exist in the keystore.
-     *         Returns null if an error occurs during the retrieval or generation process.
+     * Returns null if an error occurs during the retrieval or generation process.
      */
     private static SecretKey getOrCreateAESKey() {
         try {
@@ -117,5 +124,33 @@ public class EncryptionHelper {
             return null;
         }
     }
+
+    public static synchronized EncryptedSharedPreferences getEncryptedSharedPreferences(Context context) {
+        if (encryptedSharedPreferences == null) {
+            try {
+                MasterKey masterKey = new MasterKey.Builder(context)
+                        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                        .build();
+
+                encryptedSharedPreferences = (EncryptedSharedPreferences) EncryptedSharedPreferences.create(
+                        context,
+                        "loginkey",
+                        masterKey,
+                        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Handle exception
+            }
+        }
+        return encryptedSharedPreferences;
+    }
+
+    public static synchronized SharedPreferences getSharedPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+        return sharedPreferences;
+    }
+
 }
 

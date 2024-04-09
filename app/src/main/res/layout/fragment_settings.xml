@@ -128,8 +128,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/btn_back"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_1">
-    </ImageButton>
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -157,8 +156,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="[NewPass v.1.1.3]"
         android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="[NewPass v.1.1.3]"
         android:textColor="@color/text_secondary"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_7"
@@ -301,5 +300,28 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_10"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_9" />
+
+    <TextView
+        android:id="@+id/darkModetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="[dark mode]"
+        android:textColor="@color/text_secondary"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@id/guideline_col_1"
+        app:layout_constraintTop_toBottomOf="@id/imageView_language" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/toggleDarkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:theme="@style/ColorSwitchStyle"
+        app:layout_constraintEnd_toEndOf="@id/guideline_col_4"
+        app:layout_constraintTop_toBottomOf="@id/imageView_language"
+        app:layout_constraintTop_toTopOf="@id/darkModetv" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
