@@ -80,6 +80,14 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 [![Telegram chat](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/geroed)
 <br>
 
+## ⚒️ To-do
+- [ ] Allow exporting/importing backups compatible with KeePass database.
+- [ ] Allow exporting/importing backups.
+- [ ] Add a vibration feedback.
+- [x] Implement dark theme.
+- [x] Add italian traduction.
+<br>
+
 ## 📜 License
 The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please refer to the [LICENSE](https://github.com/6eero/NewPass/blob/master/LICENSE) file for more information on the license.
 <br>
