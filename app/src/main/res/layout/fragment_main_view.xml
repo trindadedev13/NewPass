@@ -143,8 +143,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerView"
-        app:layout_constraintVertical_bias="0.432"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_5"
         app:srcCompat="@drawable/icon_empty" />
 
     <TextView

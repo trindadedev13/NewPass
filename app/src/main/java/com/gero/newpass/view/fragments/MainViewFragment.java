@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,14 @@ public class MainViewFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
             count.setText("[" + customAdapter.getItemCount() + "]");
+
+            if (customAdapter.getItemCount() == 0) {
+                empty_imageview.setVisibility(View.VISIBLE);
+                noData.setVisibility(View.VISIBLE);
+            } else {
+                empty_imageview.setVisibility(View.GONE);
+                noData.setVisibility(View.GONE);
+            }
         });
     }
 
