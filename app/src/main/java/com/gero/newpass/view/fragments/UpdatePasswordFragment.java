@@ -127,13 +127,13 @@ public class UpdatePasswordFragment extends Fragment {
 
         copyButtonPassword.setOnClickListener(v -> {
             copyToClipboard(password_input.getText().toString().trim());
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
             Toast.makeText(this.getContext(), R.string.update_password_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
 
         copyButtonEmail.setOnClickListener(v -> {
             copyToClipboard(email_input.getText().toString().trim());
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
             Toast.makeText(this.getContext(), R.string.update_email_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
 

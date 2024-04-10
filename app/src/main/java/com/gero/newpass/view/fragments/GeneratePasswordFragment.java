@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentGeneratePasswordBinding;
+import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
 
@@ -52,7 +53,10 @@ public class GeneratePasswordFragment extends Fragment {
         initViews(binding);
         generatePasswordViewModel = new ViewModelProvider(this).get(GeneratePasswordViewModel.class);
 
-        buttonRegenerate.setOnClickListener(v -> generatePasswordViewModel.generatePassword());
+        buttonRegenerate.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+            generatePasswordViewModel.generatePassword();
+        });
 
         generatePasswordViewModel.generatePassword();
 
@@ -64,6 +68,7 @@ public class GeneratePasswordFragment extends Fragment {
 
         textViewPassword.setOnClickListener(v -> {
             copyToClipboard(textViewPassword.getText().toString());
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
             Toast.makeText(this.getContext(), R.string.generate_text_copied_to_clipboard, Toast.LENGTH_SHORT).show();
         });
 
@@ -72,7 +77,7 @@ public class GeneratePasswordFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 generatePasswordViewModel.setPasswordLength(progress);
-
+                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
                 textViewLength.setText("[" + progress + "]");
             }
 
@@ -88,9 +93,18 @@ public class GeneratePasswordFragment extends Fragment {
         });
 
 
-        buttonUppercase.setOnClickListener(v -> generatePasswordViewModel.toggleUppercase());
-        buttonNumber.setOnClickListener(v -> generatePasswordViewModel.toggleNumber());
-        buttonSpecial.setOnClickListener(v -> generatePasswordViewModel.toggleSpecial());
+        buttonUppercase.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+            generatePasswordViewModel.toggleUppercase();
+        });
+        buttonNumber.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+            generatePasswordViewModel.toggleNumber();
+    });
+        buttonSpecial.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+            generatePasswordViewModel.toggleSpecial();
+        });
 
         generatePasswordViewModel.getUppercaseStateLiveData().observe(getViewLifecycleOwner(), uppercaseState -> {
             int imageResource = (uppercaseState) ? R.drawable.btn_yes : R.drawable.btn_no;
