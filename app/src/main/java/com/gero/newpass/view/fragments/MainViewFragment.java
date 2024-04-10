@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -47,7 +48,7 @@ public class MainViewFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -63,19 +64,40 @@ public class MainViewFragment extends Fragment {
         Activity activity = this.getActivity();
         if (activity instanceof MainViewActivity) {
 
-            buttonGenerate.setOnClickListener(v -> {
-                ((MainViewActivity) activity).openFragment(new GeneratePasswordFragment());
-                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
-            });
-
-            buttonAdd.setOnClickListener(v -> {
-                ((MainViewActivity) activity).openFragment(new AddPasswordFragment());
-                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
-            });
 
             buttonSettings.setOnClickListener(v -> {
                 VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                 ((MainViewActivity) activity).openFragment(new SettingsFragment());
+            });
+
+
+            buttonAdd.setOnTouchListener((v, event) -> {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        v.performClick();
+                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                        ((MainViewActivity) activity).openFragment(new AddPasswordFragment());
+                        return true;
+                }
+                return false;
+            });
+
+
+            buttonGenerate.setOnTouchListener((v, event) -> {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        v.performClick();
+                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                        ((MainViewActivity) activity).openFragment(new GeneratePasswordFragment());
+                        return true;
+                }
+                return false;
             });
         }
 

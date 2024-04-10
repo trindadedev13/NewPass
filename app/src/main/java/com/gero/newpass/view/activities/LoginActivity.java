@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,6 +25,7 @@ import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.utilities.StringUtility;
 import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.utilities.VibrationHelper;
+import com.gero.newpass.view.fragments.GeneratePasswordFragment;
 import com.gero.newpass.viewmodel.LoginViewModel;
 import com.gero.newpass.databinding.ActivityLoginBinding;
 
@@ -46,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
-
-//        setLocale(getPreferredLanguage());
 
         initViews(binding);
 
@@ -86,15 +86,27 @@ public class LoginActivity extends AppCompatActivity {
 
     public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
         if (!isPasswordEmpty) {
-            view.setOnClickListener(v -> {
+            view.setOnTouchListener((v, event) -> {
+
                 String passwordInput = passwordEntry.getText().toString();
-                loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
-                VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration0));
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        v.performClick();
+                        loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
+                        VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+                        return true;
+                }
+                return false;
             });
         } else {
             buttonRegisterOrUnlock.setOnClickListener(v -> {
                 String passwordInput = passwordEntry.getText().toString();
                 loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
+                VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
             });
         }
     }
@@ -104,27 +116,6 @@ public class LoginActivity extends AppCompatActivity {
         welcomeTextView = binding.welcomeLoginTw;
         buttonRegisterOrUnlock = binding.registerOrUnlockButton;
         textViewRegisterOrUnlock = binding.registerOrUnlockTextView;
-    }
-
-//    private String getPreferredLanguage() {
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//
-//        if (sharedPreferences.getString("language", "").isEmpty()) {
-//            String languageOfTheDevice = Locale.getDefault().getLanguage();
-//            editor.putString("language", languageOfTheDevice);
-//            editor.apply();
-//        }
-//
-//        return sharedPreferences.getString("language", "");
-//    }
-
-    private void setLocale(String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(locale);
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 
     @Override

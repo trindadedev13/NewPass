@@ -11,13 +11,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentAddPasswordBinding;
+import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.AddViewModel;
 
@@ -38,7 +41,7 @@ public class AddPasswordFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -50,6 +53,7 @@ public class AddPasswordFragment extends Fragment {
 
         Activity activity = this.getActivity();
 
+        /*
         buttonAdd.setOnClickListener(v -> {
 
             String name = nameInput.getText().toString().trim();
@@ -57,7 +61,26 @@ public class AddPasswordFragment extends Fragment {
             String password = passwordInput.getText().toString().trim();
 
             addViewModel.addEntry(name, email, password);
+        });
+         */
 
+        buttonAdd.setOnTouchListener((v, event) -> {
+
+            String name = nameInput.getText().toString().trim();
+            String email = emailInput.getText().toString().trim();
+            String password = passwordInput.getText().toString().trim();
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    addViewModel.addEntry(name, email, password);
+                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    return true;
+            }
+            return false;
         });
 
         addViewModel.getSuccessLiveData().observe(getViewLifecycleOwner(), success -> {
