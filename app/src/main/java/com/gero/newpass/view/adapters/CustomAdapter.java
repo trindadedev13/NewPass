@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gero.newpass.R;
 import com.gero.newpass.model.UserData;
+import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.fragments.UpdatePasswordFragment;
 
 import java.util.ArrayList;
@@ -69,6 +70,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.row_email_txt.setText(email);
 
         holder.mainLayout.setOnClickListener(view -> {
+
+            VibrationHelper.vibrate(this.context, context.getResources().getInteger(R.integer.vibration_duration0));
 
             UpdatePasswordFragment updatePasswordFragment = new UpdatePasswordFragment();
             Bundle args = new Bundle();
