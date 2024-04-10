@@ -19,8 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentMainViewBinding;
 
+import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.CustomAdapter;
 import com.gero.newpass.viewmodel.MainViewModel;
@@ -60,9 +62,21 @@ public class MainViewFragment extends Fragment {
         //Navigating to generate/ add password and settings fragments using the method inherited from the base activity
         Activity activity = this.getActivity();
         if (activity instanceof MainViewActivity) {
-            buttonGenerate.setOnClickListener(v -> ((MainViewActivity) activity).openFragment(new GeneratePasswordFragment()));
-            buttonAdd.setOnClickListener(v -> ((MainViewActivity) activity).openFragment(new AddPasswordFragment()));
-            buttonSettings.setOnClickListener(v -> ((MainViewActivity) activity).openFragment(new SettingsFragment()));
+
+            buttonGenerate.setOnClickListener(v -> {
+                ((MainViewActivity) activity).openFragment(new GeneratePasswordFragment());
+                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+            });
+
+            buttonAdd.setOnClickListener(v -> {
+                ((MainViewActivity) activity).openFragment(new AddPasswordFragment());
+                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+            });
+
+            buttonSettings.setOnClickListener(v -> {
+                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                ((MainViewActivity) activity).openFragment(new SettingsFragment());
+            });
         }
 
     }

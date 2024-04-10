@@ -23,6 +23,7 @@ import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.utilities.StringUtility;
 import com.gero.newpass.utilities.SystemBarColorHelper;
+import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.viewmodel.LoginViewModel;
 import com.gero.newpass.databinding.ActivityLoginBinding;
 
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             view.setOnClickListener(v -> {
                 String passwordInput = passwordEntry.getText().toString();
                 loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
+                VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
             });
         } else {
             buttonRegisterOrUnlock.setOnClickListener(v -> {
