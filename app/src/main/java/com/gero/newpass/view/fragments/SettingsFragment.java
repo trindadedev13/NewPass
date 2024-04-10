@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
+import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 
 
@@ -57,6 +58,7 @@ public class SettingsFragment extends Fragment {
         });
 
         IVGithub.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
             String url = "https://github.com/6eero/NewPass";
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
@@ -64,6 +66,7 @@ public class SettingsFragment extends Fragment {
         });
 
         IVShare.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.settings_share_text));
@@ -71,6 +74,7 @@ public class SettingsFragment extends Fragment {
         });
 
         IVContact.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
             String url = "https://t.me/geroED";
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
@@ -81,6 +85,7 @@ public class SettingsFragment extends Fragment {
 
         //Dark mode toggle button listener
         binding.toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
             if (isChecked && !isDarkModeSet) {
                 SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(
                         this.requireActivity().getApplicationContext());
@@ -94,6 +99,7 @@ public class SettingsFragment extends Fragment {
         });
 
         IVLanguage.setOnClickListener(v -> {
+            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
             final String[] languages = getResources().getStringArray(R.array.language_options);
 
