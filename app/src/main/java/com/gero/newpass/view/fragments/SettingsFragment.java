@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -18,12 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
+
+import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
@@ -34,6 +38,8 @@ public class SettingsFragment extends Fragment {
     private SharedPreferences sharedPreferences;
 
     private Boolean isDarkModeSet;
+
+    private TextView tvDisplayChoice;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +56,8 @@ public class SettingsFragment extends Fragment {
         initViews(binding);
 
         Activity activity = this.getActivity();
+
+        //final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         buttonBack.setOnClickListener(v -> {
             if (activity instanceof MainViewActivity) {
@@ -81,9 +89,7 @@ public class SettingsFragment extends Fragment {
             startActivity(intent);
         });
 
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        //Dark mode toggle button listener
         binding.toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
             if (isChecked && !isDarkModeSet) {
@@ -99,7 +105,14 @@ public class SettingsFragment extends Fragment {
         });
 
         IVLanguage.setOnClickListener(v -> {
+
             VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+
+            DialogFragment languageDialogFragment = new LanguageDialogFragment();
+            languageDialogFragment.setCancelable(false);
+            languageDialogFragment.show(requireActivity().getSupportFragmentManager(), "Language Dialog");
+
+            /*
 
             final String[] languages = getResources().getStringArray(R.array.language_options);
 
@@ -115,14 +128,12 @@ public class SettingsFragment extends Fragment {
                 editor.putString(SharedPreferencesHelper.LANG_PREF_FLAG, selectedLanguage.toLowerCase().substring(0, 2));
                 editor.apply();
                 dialog.dismiss();
-
-                //TODO: refresh UI
-
             });
             builder.setNegativeButton(R.string.update_alertdialog_no, (dialogInterface, i) -> {
 
             });
             builder.create().show();
+             */
         });
     }
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,11 +18,12 @@ import com.gero.newpass.databinding.ActivityMainViewBinding;
 
 import com.gero.newpass.R;
 import com.gero.newpass.utilities.SystemBarColorHelper;
+import com.gero.newpass.view.fragments.LanguageDialogFragment;
 import com.gero.newpass.view.fragments.MainViewFragment;
 
 import java.util.Locale;
 
-public class MainViewActivity extends AppCompatActivity {
+public class MainViewActivity extends AppCompatActivity implements LanguageDialogFragment.LanguageListener {
 
     private ActivityMainViewBinding binding;
 
@@ -84,4 +86,16 @@ public class MainViewActivity extends AppCompatActivity {
         resources.updateConfiguration(conf, resources.getDisplayMetrics());
     }
 
+    @Override
+    public void onPositiveButtonClicked(String[] list, int position) {
+        String selectedLanguage = list[position];
+        Log.i("2353542", "Language selected from the dialog: " + selectedLanguage);
+
+        //TODO: Apply the selected language using the sharedpref
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+        Log.i("2353542", "Dialog cancel");
+    }
 }
