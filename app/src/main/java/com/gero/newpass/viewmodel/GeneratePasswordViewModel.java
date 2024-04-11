@@ -41,7 +41,6 @@ public class GeneratePasswordViewModel extends ViewModel {
 
     public void generatePassword() {
         String password = generateRandomPassword(length, uppercase, number, special);
-        Log.i("2839457", password);
         passwordLiveData.setValue(password);
     }
 

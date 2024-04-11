@@ -21,7 +21,7 @@
 
     <!--generate.xml-->
     <string name="generate_create">Crea</string>
-    <string name="generate_a_password_for">Una password per il \ntuoreame digitale</string>
+    <string name="generate_a_password_for">Una password per il \ntuo reame digitale</string>
     <string name="generate_length">Lunghezza</string>
     <string name="generate_length_example">Lunghezza</string>
     <string name="generate_uppercase">Maiuscole</string>
@@ -60,7 +60,7 @@
     <string name="dbhelper_failed_to_delete">Failed to Delete.</string>
     <string name="dbhelper_successfully_deleted">Eliminato con successo.</string>
     <string name="generate_text_copied_to_clipboard">Testo copiato negli appunti</string>
-    <string name="settings_share_text">Sblocca un mondo di sicurezza con NewPass: il tuo ultimo guardiano delle password. Esploralo ora: https://github.com/6eero/NewPass/releases</string>
+    <string name="settings_share_text">Sblocca un mondo di sicurezza con NewPass: il tuo personale guardiano delle password. Esploralo ora: https://github.com/6eero/NewPass/releases</string>
     <string name="update_alertdialog_title">"Elimina "</string>
     <string name="update_alertdialog_are_you_sure_you_want_to_delete">"Sei sicuro di voler eliminare "</string>
     <string name="update_alertdialog_yes">Si</string>
