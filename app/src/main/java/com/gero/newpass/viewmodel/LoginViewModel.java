@@ -7,17 +7,24 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
+import com.gero.newpass.R;
+import com.gero.newpass.repository.ResourceRepository;
+
 public class LoginViewModel extends ViewModel {
 
     private final MutableLiveData<String> loginMessageLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loginSuccessLiveData = new MutableLiveData<>();
+    private ResourceRepository resourceRepository;
+    
+    
+    public LoginViewModel(ResourceRepository resourceRepository) {
+        this.resourceRepository =  resourceRepository;
+    }
 
-
-
+    
     public LiveData<String> getLoginMessageLiveData() {
         return loginMessageLiveData;
     }
-
     public LiveData<Boolean> getLoginSuccessLiveData() {
         return loginSuccessLiveData;
     }
@@ -30,10 +37,10 @@ public class LoginViewModel extends ViewModel {
 
         if (savedPasswordSharedPreferences.equals(password)) {
             loginSuccessLiveData.setValue(true);
-            loginMessageLiveData.setValue("Login done");
+            loginMessageLiveData.setValue(resourceRepository.getString(R.string.login_done));
         } else {
             loginSuccessLiveData.setValue(false);
-            loginMessageLiveData.setValue("Access Denied");
+            loginMessageLiveData.setValue(resourceRepository.getString(R.string.access_denied));
         }
     }
 
@@ -47,10 +54,10 @@ public class LoginViewModel extends ViewModel {
             editor.apply();
 
             loginSuccessLiveData.setValue(true);
-            loginMessageLiveData.setValue("User created successfully!");
+            loginMessageLiveData.setValue(resourceRepository.getString(R.string.user_created_successfully));
         } else {
             loginSuccessLiveData.setValue(false);
-            loginMessageLiveData.setValue("Password must be at least 4 characters long!");
+            loginMessageLiveData.setValue(resourceRepository.getString(R.string.password_must_be_at_least_4_characters_long));
         }
     }
 }

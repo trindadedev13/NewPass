@@ -2,7 +2,6 @@ package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,7 @@ import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentAddPasswordBinding;
-import com.gero.newpass.factory.AddViewModelFactory;
+import com.gero.newpass.factory.ViewMoldelsFactory;
 import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
@@ -52,7 +51,7 @@ public class AddPasswordFragment extends Fragment {
         //addViewModel = new ViewModelProvider(this).get(AddViewModel.class);
 
         ResourceRepository resourceRepository = new ResourceRepository(getContext());
-        AddViewModelFactory factory = new AddViewModelFactory(resourceRepository);
+        ViewMoldelsFactory factory = new ViewMoldelsFactory(resourceRepository);
         AddViewModel addViewModel = new ViewModelProvider(this, factory).get(AddViewModel.class);
 
         initViews(binding);

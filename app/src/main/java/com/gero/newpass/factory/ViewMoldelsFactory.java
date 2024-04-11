@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.viewmodel.AddViewModel;
+import com.gero.newpass.viewmodel.LoginViewModel;
 
-public class AddViewModelFactory implements ViewModelProvider.Factory {
+public class ViewMoldelsFactory implements ViewModelProvider.Factory {
     private ResourceRepository resourceRepository;
 
-    public AddViewModelFactory(ResourceRepository resourceRepository) {
+    public ViewMoldelsFactory(ResourceRepository resourceRepository) {
         this.resourceRepository = resourceRepository;
     }
 
@@ -19,6 +20,10 @@ public class AddViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(AddViewModel.class)) {
             return (T) new AddViewModel(resourceRepository);
+        }
+
+        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
+            return (T) new LoginViewModel(resourceRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

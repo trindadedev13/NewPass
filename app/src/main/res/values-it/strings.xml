@@ -79,5 +79,10 @@
     <string name="email_should_be_4_to">"L'email deve essere compresa tra 1 e "</string>
     <string name="password_should_be_4_to">"La password deve essere compresa tra 1 e "</string>
 
+    <string name="login_done">Login effettuato</string>
+    <string name="access_denied">Password errata</string>
+    <string name="user_created_successfully">Utente creato con successo</string>
+    <string name="password_must_be_at_least_4_characters_long">La password deve essere lunga almeno 4 caratteri!</string>
+
 
 </resources>

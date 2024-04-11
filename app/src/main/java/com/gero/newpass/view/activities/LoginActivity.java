@@ -22,6 +22,8 @@ import com.gero.newpass.ContextWrapper.NewPassContextWrapper;
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.encryption.EncryptionHelper;
+import com.gero.newpass.factory.ViewMoldelsFactory;
+import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.utilities.StringUtility;
 import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.utilities.VibrationHelper;
@@ -54,7 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegisterOrUnlock.setText(getString(R.string.create_password_button_text));
         welcomeTextView.setText(getString(R.string.welcome_newpass_text));
 
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        //loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this, new ViewMoldelsFactory(new ResourceRepository(getApplicationContext()))).get(LoginViewModel.class);
+
 
         loginViewModel.getLoginMessageLiveData().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
 
