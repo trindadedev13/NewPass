@@ -47,10 +47,10 @@ public class LanguageDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Select your choice")
+        builder.setTitle(R.string.languagedialog_select_your_choice)
                 .setSingleChoiceItems(languageList, position, (dialog, which) -> position = which)
                 .setPositiveButton("Ok", (dialog, which) -> mListener.onPositiveButtonClicked(languageList, position))
-                .setNegativeButton("Cancel", (dialog, which) -> mListener.onNegativeButtonClicked());
+                .setNegativeButton(R.string.cancel, (dialog, which) -> mListener.onNegativeButtonClicked());
 
         return builder.create();
     }

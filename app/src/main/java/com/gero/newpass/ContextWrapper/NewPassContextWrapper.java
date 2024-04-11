@@ -24,18 +24,10 @@ public class NewPassContextWrapper extends ContextWrapper {
         if (!language.isEmpty() && !sysLocale.getLanguage().equals(language)) {
             Locale locale = new Locale(language);
             Locale.setDefault(locale);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                setSystemLocale(config, locale);
-            } else {
-                setSystemLocaleLegacy(config, locale);
-            }
+            setSystemLocale(config, locale);
 
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            context = context.createConfigurationContext(config);
-        } else {
-            context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-        }
+        context = context.createConfigurationContext(config);
         return new NewPassContextWrapper(context);
     }
 

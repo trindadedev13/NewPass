@@ -168,7 +168,7 @@ public class UpdatePasswordFragment extends Fragment {
     private void copyToClipboard(String text) {
 
         ClipboardManager clipboardManager = (ClipboardManager) this.requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("Text copied to the clipboard", text);
+        ClipData clipData = ClipData.newPlainText(getString(R.string.text_copied_to_clipboard), text);
         clipboardManager.setPrimaryClip(clipData);
     }
 

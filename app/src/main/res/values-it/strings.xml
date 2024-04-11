@@ -71,5 +71,9 @@
     <string name="account_already_exists">Questo account esiste già!</string>
     <string name="account_added_successfully">Account aggiunto correttamente!</string>
 
+    <string name="text_copied_to_clipboard">Testo copiato negli appunti</string>
+    <string name="languagedialog_select_your_choice">Seleziona la lingua</string>
+    <string name="cancel">Indietro</string>
+
 
 </resources>
