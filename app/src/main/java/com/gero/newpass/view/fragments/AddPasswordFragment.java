@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentAddPasswordBinding;
+import com.gero.newpass.factory.AddViewModelFactory;
+import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.AddViewModel;
@@ -29,7 +31,7 @@ public class AddPasswordFragment extends Fragment {
 
     private EditText nameInput, emailInput, passwordInput;
     private ImageButton buttonAdd, buttonBack;
-    private AddViewModel addViewModel;
+   // private AddViewModel addViewModel;
 
     private FragmentAddPasswordBinding binding;
 
@@ -47,7 +49,11 @@ public class AddPasswordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        addViewModel = new ViewModelProvider(this).get(AddViewModel.class);
+        //addViewModel = new ViewModelProvider(this).get(AddViewModel.class);
+
+        ResourceRepository resourceRepository = new ResourceRepository(getContext());
+        AddViewModelFactory factory = new AddViewModelFactory(resourceRepository);
+        AddViewModel addViewModel = new ViewModelProvider(this, factory).get(AddViewModel.class);
 
         initViews(binding);
 

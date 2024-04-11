@@ -68,12 +68,16 @@
     <string name="update_password_copied_to_the_clipboard">Password copied to the clipboard</string>
     <string name="update_email_copied_to_the_clipboard">Email copied to the clipboard</string>
     <string name="update_no_data">No data.</string>
-    <string name="account_already_exists">This account already exists!</string>
-    <string name="account_added_successfully">Account added successfully</string>
 
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="languagedialog_select_your_choice">Select your language</string>
     <string name="cancel">Back</string>
+    <string name="this_account_already_exists">This account already exists!</string>
+    <string name="account_added_successfully">Account added successfully</string>
+    <string name="name_should_be_1_to">"Name should be 1 to "</string>
+    <string name="characters_long">" characters long!"</string>
+    <string name="email_should_be_4_to">"Email should be 4 to "</string>
+    <string name="password_should_be_4_to">"Password should be 4 to "</string>
 
 
 </resources>

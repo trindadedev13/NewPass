@@ -1,7 +1,9 @@
 package com.gero.newpass.viewmodel;
 
+import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.database.DatabaseServiceLocator;
+import com.gero.newpass.repository.ResourceRepository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,11 +13,12 @@ public class AddViewModel extends ViewModel {
 
     private final DatabaseHelper databaseHelper;
     private final MutableLiveData<String> messageLiveData = new MutableLiveData<>();
-
     private final MutableLiveData<Boolean> successLiveData = new MutableLiveData<>();
+    private ResourceRepository resourceRepository;
 
-    public AddViewModel() {
-        databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
+    public AddViewModel(ResourceRepository resourceRepository) { // Modificato
+        this.databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
+        this.resourceRepository = resourceRepository;
     }
 
     public LiveData<String> getMessageLiveData() {
@@ -39,25 +42,25 @@ public class AddViewModel extends ViewModel {
             ) {
 
                 if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
-                    messageLiveData.setValue("This account already exists!");
+                    messageLiveData.setValue(resourceRepository.getString(R.string.this_account_already_exists));
                     successLiveData.setValue(false);
 
                 } else  {
                     databaseHelper.addEntry(name, email, password);
-                    messageLiveData.setValue("Account added successfully");
+                    messageLiveData.setValue(resourceRepository.getString(R.string.account_added_successfully));
                     successLiveData.setValue(true);
                 }
 
             } else {
                 successLiveData.setValue(false);
                 if (name.isEmpty() || name.length() > NAME_MAX_LENGTH) {
-                    messageLiveData.setValue("Name should be 1 to "+ NAME_MAX_LENGTH +" characters long!");
+                    messageLiveData.setValue(resourceRepository.getString(R.string.name_should_be_1_to)+ NAME_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
 
                 } else if (email.length() < 4 || email.length() > EMAIL_MAX_LENGTH) {
-                    messageLiveData.setValue("Email should be 4 to " + EMAIL_MAX_LENGTH +" characters long!");
+                    messageLiveData.setValue(resourceRepository.getString(R.string.email_should_be_4_to) + EMAIL_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
 
                 } else {
-                    messageLiveData.setValue("Password should be 4 to " + PASSWORD_MAX_LENGTH + " characters long!");
+                    messageLiveData.setValue(resourceRepository.getString(R.string.password_should_be_4_to) + PASSWORD_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
                 }
             }
     }

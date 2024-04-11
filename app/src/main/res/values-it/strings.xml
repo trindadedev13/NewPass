@@ -68,12 +68,16 @@
     <string name="update_password_copied_to_the_clipboard">Password copiata negli appunti</string>
     <string name="update_email_copied_to_the_clipboard">Email copiata negli appunti</string>
     <string name="update_no_data">Vuoto</string>
-    <string name="account_already_exists">Questo account esiste già!</string>
-    <string name="account_added_successfully">Account aggiunto correttamente!</string>
 
     <string name="text_copied_to_clipboard">Testo copiato negli appunti</string>
     <string name="languagedialog_select_your_choice">Seleziona la lingua</string>
     <string name="cancel">Indietro</string>
+    <string name="this_account_already_exists">Questo account esiste già</string>
+    <string name="account_added_successfully">Account aggiunto con successo</string>
+    <string name="name_should_be_1_to">"Il nome deve essere compreso tra 1 e "</string>
+    <string name="characters_long">" caratteri"</string>
+    <string name="email_should_be_4_to">"L'email deve essere compresa tra 1 e "</string>
+    <string name="password_should_be_4_to">"La password deve essere compresa tra 1 e "</string>
 
 
 </resources>
