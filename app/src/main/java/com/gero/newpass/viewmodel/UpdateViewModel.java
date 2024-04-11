@@ -5,17 +5,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.database.DatabaseServiceLocator;
 import com.gero.newpass.encryption.EncryptionHelper;
+import com.gero.newpass.repository.ResourceRepository;
 
 public class UpdateViewModel extends ViewModel {
 
     private final DatabaseHelper databaseHelper;
     private final MutableLiveData<String> messageLiveData = new MutableLiveData<>();
+    private ResourceRepository resourceRepository;
 
-    public UpdateViewModel() {
-        databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
+    public UpdateViewModel(ResourceRepository resourceRepository) {
+        this.databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
+        this.resourceRepository = resourceRepository;
     }
 
     public LiveData<String> getMessageLiveData() {
@@ -39,13 +43,13 @@ public class UpdateViewModel extends ViewModel {
 
         } else {
             if (name.isEmpty() || name.length() > nameMaxLen) {
-                messageLiveData.setValue("Name should be 1 to "+ nameMaxLen +" characters long!");
+                messageLiveData.setValue(resourceRepository.getString(R.string.name_should_be_1_to)+ nameMaxLen + resourceRepository.getString(R.string.characters_long));
 
             } else if (email.length() < 4 || email.length() > emailMaxLen) {
-                messageLiveData.setValue("Email should be 4 to " + emailMaxLen +" characters long!");
+                messageLiveData.setValue(resourceRepository.getString(R.string.email_should_be_4_to) + emailMaxLen + resourceRepository.getString(R.string.characters_long));
 
             } else {
-                messageLiveData.setValue("Password should be 4 to " + passwordMaxLen + " characters long!");
+                messageLiveData.setValue(resourceRepository.getString(R.string.password_should_be_4_to) + passwordMaxLen + resourceRepository.getString(R.string.characters_long));
             }
         }
     }

@@ -16,7 +16,7 @@ public class AddViewModel extends ViewModel {
     private final MutableLiveData<Boolean> successLiveData = new MutableLiveData<>();
     private ResourceRepository resourceRepository;
 
-    public AddViewModel(ResourceRepository resourceRepository) { // Modificato
+    public AddViewModel(ResourceRepository resourceRepository) {
         this.databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
         this.resourceRepository = resourceRepository;
     }

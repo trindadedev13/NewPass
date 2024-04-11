@@ -24,6 +24,8 @@ import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentUpdatePasswordBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 
+import com.gero.newpass.factory.ViewMoldelsFactory;
+import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.UpdateViewModel;
@@ -36,7 +38,7 @@ public class UpdatePasswordFragment extends Fragment {
 
     private EditText name_input, email_input, password_input;
     private String entry, name, email, password;
-    private UpdateViewModel updateViewModel;
+    //private UpdateViewModel updateViewModel;
     private ImageButton updateButton, deleteButton, copyButtonPassword, copyButtonEmail, backButton;
 
     @Override
@@ -55,7 +57,12 @@ public class UpdatePasswordFragment extends Fragment {
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        updateViewModel = new ViewModelProvider(this).get(UpdateViewModel.class);
+        //updateViewModel = new ViewModelProvider(this).get(UpdateViewModel.class);
+
+        ResourceRepository resourceRepository = new ResourceRepository(getContext());
+        ViewMoldelsFactory factory = new ViewMoldelsFactory(resourceRepository);
+        UpdateViewModel updateViewModel = new ViewModelProvider(this, factory).get(UpdateViewModel.class);
+
 
         initViews(binding);
 
