@@ -18,13 +18,20 @@ public class SharedPreferencesHelper {
 
     //Obtain shared preferences
     public static synchronized SharedPreferences getSharedPreferences(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_FLAG, Context.MODE_PRIVATE);
-        return sharedPreferences;
+        return context.getSharedPreferences(SHARED_PREF_FLAG, Context.MODE_PRIVATE);
     }
 
     public static String getCurrentLanguage(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getString(LANG_PREF_FLAG, "");
+    }
+
+    public static void setLanguage(Context context, String selectedLanguage) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(SharedPreferencesHelper.LANG_PREF_FLAG, selectedLanguage.toLowerCase().substring(0, 2));
+        editor.apply();
     }
 
     //Return is dark mode is set or not from shared preferences, default value is true

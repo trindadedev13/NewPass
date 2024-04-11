@@ -3,9 +3,7 @@ package com.gero.newpass.view.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +12,6 @@ import androidx.fragment.app.DialogFragment;
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class LanguageDialogFragment extends DialogFragment {
@@ -46,7 +43,7 @@ public class LanguageDialogFragment extends DialogFragment {
 
         position = getLanguagePosition(languageList, currentLanguage);
 
-        Log.i("2353542", "array: " + Arrays.toString(languageList) + " currentLanguage: " + currentLanguage + " at posiztion:" + position);
+        //Log.i("2353542", "array: " + Arrays.toString(languageList) + " currentLanguage: " + currentLanguage + " at posiztion:" + position);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
