@@ -78,11 +78,14 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
     protected void attachBaseContext(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesHelper.SHARED_PREF_FLAG, MODE_PRIVATE);
         String language = sharedPreferences.getString(SharedPreferencesHelper.LANG_PREF_FLAG, "en");
+
         super.attachBaseContext(NewPassContextWrapper.wrap(context, language));
+
         Locale locale = new Locale(language);
         Resources resources = getBaseContext().getResources();
         Configuration conf = resources.getConfiguration();
-        conf.locale = locale;
+
+        conf.setLocale(locale);
         resources.updateConfiguration(conf, resources.getDisplayMetrics());
     }
 
@@ -93,7 +96,5 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
     }
 
     @Override
-    public void onNegativeButtonClicked() {
-        Log.i("2353542", "Dialog cancel");
-    }
+    public void onNegativeButtonClicked() { }
 }
