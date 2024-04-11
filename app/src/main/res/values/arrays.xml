@@ -3,5 +3,7 @@
     <array name="language_options">
         <item>English</item>
         <item>Italiano</item>
+        <item>Español</item>
+        <item>Français</item>
     </array>
 </resources>

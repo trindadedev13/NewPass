@@ -1,25 +1,17 @@
 <resources>
     <string name="app_name">NewPass</string>
-
-    <!--Login Activity-->
     <string name="unlock_newpass_button_text">[unlock NewPass]</string>
     <string name="create_password_button_text">[create password]</string>
     <string name="welcome_newpass_text">Welcome to\nNewpass!</string>
     <string name="welcome_back_newpass_text">Welcome back\nto NewPass!</string>
-
-    <!--login.xml-->
     <string name="login_text">text</string>
     <string name="login_password">Password</string>
     <string name="login_button">TextView_button</string>
-
-    <!--add.xml-->
     <string name="add_add">Add</string>
     <string name="add_btn_add">[add]</string>
     <string name="add_name">Name</string>
     <string name="add_email">Email</string>
     <string name="add_password">Password</string>
-
-    <!--generate.xml-->
     <string name="generate_create">Create</string>
     <string name="generate_a_password_for">A password for your\ndigital realm</string>
     <string name="generate_length">Length</string>
@@ -30,15 +22,11 @@
     <string name="generate_special_example">[?#%]</string>
     <string name="generate_number">Number</string>
     <string name="generate_number_example">[123]</string>
-
-    <!--main.xml-->
     <string name="main_saved_password">Saved\nPassword</string>
     <string name="main__btn_add">[add]</string>
     <string name="main_btn_generate">[generate]</string>
     <string name="main_all">All</string>
     <string name="main_no_data">[No data]</string>
-
-    <!--settings.xml-->
     <string name="settings_settings">Settings</string>
     <string name="settings_about">[look &amp; feel]</string>
     <string name="settings_other">[other]</string>
@@ -47,20 +35,12 @@
     <string name="settings_change_language">Change language</string>
     <string name="settings_dark_theme">Dark Theme</string>
     <string name="settings_github">GitHub Respository</string>
-
-    <!--update.xml-->
     <string name="update_update">Update</string>
     <string name="update_name">Name</string>
     <string name="update_email">Email</string>
     <string name="update_password">Password</string>
     <string name="update_btn_update">[update]</string>
     <string name="update_btn_delete">[delete]</string>
-    <string name="dbhelper_failed">Failed</string>
-    <string name="dbhelper_updated_successfully">Updated Successfully!</string>
-    <string name="dbhelper_failed_to_delete">Failed to Delete.</string>
-    <string name="dbhelper_successfully_deleted">Successfully Deleted.</string>
-    <string name="generate_text_copied_to_clipboard">Text copied to clipboard</string>
-    <string name="settings_share_text">Unlock a world of security with NewPass – your ultimate password guardian. Explore it now: https://github.com/6eero/NewPass/releases</string>
     <string name="update_alertdialog_title">"Delete "</string>
     <string name="update_alertdialog_are_you_sure_you_want_to_delete">"Are you sure you want to delete "</string>
     <string name="update_alertdialog_yes">Yes</string>
@@ -68,7 +48,12 @@
     <string name="update_password_copied_to_the_clipboard">Password copied to the clipboard</string>
     <string name="update_email_copied_to_the_clipboard">Email copied to the clipboard</string>
     <string name="update_no_data">No data.</string>
-
+    <string name="dbhelper_failed">Failed</string>
+    <string name="dbhelper_updated_successfully">Updated Successfully!</string>
+    <string name="dbhelper_failed_to_delete">Failed to Delete.</string>
+    <string name="dbhelper_successfully_deleted">Successfully Deleted.</string>
+    <string name="generate_text_copied_to_clipboard">Text copied to clipboard</string>
+    <string name="settings_share_text">Unlock a world of security with NewPass – your ultimate password guardian. Explore it now: https://github.com/6eero/NewPass/releases</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="languagedialog_select_your_choice">Select your language</string>
     <string name="cancel">Back</string>
@@ -82,6 +67,4 @@
     <string name="access_denied">Access Denied</string>
     <string name="user_created_successfully">User created successfully!</string>
     <string name="password_must_be_at_least_4_characters_long">Password must be at least 4 characters long!</string>
-
-
 </resources>
