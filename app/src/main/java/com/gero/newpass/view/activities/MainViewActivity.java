@@ -89,9 +89,12 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
     @Override
     public void onPositiveButtonClicked(String[] list, int position) {
         String selectedLanguage = list[position];
-        Log.i("2353542", "Language selected from the dialog: " + selectedLanguage);
+        //Log.i("2353542", "Language selected from the dialog: " + selectedLanguage);
 
-        //TODO: Apply the selected language using the sharedpref
+        SharedPreferences sharedPreferences = getSharedPreferences("SharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SharedPreferencesHelper.LANG_PREF_FLAG, selectedLanguage.toLowerCase().substring(0, 2));
+        editor.apply();
     }
 
     @Override

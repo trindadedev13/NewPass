@@ -22,6 +22,11 @@ public class SharedPreferencesHelper {
         return sharedPreferences;
     }
 
+    public static String getCurrentLanguage(Context context) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return sharedPreferences.getString(LANG_PREF_FLAG, "");
+    }
+
     //Return is dark mode is set or not from shared preferences, default value is true
     public static Boolean isDarkModeSet(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
@@ -88,6 +93,4 @@ public class SharedPreferencesHelper {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
     }
-
-
 }
