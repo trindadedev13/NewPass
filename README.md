@@ -101,6 +101,6 @@ BTC: bc1qlkm4wgtr0z3y72w9ag90vyejy895fc3fj3djtx or [PayPal](https://www.paypal.c
 
 <div align="right">
 <table><td> 
-<a href="#start-of-content"> 👆🏻 </a>
+<a href="#start-of-content">👆 Scroll to top</a>
 </td></table> 
 </div>
