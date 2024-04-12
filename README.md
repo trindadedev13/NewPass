@@ -96,3 +96,7 @@ The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please
 
 ## 💰 Buy me a coffe
 BTC: bc1qlkm4wgtr0z3y72w9ag90vyejy895fc3fj3djtx or [PayPal](https://www.paypal.com/paypalme/geeero)
+<br>
+<br>
+
+<div align="right"> <table><td> <a href="#start-of-content"> </td></table> </div>
