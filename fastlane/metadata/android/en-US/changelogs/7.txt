@@ -1,0 +1,8 @@
+Added:
+- Added support for language selection.
+- Added italian language.
+- Added light mode.
+- Added a button to toggle between dark mode and light mode.
+
+Improved:
+- Setting UI
