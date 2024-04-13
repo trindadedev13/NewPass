@@ -51,7 +51,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.activity:activity:1.8.2")
     implementation("androidx.databinding:databinding-runtime:8.3.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -60,4 +60,5 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("net.zetetic:android-database-sqlcipher:4.4.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("com.android.tools.build:gradle:8.3.2")
 }
