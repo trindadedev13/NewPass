@@ -13,6 +13,11 @@
     <a href="https://github.com/6eero/NewPass/releases">
         <img src="https://img.shields.io/github/v/release/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=pkgsrc&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
     </a>
+    <a href="https://github.com/6eero/NewPass/releases">
+        <img src="https://img.shields.io/github/downloads/6eero/NewPass/total.svg?color=D0BCFF&style=for-the-badge&logo=pkgsrc&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
+    </a>
+
+    
          
 <a href="https://github.com/6eero/NewPass/stargazers">
         <img src="https://img.shields.io/github/stars/6eero/NewPass.svg?color=D0BCFF&style=for-the-badge&logo=apachespark&logoColor=ebebf0&labelColor=23232F" alt="Stars Count">
