@@ -98,7 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                         return true;
                     case MotionEvent.ACTION_UP:
                         v.performClick();
-                        loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
+                        //loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
+                        loginViewModel.loginUser(this);
                         VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
                         return true;
                 }

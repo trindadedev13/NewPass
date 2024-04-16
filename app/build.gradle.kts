@@ -60,4 +60,5 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("net.zetetic:android-database-sqlcipher:4.4.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.biometric:biometric:1.1.0")
 }
