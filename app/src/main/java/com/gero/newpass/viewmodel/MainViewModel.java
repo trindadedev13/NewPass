@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class MainViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<UserData>> userDataList;
-    private DatabaseHelper myDB;
+    private final DatabaseHelper myDB;
 
     public MainViewModel() {
         myDB = DatabaseServiceLocator.getDatabaseHelper();

@@ -14,7 +14,7 @@ public class LoginViewModel extends ViewModel {
 
     private final MutableLiveData<String> loginMessageLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loginSuccessLiveData = new MutableLiveData<>();
-    private ResourceRepository resourceRepository;
+    private final ResourceRepository resourceRepository;
     
     
     public LoginViewModel(ResourceRepository resourceRepository) {

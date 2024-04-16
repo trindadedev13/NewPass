@@ -21,7 +21,6 @@ import com.gero.newpass.model.UserData;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.fragments.UpdatePasswordFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {

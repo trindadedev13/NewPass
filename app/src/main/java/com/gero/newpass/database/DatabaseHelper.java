@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
-import com.gero.newpass.utilities.StringUtility;
+import com.gero.newpass.utilities.StringHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "record_name";
     private static final String COLUMN_EMAIL = "record_email";
     private static final String COLUMN_PASSWORD = "record_password";
-    private static final String KEY_ENCRYPTION = StringUtility.getSharedString();
+    private static final String KEY_ENCRYPTION = StringHelper.getSharedString();
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

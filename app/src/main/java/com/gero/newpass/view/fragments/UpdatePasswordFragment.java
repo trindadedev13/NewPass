@@ -59,7 +59,7 @@ public class UpdatePasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //updateViewModel = new ViewModelProvider(this).get(UpdateViewModel.class);
 
-        ResourceRepository resourceRepository = new ResourceRepository(getContext());
+        ResourceRepository resourceRepository = new ResourceRepository(requireContext());
         ViewMoldelsFactory factory = new ViewMoldelsFactory(resourceRepository);
         UpdateViewModel updateViewModel = new ViewModelProvider(this, factory).get(UpdateViewModel.class);
 
@@ -108,7 +108,7 @@ public class UpdatePasswordFragment extends Fragment {
                 case MotionEvent.ACTION_UP:
                     v.performClick();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this.requireContext());
                     builder.setTitle(getString(R.string.update_alertdialog_title) + name + " ?");
                     builder.setMessage(getString(R.string.update_alertdialog_are_you_sure_you_want_to_delete) + name + " ?");
                     builder.setPositiveButton(R.string.update_alertdialog_yes, (dialogInterface, i) -> {

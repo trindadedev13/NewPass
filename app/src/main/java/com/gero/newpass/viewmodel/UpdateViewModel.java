@@ -15,7 +15,7 @@ public class UpdateViewModel extends ViewModel {
 
     private final DatabaseHelper databaseHelper;
     private final MutableLiveData<String> messageLiveData = new MutableLiveData<>();
-    private ResourceRepository resourceRepository;
+    private final ResourceRepository resourceRepository;
 
     public UpdateViewModel(ResourceRepository resourceRepository) {
         this.databaseHelper = DatabaseServiceLocator.getDatabaseHelper();

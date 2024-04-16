@@ -30,8 +30,6 @@ public class AddPasswordFragment extends Fragment {
 
     private EditText nameInput, emailInput, passwordInput;
     private ImageButton buttonAdd, buttonBack;
-   // private AddViewModel addViewModel;
-
     private FragmentAddPasswordBinding binding;
 
 
@@ -48,26 +46,13 @@ public class AddPasswordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        //addViewModel = new ViewModelProvider(this).get(AddViewModel.class);
-
-        ResourceRepository resourceRepository = new ResourceRepository(getContext());
+        ResourceRepository resourceRepository = new ResourceRepository(requireContext());
         ViewMoldelsFactory factory = new ViewMoldelsFactory(resourceRepository);
         AddViewModel addViewModel = new ViewModelProvider(this, factory).get(AddViewModel.class);
 
         initViews(binding);
 
         Activity activity = this.getActivity();
-
-        /*
-        buttonAdd.setOnClickListener(v -> {
-
-            String name = nameInput.getText().toString().trim();
-            String email = emailInput.getText().toString().trim();
-            String password = passwordInput.getText().toString().trim();
-
-            addViewModel.addEntry(name, email, password);
-        });
-         */
 
         buttonAdd.setOnTouchListener((v, event) -> {
 

@@ -1,7 +1,5 @@
 package com.gero.newpass.viewmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,7 +11,7 @@ public class GeneratePasswordViewModel extends ViewModel {
     private final MutableLiveData<String> passwordLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> uppercaseStateLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> numberStateLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> specialeStateLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> specialStateLiveData = new MutableLiveData<>();
     private boolean uppercase = true;
     private boolean number = true;
     private boolean special = false;
@@ -23,7 +21,7 @@ public class GeneratePasswordViewModel extends ViewModel {
         generatePassword();
         uppercaseStateLiveData.setValue(uppercase);
         numberStateLiveData.setValue(number);
-        specialeStateLiveData.setValue(special);
+        specialStateLiveData.setValue(special);
     }
 
     public LiveData<String> getPasswordLiveData() { return passwordLiveData; }
@@ -36,7 +34,7 @@ public class GeneratePasswordViewModel extends ViewModel {
     }
 
     public LiveData<Boolean> getSpecialStateLiveData() {
-        return specialeStateLiveData;
+        return specialStateLiveData;
     }
 
     public void generatePassword() {
@@ -63,7 +61,7 @@ public class GeneratePasswordViewModel extends ViewModel {
 
     public void toggleSpecial() {
         special = !special;
-        specialeStateLiveData.setValue(special);
+        specialStateLiveData.setValue(special);
         generatePassword();
     }
 

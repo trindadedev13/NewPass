@@ -1,6 +1,6 @@
 package com.gero.newpass.utilities;
 
-public class StringUtility {
+public class StringHelper {
     private static String sharedString;
 
     public static void setSharedString(String value) {

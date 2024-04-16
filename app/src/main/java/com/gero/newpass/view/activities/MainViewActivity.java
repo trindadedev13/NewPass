@@ -24,12 +24,10 @@ import java.util.Locale;
 
 public class MainViewActivity extends AppCompatActivity implements LanguageDialogFragment.LanguageListener {
 
-    private ActivityMainViewBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainViewBinding.inflate(getLayoutInflater());
+        com.gero.newpass.databinding.ActivityMainViewBinding binding = ActivityMainViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         DatabaseServiceLocator.init(getApplicationContext());

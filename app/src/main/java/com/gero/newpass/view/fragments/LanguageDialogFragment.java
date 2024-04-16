@@ -43,8 +43,6 @@ public class LanguageDialogFragment extends DialogFragment {
 
         position = getLanguagePosition(languageList, currentLanguage);
 
-        //Log.i("2353542", "array: " + Arrays.toString(languageList) + " currentLanguage: " + currentLanguage + " at posiztion:" + position);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.languagedialog_select_your_choice)

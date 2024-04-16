@@ -24,10 +24,9 @@ import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.factory.ViewMoldelsFactory;
 import com.gero.newpass.repository.ResourceRepository;
-import com.gero.newpass.utilities.StringUtility;
+import com.gero.newpass.utilities.StringHelper;
 import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.utilities.VibrationHelper;
-import com.gero.newpass.view.fragments.GeneratePasswordFragment;
 import com.gero.newpass.viewmodel.LoginViewModel;
 import com.gero.newpass.databinding.ActivityLoginBinding;
 
@@ -39,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton buttonRegisterOrUnlock;
     private TextView welcomeTextView, textViewRegisterOrUnlock;
     private EncryptedSharedPreferences encryptedSharedPreferences;
-    private SharedPreferences sharedPreferences;
     private LoginViewModel loginViewModel;
 
 
@@ -67,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainViewActivity.class);
-                StringUtility.setSharedString(savedPasswordSharedPreferences);
+                StringHelper.setSharedString(savedPasswordSharedPreferences);
                 startActivity(intent);
                 finish();
             }
@@ -124,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context context) {
-        sharedPreferences = context.getSharedPreferences(SharedPreferencesHelper.SHARED_PREF_FLAG, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPreferencesHelper.SHARED_PREF_FLAG, MODE_PRIVATE);
         String language = sharedPreferences.getString(SharedPreferencesHelper.LANG_PREF_FLAG, "en");
         super.attachBaseContext(NewPassContextWrapper.wrap(context, language));
         Locale locale = new Locale(language);
