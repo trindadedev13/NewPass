@@ -1,6 +1,7 @@
 package com.gero.newpass.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
@@ -11,10 +12,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText passwordEntry;
     private ImageButton buttonRegisterOrUnlock;
+    private ImageView passwordBox, bgImage;
     private TextView welcomeTextView, textViewRegisterOrUnlock;
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private LoginViewModel loginViewModel;
@@ -54,9 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegisterOrUnlock.setText(getString(R.string.create_password_button_text));
         welcomeTextView.setText(getString(R.string.welcome_newpass_text));
 
-        //loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel = new ViewModelProvider(this, new ViewMoldelsFactory(new ResourceRepository(getApplicationContext()))).get(LoginViewModel.class);
-
 
         loginViewModel.getLoginMessageLiveData().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
 
@@ -87,25 +89,51 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
+
         if (!isPasswordEmpty) {
-            view.setOnTouchListener((v, event) -> {
 
-                String passwordInput = passwordEntry.getText().toString();
+            Log.d("LOGIN_VM", "Already launched before");
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration0));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        v.performClick();
-                        //loginViewModel.loginUser(passwordInput, encryptedSharedPreferences);
-                        loginViewModel.loginUser(this);
-                        VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
-                        return true;
-                }
-                return false;
-            });
+            BiometricManager biometricManager = BiometricManager.from(this);
+
+            int canAuthenticate = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL);
+
+            if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
+                Log.d("LOGIN_VM", "App can authenticate using biometrics or device credentials.");
+
+                buttonRegisterOrUnlock.setVisibility(View.GONE);
+                passwordEntry.setVisibility(View.GONE);
+                passwordBox.setVisibility(View.GONE);
+                welcomeTextView.setVisibility(View.GONE);
+                bgImage.setVisibility(View.GONE);
+
+                loginViewModel.loginUserWithBiometricAuth(this);
+
+            } else {
+
+                Log.d("LOGIN_VM", "No biometric or credential authentication features available on this device.");
+
+                view.setOnTouchListener((v, event) -> {
+
+                    String passwordInput = passwordEntry.getText().toString();
+
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration0));
+                            return true;
+                        case MotionEvent.ACTION_UP:
+                            v.performClick();
+                            loginViewModel.loginUserWithPassword(passwordInput, encryptedSharedPreferences);
+                            VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+                            return true;
+                    }
+                    return false;
+                });
+            }
         } else {
+
+            Log.d("LOGIN_VM", "First launch");
+
             buttonRegisterOrUnlock.setOnClickListener(v -> {
                 String passwordInput = passwordEntry.getText().toString();
                 loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
@@ -114,11 +142,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     private void initViews(ActivityLoginBinding binding) {
         passwordEntry = binding.loginTwPassword;
         welcomeTextView = binding.welcomeLoginTw;
         buttonRegisterOrUnlock = binding.registerOrUnlockButton;
         textViewRegisterOrUnlock = binding.registerOrUnlockTextView;
+        passwordBox = binding.backgroundInputbox2;
+        bgImage = binding.logoLogin;
     }
 
     @Override

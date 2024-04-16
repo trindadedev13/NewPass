@@ -4,9 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.biometric.BiometricManager;
-import android.os.Build;
+
 import android.util.Log;
 
 import androidx.biometric.BiometricPrompt;
@@ -29,13 +28,13 @@ public class LoginViewModel extends ViewModel {
     private final ResourceRepository resourceRepository;
     private Executor executor;
     private BiometricPrompt biometricPrompt;
-    
-    
+
+
     public LoginViewModel(ResourceRepository resourceRepository) {
         this.resourceRepository =  resourceRepository;
     }
 
-    
+
     public LiveData<String> getLoginMessageLiveData() {
         return loginMessageLiveData;
     }
@@ -45,7 +44,7 @@ public class LoginViewModel extends ViewModel {
 
 
 
-    public void loginUserWithoutBiometric(String password, EncryptedSharedPreferences sharedPreferences) {
+    public void loginUserWithPassword(String password, EncryptedSharedPreferences sharedPreferences) {
 
         String savedPasswordSharedPreferences = sharedPreferences.getString("password", "");
 
@@ -58,31 +57,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void loginUser(Context context) {
-        BiometricManager biometricManager = BiometricManager.from(context);
-        switch (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                Log.d("LOGIN_VM", "App can authenticate using biometrics.");
-                promptBiometricLogin(context);
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Log.e("LOGIN_VM", "No biometric features available on this device.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Log.e("LOGIN_VM", "Biometric features are currently unavailable.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Log.e("LOGIN_VM", "The user hasn't associated any biometric credentials with their account.");
-
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
-            case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
-            case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
-                break;
-        }
-    }
-
-    private void promptBiometricLogin(Context context) {
+    public void loginUserWithBiometricAuth(Context context) {
         Executor executor = ContextCompat.getMainExecutor(context);
         biometricPrompt = new BiometricPrompt((FragmentActivity) context, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -106,9 +81,9 @@ public class LoginViewModel extends ViewModel {
         });
 
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric Login")
-                .setSubtitle("Log in using your biometric credential")
-                .setNegativeButtonText("Use account password")
+                .setTitle("Login")
+                .setSubtitle("Use your biometric or device credentials")
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL)
                 .build();
 
         biometricPrompt.authenticate(promptInfo);
