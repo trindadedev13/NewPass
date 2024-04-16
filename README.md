@@ -92,11 +92,11 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 <br>
 
 ## ⚒️ To-do
-- [ ] Allow exporting/importing backups compatible with KeePass database.
 - [ ] Allow exporting/importing backups.
-- [ ] Add a vibration feedback.
+- [ ] Implement login to NewPass with device lock screen credentials.
+- [x] Add a vibration feedback.
 - [x] Implement dark theme.
-- [x] Add italian traduction.
+- [ ] Add support for more languages.
 <br>
 
 ## 📜 License
