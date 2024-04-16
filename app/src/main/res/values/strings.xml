@@ -67,4 +67,6 @@
     <string name="access_denied">Access Denied</string>
     <string name="user_created_successfully">User created successfully!</string>
     <string name="password_must_be_at_least_4_characters_long">Password must be at least 4 characters long!</string>
+    <string name="settings_import_db">Import Passwords</string>
+    <string name="settings_export_db">Export Passwords</string>
 </resources>

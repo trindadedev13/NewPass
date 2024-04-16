@@ -82,6 +82,8 @@
     <string name="access_denied">Password errata</string>
     <string name="user_created_successfully">Utente creato con successo</string>
     <string name="password_must_be_at_least_4_characters_long">La password deve essere lunga almeno 4 caratteri!</string>
+    <string name="settings_import_db">Importa Passwords</string>
+    <string name="settings_export_db">Esporta Passwords</string>
 
 
 </resources>

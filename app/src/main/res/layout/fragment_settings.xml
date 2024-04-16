@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.165" />
+        app:layout_constraintGuide_percent="0.16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_col_9"
@@ -82,57 +82,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_row_12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.50" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55
-" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_row_7"
@@ -163,16 +155,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_row_2"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/jetbrainsmonoregular"
-        android:text="@string/settings_about"
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_3" />
-
 
     <TextView
         android:id="@+id/textView"
@@ -199,20 +181,42 @@
         android:id="@+id/imageView_dark_theme"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_6"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_6"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_3"
         app:srcCompat="@drawable/settings_entry_bg" />
 
     <ImageView
         android:id="@+id/imageView_language"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_6"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/settings_entry_bg" />
+
+    <ImageView
+        android:id="@+id/imageView_import"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_8"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_5"
+        app:srcCompat="@drawable/settings_entry_bg" />
+
+    <ImageView
+        android:id="@+id/imageView_export"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_11"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_8"
         app:srcCompat="@drawable/settings_entry_bg" />
 
     <ImageView
@@ -249,21 +253,43 @@
         android:id="@+id/imageView9"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_6"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_5"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_2"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_6"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_3"
         app:srcCompat="@drawable/settings_icon_dark_theme" />
 
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_6"
+        app:srcCompat="@drawable/settings_icon_language" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_row_8"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_5"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_2"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_5"
-        app:srcCompat="@drawable/settings_icon_language" />
+        app:srcCompat="@drawable/icon_import" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_11"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_col_5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_8"
+        app:srcCompat="@drawable/icon_export" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -303,9 +329,9 @@
         android:text="@string/settings_dark_theme"
         android:textColor="@color/text_primary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_6"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_6" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_3" />
 
     <TextView
         android:id="@+id/textView4"
@@ -315,9 +341,34 @@
         android:text="@string/settings_change_language"
         android:textColor="@color/text_primary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_6" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="@string/settings_import_db"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_8"
         app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_5" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmonoregular"
+        android:text="@string/settings_export_db"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_11"
+        app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_8" />
+
 
     <TextView
         android:id="@+id/textView5"
@@ -355,26 +406,15 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_col_9"
         app:layout_constraintTop_toTopOf="@+id/guideline_row_10" />
 
-    <TextView
-        android:id="@+id/darkModetv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/jetbrainsmonoregular"
-        android:text="@string/settings_other"
-        android:textColor="@color/text_secondary"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="@id/guideline_col_1"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_12" />
-
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/toggleDarkMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/jetbrainsmonoregular"
         android:theme="@style/ColorSwitchStyle"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_row_5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_row_6"
         app:layout_constraintEnd_toStartOf="@+id/guideline_col_3"
-        app:layout_constraintTop_toTopOf="@+id/guideline_row_6" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_row_3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
