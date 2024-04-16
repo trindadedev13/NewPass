@@ -15,7 +15,6 @@ import com.gero.newpass.utilities.StringHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private final Context context;
     private static final String DATABASE_NAME = "Password.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "my_password_record";
@@ -29,7 +28,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         assert context != null;
         SQLiteDatabase.loadLibs(context);
-        this.context = context;
     }
 
     @Override
@@ -89,29 +87,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
         ContentValues cv = new ContentValues();
 
-
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_EMAIL, email);
         cv.put(COLUMN_PASSWORD, password);
 
-        long result = db.update(TABLE_NAME, cv, "id=?", new String[]{row_id});
-        if(result == -1){
-            Toast.makeText(context, R.string.dbhelper_failed, Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context, R.string.dbhelper_updated_successfully, Toast.LENGTH_SHORT).show();
-        }
-
+        db.update(TABLE_NAME, cv, "id=?", new String[]{row_id});
     }
 
 
     public void deleteOneRow(String row_id){
         SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
-        long result = db.delete(TABLE_NAME, "id=?", new String[]{row_id});
-        if(result == -1){
-            Toast.makeText(context, R.string.dbhelper_failed_to_delete, Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, R.string.dbhelper_successfully_deleted, Toast.LENGTH_SHORT).show();
-        }
+        db.delete(TABLE_NAME, "id=?", new String[]{row_id});
     }
 
     public boolean checkIfAccountAlreadyExist(String name, String email) {

@@ -1,5 +1,7 @@
 package com.gero.newpass.viewmodel;
 
+import android.util.Log;
+
 import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.database.DatabaseServiceLocator;

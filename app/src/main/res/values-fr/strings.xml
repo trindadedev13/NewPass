@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">NewPass</string>
     <string name="unlock_newpass_button_text">[déverrouiller NewPass]</string>
     <string name="create_password_button_text">[créer mot de passe]</string>
     <string name="welcome_newpass_text">Bienvenue sur\nNewPass!</string>

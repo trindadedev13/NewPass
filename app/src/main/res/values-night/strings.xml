@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewPass</string>
+    <string name="app_name" translatable="false">NewPass</string>
 
 <!--    Login Activity-->
     <string name="unlock_newpass_button_text">[unlock NewPass]</string>

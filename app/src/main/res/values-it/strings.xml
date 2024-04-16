@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">NewPass</string>
 
     <!--Login Activity-->
     <string name="unlock_newpass_button_text">[sblocca NewPass]</string>

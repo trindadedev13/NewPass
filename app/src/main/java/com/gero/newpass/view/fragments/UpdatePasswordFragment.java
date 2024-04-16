@@ -66,6 +66,8 @@ public class UpdatePasswordFragment extends Fragment {
 
         initViews(binding);
 
+        Activity activity = this.getActivity();
+
         String decryptedPassword = EncryptionHelper.decrypt(password);
 
         name_input.setText(name);
@@ -96,7 +98,18 @@ public class UpdatePasswordFragment extends Fragment {
             return false;
         });
 
-        Activity activity = this.getActivity();
+        updateViewModel.getSuccessUpdateLiveData().observe(getViewLifecycleOwner(), success -> {
+                    if (success) {
+                        if (activity instanceof MainViewActivity) {
+                            Bundle result = new Bundle();
+                            //Result key for the main fragment to update the addition
+                            result.putString("resultKey", "1");
+                            getParentFragmentManager().setFragmentResult("requestKey", result);
+                            ((MainViewActivity) activity).onBackPressed();
+                        }
+                    }
+                }
+        );
 
 
         deleteButton.setOnTouchListener((v, event) -> {
@@ -131,6 +144,19 @@ public class UpdatePasswordFragment extends Fragment {
             }
             return false;
         });
+
+        updateViewModel.getSuccessUpdateLiveData().observe(getViewLifecycleOwner(), success -> {
+                    if (success) {
+                        if (activity instanceof MainViewActivity) {
+                            Bundle result = new Bundle();
+                            //Result key for the main fragment to update the addition
+                            result.putString("resultKey", "1");
+                            getParentFragmentManager().setFragmentResult("requestKey", result);
+                            ((MainViewActivity) activity).onBackPressed();
+                        }
+                    }
+                }
+        );
 
         copyButtonPassword.setOnClickListener(v -> {
             copyToClipboard(password_input.getText().toString().trim());

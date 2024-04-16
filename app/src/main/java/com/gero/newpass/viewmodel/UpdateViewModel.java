@@ -15,6 +15,8 @@ public class UpdateViewModel extends ViewModel {
 
     private final DatabaseHelper databaseHelper;
     private final MutableLiveData<String> messageLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> successUpdateLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> successDeleteLiveData = new MutableLiveData<>();
     private final ResourceRepository resourceRepository;
 
     public UpdateViewModel(ResourceRepository resourceRepository) {
@@ -24,6 +26,9 @@ public class UpdateViewModel extends ViewModel {
 
     public LiveData<String> getMessageLiveData() {
         return messageLiveData;
+    }
+    public LiveData<Boolean> getSuccessUpdateLiveData() {
+        return successUpdateLiveData;
     }
 
     public void updateEntry(String entry, String name, String email, String password) {
@@ -40,8 +45,12 @@ public class UpdateViewModel extends ViewModel {
                         password.length() >= 4 && password.length() <= passwordMaxLen
         ) {
             databaseHelper.updateData(entry, name, email, encryptedPassword);
+            messageLiveData.setValue(resourceRepository.getString(R.string.dbhelper_updated_successfully));
+            successUpdateLiveData.setValue(true);
 
         } else {
+            successUpdateLiveData.setValue(false);
+
             if (name.isEmpty() || name.length() > nameMaxLen) {
                 messageLiveData.setValue(resourceRepository.getString(R.string.name_should_be_1_to)+ nameMaxLen + resourceRepository.getString(R.string.characters_long));
 
@@ -56,5 +65,7 @@ public class UpdateViewModel extends ViewModel {
 
     public void deleteEntry(String entry) {
         databaseHelper.deleteOneRow(entry);
+        messageLiveData.setValue(resourceRepository.getString(R.string.dbhelper_successfully_deleted));
+        successDeleteLiveData.setValue(true);
     }
 }
