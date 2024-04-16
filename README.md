@@ -96,7 +96,7 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 - [ ] Implement login to NewPass with device lock screen credentials.
 - [x] Add a vibration feedback.
 - [x] Implement dark theme.
-- [ ] Add support for more languages.
+- [x] Add support for more languages.
 <br>
 
 ## 📜 License
