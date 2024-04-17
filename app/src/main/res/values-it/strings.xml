@@ -84,6 +84,8 @@
     <string name="password_must_be_at_least_4_characters_long">La password deve essere lunga almeno 4 caratteri!</string>
     <string name="settings_import_db">Importa Passwords</string>
     <string name="settings_export_db">Esporta Passwords</string>
+    <string name="login">Accedi a NewPass</string>
+    <string name="use_your_biometric_or_device_credentials">Usa le tue credenziali biometriche o del dispositivo</string>
 
 
 </resources>

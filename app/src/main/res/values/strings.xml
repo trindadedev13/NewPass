@@ -69,4 +69,6 @@
     <string name="password_must_be_at_least_4_characters_long">Password must be at least 4 characters long!</string>
     <string name="settings_import_db">Import Passwords</string>
     <string name="settings_export_db">Export Passwords</string>
+    <string name="login">Login to NewPass</string>
+    <string name="use_your_biometric_or_device_credentials">Use your biometric or device credentials</string>
 </resources>

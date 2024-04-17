@@ -68,4 +68,6 @@
     <string name="password_must_be_at_least_4_characters_long">Le mot de passe doit contenir au moins 4 caractères !</string>
     <string name="settings_import_db">Importer un mot de passe</string>
     <string name="settings_export_db">Exporter les mots de passe</string>
+    <string name="login">Connectez-vous à NewPass</string>
+    <string name="use_your_biometric_or_device_credentials">Utilisez vos identifiants biométriques ou de dispositif</string>
 </resources>

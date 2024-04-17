@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
 
-import android.util.Log;
-
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -26,8 +24,6 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> loginMessageLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loginSuccessLiveData = new MutableLiveData<>();
     private final ResourceRepository resourceRepository;
-    private Executor executor;
-    private BiometricPrompt biometricPrompt;
 
 
     public LoginViewModel(ResourceRepository resourceRepository) {
@@ -59,7 +55,7 @@ public class LoginViewModel extends ViewModel {
 
     public void loginUserWithBiometricAuth(Context context) {
         Executor executor = ContextCompat.getMainExecutor(context);
-        biometricPrompt = new BiometricPrompt((FragmentActivity) context, executor, new BiometricPrompt.AuthenticationCallback() {
+        BiometricPrompt biometricPrompt = new BiometricPrompt((FragmentActivity) context, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
@@ -81,8 +77,8 @@ public class LoginViewModel extends ViewModel {
         });
 
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Login")
-                .setSubtitle("Use your biometric or device credentials")
+                .setTitle(context.getString(R.string.login))
+                .setSubtitle(context.getString(R.string.use_your_biometric_or_device_credentials))
                 .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL)
                 .build();
 
