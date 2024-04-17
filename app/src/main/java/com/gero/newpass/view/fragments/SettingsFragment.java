@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
@@ -111,6 +112,7 @@ public class SettingsFragment extends Fragment {
             VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
             //TODO: export database -> open file manager exporting db as "password.db" and let the user saves it
+            Toast.makeText(getActivity(), "Coming soon", Toast.LENGTH_LONG).show();
         });
 
         IVImport.setOnClickListener(v -> {
@@ -118,11 +120,14 @@ public class SettingsFragment extends Fragment {
             VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
             //TODO: import database -> open file manager and let the user pick a .db
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*");
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-            startActivityForResult(Intent.createChooser(intent, "Select File"), PICK_FILE_REQUEST_CODE);
+//            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//            intent.setType("*/*");
+//            intent.addCategory(Intent.CATEGORY_OPENABLE);
+//
+//            startActivityForResult(Intent.createChooser(intent, "Select File"), PICK_FILE_REQUEST_CODE);
+              Toast.makeText(getActivity(), "Coming soon", Toast.LENGTH_LONG).show();
+
 
         });
     }
