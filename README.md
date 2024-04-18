@@ -93,6 +93,7 @@ If you wish to contribute to the NewPass project or report bugs, we encourage yo
 
 ## ⚒️ To-do
 - [ ] Allow exporting/importing backups.
+- [ ] Add an option to reset the app password.
 - [x] Implement login to NewPass with device lock screen credentials.
 - [x] Add a vibration feedback.
 - [x] Implement dark theme.
