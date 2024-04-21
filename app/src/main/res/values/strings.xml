@@ -71,4 +71,6 @@
     <string name="settings_export_db">Export Passwords</string>
     <string name="login">Login to NewPass</string>
     <string name="use_your_biometric_or_device_credentials">Use your biometric or device credentials</string>
+    <string name="settings_change_password">Change Lock Password</string>
+    <string name="app_version">"App Version: "</string>
 </resources>

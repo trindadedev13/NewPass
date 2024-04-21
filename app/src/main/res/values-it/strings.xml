@@ -86,6 +86,8 @@
     <string name="settings_export_db">Esporta Passwords</string>
     <string name="login">Accedi a NewPass</string>
     <string name="use_your_biometric_or_device_credentials">Usa le tue credenziali biometriche o del dispositivo</string>
+    <string name="settings_change_password">Cambia la password di accesso</string>
+    <string name="app_version">"Versione dell'app: "</string>
 
 
 </resources>

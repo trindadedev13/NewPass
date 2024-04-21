@@ -1,7 +1,9 @@
 package com.gero.newpass.view.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,50 +16,94 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.gero.newpass.R;
+import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.model.SettingData;
+import com.gero.newpass.utilities.VibrationHelper;
+import com.gero.newpass.view.activities.MainViewActivity;
+import com.gero.newpass.view.fragments.SettingsFragment;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SettingsAdapter extends ArrayAdapter<SettingData> {
 
     private final Context mContext;
     private final int mResource;
+    private Boolean isDarkModeSet;
+    private final Activity mActivity; // Aggiunta dell'istanza di Activity
 
-    public SettingsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<SettingData> objects) {
+    // Constructor
+    public SettingsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<SettingData> objects, Activity activity) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResource = resource;
+        this.mActivity = activity;
     }
 
-    @SuppressLint("ViewHolder")
+    // View holder class
+    private static class ViewHolder {
+        ImageView imageView;
+        TextView txtName;
+        Switch switchView;
+        ImageView arrowImage;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        ViewHolder holder;
 
-        convertView = layoutInflater.inflate(mResource, parent, false);
-
-        ImageView imageView = convertView.findViewById(R.id.image);
-        TextView txtName = convertView.findViewById(R.id.txtName);
-        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchView = convertView.findViewById(R.id.switch1);
-        ImageView arrowImage = convertView.findViewById(R.id.arrow);
-
-        imageView.setImageResource(Objects.requireNonNull(getItem(position)).getImage());
-        txtName.setText(Objects.requireNonNull(getItem(position)).getName());
-
-        // Show or hide the switch based on the value of showSwitch
-        if (Objects.requireNonNull(getItem(position)).getSwitchPresence()) {
-            switchView.setVisibility(View.VISIBLE);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
+            holder = new ViewHolder();
+            holder.imageView = convertView.findViewById(R.id.image);
+            holder.txtName = convertView.findViewById(R.id.txtName);
+            holder.switchView = convertView.findViewById(R.id.switch1);
+            holder.arrowImage = convertView.findViewById(R.id.arrow);
+            convertView.setTag(holder);
         } else {
-            switchView.setVisibility(View.GONE);
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        // Show or hide the switch based on the value of showSwitch
-        if (Objects.requireNonNull(getItem(position)).getImagePresence()) {
-            arrowImage.setVisibility(View.VISIBLE);
-        } else {
-            arrowImage.setVisibility(View.GONE);
+        SettingData setting = getItem(position);
+        if (setting != null) {
+            holder.imageView.setImageResource(setting.getImage());
+            holder.txtName.setText(setting.getName());
+
+            if (setting.getSwitchPresence()) {
+                holder.switchView.setVisibility(View.VISIBLE);
+                //holder.switchView.setChecked(setting.getSwitchEnabled()); // Ensures the switch displays the current state
+                //holder.switchView.setOnCheckedChangeListener(null); // Prevent triggering the listener during initialization
+
+                holder.switchView.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    // Prevent multiple triggers and ensure only user interaction causes this
+
+                    //setting.setSwitchEnabled(isChecked); // Update the model
+
+                    //Log.i("2395872", "nega");
+
+                    VibrationHelper.vibrate(mContext, mContext.getResources().getInteger(R.integer.vibration_duration1));
+
+                    isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(mContext);
+
+                    if (isChecked && !isDarkModeSet) {
+                        SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(mContext);
+                    } else if (!isChecked && isDarkModeSet) {
+                        SharedPreferencesHelper.setAndEditSharedPrefForLightMode(mContext);
+                    }
+                    if (mActivity instanceof MainViewActivity) {
+                        SharedPreferencesHelper.updateNavigationBarColor(isChecked, mActivity);
+                    }
+
+                });
+            } else {
+                holder.switchView.setVisibility(View.GONE);
+            }
+
+            if (setting.getImagePresence()) {
+                holder.arrowImage.setVisibility(View.VISIBLE);
+            } else {
+                holder.arrowImage.setVisibility(View.GONE);
+            }
         }
 
         return convertView;

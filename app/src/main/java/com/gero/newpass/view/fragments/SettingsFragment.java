@@ -19,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.gero.newpass.R;
+import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.model.SettingData;
 import com.gero.newpass.utilities.VibrationHelper;
@@ -35,7 +37,7 @@ public class SettingsFragment extends Fragment {
     private ListView listView;
     private String url;
     private Intent intent;
-
+    private Boolean isDarkModeSet;
     static final int DARK_THEME = 0;
     static final int CHANGE_LANGUAGE = 1;
     static final int CHANGE_PASSWORD = 2;
@@ -48,7 +50,6 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -70,9 +71,7 @@ public class SettingsFragment extends Fragment {
 
         createSettingsList(arrayList);
 
-
-
-        SettingsAdapter settingsAdapter = new SettingsAdapter(requireContext(), R.layout.list_row, arrayList);
+        SettingsAdapter settingsAdapter = new SettingsAdapter(requireContext(), R.layout.list_row, arrayList, getActivity());
 
         listView.setAdapter(settingsAdapter);
 
@@ -81,15 +80,19 @@ public class SettingsFragment extends Fragment {
             switch(position) {
                 case DARK_THEME:
                     Log.i("ImageMenu", "DARK_THEME");
+
+                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+
+                    DialogFragment languageDialogFragment = new LanguageDialogFragment();
+                    languageDialogFragment.setCancelable(false);
+                    languageDialogFragment.show(requireActivity().getSupportFragmentManager(), "Language Dialog");
                     break;
 
                 case CHANGE_LANGUAGE:
                     Log.i("ImageMenu", "CHANGE_LANGUAGE");
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
-                    DialogFragment languageDialogFragment = new LanguageDialogFragment();
-                    languageDialogFragment.setCancelable(false);
-                    languageDialogFragment.show(requireActivity().getSupportFragmentManager(), "Language Dialog");
+
                     break;
 
                 case CHANGE_PASSWORD:
@@ -142,15 +145,15 @@ public class SettingsFragment extends Fragment {
     }
 
     private void createSettingsList(ArrayList<SettingData> arrayList) {
-        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, "Dark theme", true, false));
-        arrayList.add(new SettingData(R.drawable.settings_icon_language, "Change language", false, false));
-        arrayList.add(new SettingData(R.drawable.settings_icon_lock, "Change password", false, false));
-        arrayList.add(new SettingData(R.drawable.icon_export, "Export password", false, false));
-        arrayList.add(new SettingData(R.drawable.icon_import, "Import password", false, false));
-        arrayList.add(new SettingData(R.drawable.settings_icon_github, "GitHub Repository", false, true));
-        arrayList.add(new SettingData(R.drawable.settings_icon_share, "Share NewPass", false, true));
-        arrayList.add(new SettingData(R.drawable.settings_icon_telegram, "Contact me on Telegram", false, true));
-        arrayList.add(new SettingData(R.drawable.settings_icon_version, "App Version " + getAppVersion(), false, false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, getString(R.string.settings_dark_theme), true, false, false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_language, getString(R.string.settings_change_language), false, false,false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_lock, getString(R.string.settings_change_password), false, false,false));
+        arrayList.add(new SettingData(R.drawable.icon_export, getString(R.string.settings_export_db), false, false,false));
+        arrayList.add(new SettingData(R.drawable.icon_import, getString(R.string.settings_import_db), false, false,false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_github, getString(R.string.settings_github), false, false,true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_share, getString(R.string.settings_share_newpass), false, false,true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_telegram, getString(R.string.settings_contact_me), false, false,true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_version, getString(R.string.app_version) + getAppVersion(), false, false,false));
     }
 
     private String getAppVersion() {
