@@ -29,7 +29,7 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
     private final Context mContext;
     private final int mResource;
     private Boolean isDarkModeSet;
-    private final Activity mActivity; // Aggiunta dell'istanza di Activity
+    private final Activity mActivity;
 
     // Constructor
     public SettingsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<SettingData> objects, Activity activity) {
