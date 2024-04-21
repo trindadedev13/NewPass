@@ -1,7 +1,5 @@
 package com.gero.newpass.view.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,15 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.gero.newpass.R;
-import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
-import com.gero.newpass.database.DatabaseServiceLocator;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.model.SettingData;
 import com.gero.newpass.utilities.VibrationHelper;
@@ -75,28 +68,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        String versionName = "";
-        int versionCode = 0;
+        createSettingsList(arrayList);
 
-        try {
-            PackageManager packageManager = requireActivity().getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(requireActivity().getPackageName(), 0);
-            versionName = packageInfo.versionName;
-            versionCode = packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, "Dark theme", ""));
-        arrayList.add(new SettingData(R.drawable.settings_icon_language, "Change language", ""));
-        arrayList.add(new SettingData(R.drawable.settings_icon_lock, "Change password", ""));
-        arrayList.add(new SettingData(R.drawable.icon_export, "Export password", ""));
-        arrayList.add(new SettingData(R.drawable.icon_import, "Import password", ""));
-        arrayList.add(new SettingData(R.drawable.settings_icon_github, "GitHub Repository", ""));
-        arrayList.add(new SettingData(R.drawable.settings_icon_share, "Share NewPass", ""));
-        arrayList.add(new SettingData(R.drawable.settings_icon_telegram, "Contact me on Telegram", ""));
-        arrayList.add(new SettingData(R.drawable.settings_icon_version, "App Version " + versionName, ""));
 
 
         SettingsAdapter settingsAdapter = new SettingsAdapter(requireContext(), R.layout.list_row, arrayList);
@@ -166,6 +139,33 @@ public class SettingsFragment extends Fragment {
                     break;
             }
         });
+    }
+
+    private void createSettingsList(ArrayList<SettingData> arrayList) {
+        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, "Dark theme", true, false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_language, "Change language", false, false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_lock, "Change password", false, false));
+        arrayList.add(new SettingData(R.drawable.icon_export, "Export password", false, false));
+        arrayList.add(new SettingData(R.drawable.icon_import, "Import password", false, false));
+        arrayList.add(new SettingData(R.drawable.settings_icon_github, "GitHub Repository", false, true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_share, "Share NewPass", false, true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_telegram, "Contact me on Telegram", false, true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_version, "App Version " + getAppVersion(), false, false));
+    }
+
+    private String getAppVersion() {
+        String versionName = "";
+        int versionCode = 0;
+
+        try {
+            PackageManager packageManager = requireActivity().getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(requireActivity().getPackageName(), 0);
+            versionName = packageInfo.versionName;
+            versionCode = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 
     private void initViews(FragmentSettingsBinding binding) {
