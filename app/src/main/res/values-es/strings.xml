@@ -70,4 +70,6 @@
     <string name="settings_export_db">Exportar contraseñas</string>
     <string name="login">Inicia sesión en NewPass</string>
     <string name="use_your_biometric_or_device_credentials">Utiliza tus credenciales biométricas o del dispositivo</string>
+    <string name="settings_change_password">Cambiar contraseña de bloqueo</string>
+    <string name="app_version">"Version de aplicacion: "</string>
 </resources>
