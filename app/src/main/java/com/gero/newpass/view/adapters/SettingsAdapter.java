@@ -71,29 +71,24 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
 
             if (setting.getSwitchPresence()) {
                 holder.switchView.setVisibility(View.VISIBLE);
-                //holder.switchView.setChecked(setting.getSwitchEnabled()); // Ensures the switch displays the current state
-                //holder.switchView.setOnCheckedChangeListener(null); // Prevent triggering the listener during initialization
+                holder.switchView.setChecked(SharedPreferencesHelper.isDarkModeSet(mContext));
 
                 holder.switchView.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    // Prevent multiple triggers and ensure only user interaction causes this
+                    if (buttonView.isPressed() && buttonView.isShown()) {
 
-                    //setting.setSwitchEnabled(isChecked); // Update the model
+                        VibrationHelper.vibrate(mContext, mContext.getResources().getInteger(R.integer.vibration_duration1));
 
-                    //Log.i("2395872", "nega");
+                        isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(mContext);
 
-                    VibrationHelper.vibrate(mContext, mContext.getResources().getInteger(R.integer.vibration_duration1));
-
-                    isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(mContext);
-
-                    if (isChecked && !isDarkModeSet) {
-                        SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(mContext);
-                    } else if (!isChecked && isDarkModeSet) {
-                        SharedPreferencesHelper.setAndEditSharedPrefForLightMode(mContext);
+                        if (isChecked && !isDarkModeSet) {
+                            SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(mContext);
+                        } else if (!isChecked && isDarkModeSet) {
+                            SharedPreferencesHelper.setAndEditSharedPrefForLightMode(mContext);
+                        }
+                        if (mActivity instanceof MainViewActivity) {
+                            SharedPreferencesHelper.updateNavigationBarColor(isChecked, mActivity);
+                        }
                     }
-                    if (mActivity instanceof MainViewActivity) {
-                        SharedPreferencesHelper.updateNavigationBarColor(isChecked, mActivity);
-                    }
-
                 });
             } else {
                 holder.switchView.setVisibility(View.GONE);
