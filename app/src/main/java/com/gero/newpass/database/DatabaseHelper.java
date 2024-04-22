@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
+
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -115,5 +117,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return result;
+    }
+
+    public static void changeDBPassword(String newPassword, Context context) {
+        // Carica le librerie di SQLCipher
+        SQLiteDatabase.loadLibs(context);
+        Log.i("Database123", "loaded libs");
+
+        // Ottieni il percorso del database
+        String databasePath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+        Log.i("Database123", "got the db path: " + databasePath);
+
+        // Apri il database con la vecchia chiave
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(databasePath, KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
+        Log.i("Database123", "db opened with the old key");
+
+        // Imposta la nuova password (key)
+        db.rawExecSQL("PRAGMA rekey = '" + newPassword + "'");
+        Log.i("Database123", "new key set");
+
+        // Chiudi il database
+        db.close();
+
+        // Mostra un messaggio Toast per confermare il cambio della password
+        Toast.makeText(context, "Database password changed successfully!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -2,7 +2,10 @@ package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,18 +15,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.security.crypto.EncryptedSharedPreferences;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
+import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
+import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.model.SettingData;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
@@ -38,6 +46,7 @@ public class SettingsFragment extends Fragment {
     private String url;
     private Intent intent;
     private Boolean isDarkModeSet;
+    private EncryptedSharedPreferences encryptedSharedPreferences;
     static final int DARK_THEME = 0;
     static final int CHANGE_LANGUAGE = 1;
     static final int CHANGE_PASSWORD = 2;
@@ -62,6 +71,7 @@ public class SettingsFragment extends Fragment {
         Activity activity = this.getActivity();
 
         ArrayList<SettingData> arrayList = new ArrayList<>();
+        encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(requireContext());
 
         buttonBack.setOnClickListener(v -> {
             if (activity instanceof MainViewActivity) {
@@ -96,6 +106,7 @@ public class SettingsFragment extends Fragment {
                 case CHANGE_PASSWORD:
                     Log.i("ImageMenu", "CHANGE_PASSWORD");
                     //TODO
+                    showDialog();
                     break;
 
                 case EXPORT:
@@ -172,5 +183,48 @@ public class SettingsFragment extends Fragment {
     private void initViews(FragmentSettingsBinding binding) {
         buttonBack = binding.backButton;
         listView = binding.listView;
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_inputs, null);
+        builder.setView(dialogView);
+
+        EditText firstInput = dialogView.findViewById(R.id.first_input);
+        EditText secondInput = dialogView.findViewById(R.id.second_input);
+
+        builder.setTitle("Inserisci i dettagli")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Azioni da fare quando l'utente clicca su OK
+                        String inputOne = firstInput.getText().toString();
+                        String inputTwo = secondInput.getText().toString();
+
+                        if (inputOne.equals(encryptedSharedPreferences.getString("password", ""))) {
+                            Log.i("2895124", "Correct password");
+
+                            SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+                            editor.putString("password", inputTwo);
+                            editor.apply();
+
+                            Log.w("Database123", "psw in the encryptedsharedpref aka new key: " + encryptedSharedPreferences.getString("password", ""));
+                            DatabaseHelper.changeDBPassword(inputTwo, requireContext());
+                        } else {
+                            Log.i("2895124", "Incorrect password");
+                            Toast.makeText(requireContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
