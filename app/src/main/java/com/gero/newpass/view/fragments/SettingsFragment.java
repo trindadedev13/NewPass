@@ -106,6 +106,7 @@ public class SettingsFragment extends Fragment {
                 case CHANGE_PASSWORD:
                     Log.i("ImageMenu", "CHANGE_PASSWORD");
                     //TODO
+                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     showDialog();
                     break;
 
@@ -194,35 +195,27 @@ public class SettingsFragment extends Fragment {
         EditText firstInput = dialogView.findViewById(R.id.first_input);
         EditText secondInput = dialogView.findViewById(R.id.second_input);
 
-        builder.setTitle("Inserisci i dettagli")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Azioni da fare quando l'utente clicca su OK
-                        String inputOne = firstInput.getText().toString();
-                        String inputTwo = secondInput.getText().toString();
+        builder.setTitle(R.string.settings_change_password)
+                .setPositiveButton(R.string.update_alertdialog_yes, (dialog, id) -> {
 
-                        if (inputOne.equals(encryptedSharedPreferences.getString("password", ""))) {
-                            Log.i("2895124", "Correct password");
+                    String inputOne = firstInput.getText().toString();
+                    String inputTwo = secondInput.getText().toString();
 
-                            SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-                            editor.putString("password", inputTwo);
-                            editor.apply();
+                    if (inputOne.equals(encryptedSharedPreferences.getString("password", ""))) {
+                        //Log.i("2895124", "Correct password");
 
-                            Log.w("Database123", "psw in the encryptedsharedpref aka new key: " + encryptedSharedPreferences.getString("password", ""));
-                            DatabaseHelper.changeDBPassword(inputTwo, requireContext());
-                        } else {
-                            Log.i("2895124", "Incorrect password");
-                            Toast.makeText(requireContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
-                        }
+                        SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+                        editor.putString("password", inputTwo);
+                        editor.apply();
+
+                        //Log.w("Database123", "psw in the encryptedsharedpref aka new key: " + encryptedSharedPreferences.getString("password", ""));
+                        DatabaseHelper.changeDBPassword(inputTwo, requireContext());
+                    } else {
+                        //Log.i("2895124", "Incorrect password");
+                        Toast.makeText(requireContext(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton(R.string.update_alertdialog_no, (dialog, id) -> dialog.cancel());
 
         AlertDialog dialog = builder.create();
         dialog.show();

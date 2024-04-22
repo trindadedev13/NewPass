@@ -73,4 +73,7 @@
     <string name="use_your_biometric_or_device_credentials">Use your biometric or device credentials</string>
     <string name="settings_change_password">Change Lock Password</string>
     <string name="app_version">"App Version: "</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="enter_the_old_password">Old password</string>
+    <string name="enter_the_new_password">New Password</string>
 </resources>

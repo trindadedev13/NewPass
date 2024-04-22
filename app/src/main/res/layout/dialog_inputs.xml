@@ -9,13 +9,13 @@
         android:id="@+id/first_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Inserisci il primo valore"
+        android:hint="@string/enter_the_old_password"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/second_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Inserisci il secondo valore"
+        android:hint="@string/enter_the_new_password"
         android:inputType="text"/>
 </LinearLayout>
