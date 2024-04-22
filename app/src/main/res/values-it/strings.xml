@@ -88,6 +88,10 @@
     <string name="use_your_biometric_or_device_credentials">Usa le tue credenziali biometriche o del dispositivo</string>
     <string name="settings_change_password">Cambia la password di accesso</string>
     <string name="app_version">"Versione dell'app: "</string>
+    <string name="wrong_password">Password errata</string>
+    <string name="enter_the_old_password">Password attuale</string>
+    <string name="enter_the_new_password">Nuova password</string>
+
 
 
 </resources>

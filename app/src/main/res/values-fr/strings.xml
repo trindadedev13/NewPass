@@ -72,4 +72,8 @@
     <string name="use_your_biometric_or_device_credentials">Utilisez vos identifiants biométriques ou de dispositif</string>
     <string name="settings_change_password">Changer le mot de passe de verrouillage</string>
     <string name="app_version">"Version de l'application: "</string>
+    <string name="wrong_password">Mot de passe incorrect</string>
+    <string name="enter_the_old_password">Ancien mot de passe</string>
+    <string name="enter_the_new_password">Nouveau mot de passe</string>
+
 </resources>

@@ -72,4 +72,8 @@
     <string name="use_your_biometric_or_device_credentials">Utiliza tus credenciales biométricas o del dispositivo</string>
     <string name="settings_change_password">Cambiar contraseña de bloqueo</string>
     <string name="app_version">"Version de aplicacion: "</string>
+    <string name="wrong_password">Contraseña incorrecta</string>
+    <string name="enter_the_old_password">Contraseña antigua</string>
+    <string name="enter_the_new_password">Nueva contraseña</string>
+
 </resources>
