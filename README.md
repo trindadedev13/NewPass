@@ -55,7 +55,7 @@ NewPass is a secure password management application designed to generate and sto
     <td><img src="https://github.com/6eero/NewPass/assets/114809573/638a1b08-3fe4-46d0-82c8-7e1ed29c3082" alt="Screenshot 2"></td>
     <td><img src="https://github.com/6eero/NewPass/assets/114809573/b07d9717-65a3-4c2a-bb8f-ecaf7d94516f" alt="Screenshot 3"></td>
     <td><img src="https://github.com/6eero/NewPass/assets/114809573/2751be07-78ab-4854-b929-bfcf20a98d91" alt="Screenshot 4"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/14c5866e-a251-42f6-9560-dafcacab0f14" alt="Screenshot 5"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/e4108359-667f-4277-aa9a-1e84e9fc8375" alt="Screenshot 5"></td>
   </tr>
 </table>
 <br>
