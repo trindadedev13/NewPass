@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
@@ -43,7 +45,7 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
     private static class ViewHolder {
         ImageView imageView;
         TextView txtName;
-        Switch switchView;
+        ImageButton switchView;
         ImageView arrowImage;
     }
 
@@ -71,8 +73,9 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
 
             if (setting.getSwitchPresence()) {
                 holder.switchView.setVisibility(View.VISIBLE);
-                holder.switchView.setChecked(SharedPreferencesHelper.isDarkModeSet(mContext));
 
+                //holder.switchView.setChecked(SharedPreferencesHelper.isDarkModeSet(mContext));
+                /*
                 holder.switchView.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (buttonView.isPressed() && buttonView.isShown()) {
 
@@ -88,6 +91,26 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
                         if (mActivity instanceof MainViewActivity) {
                             SharedPreferencesHelper.updateNavigationBarColor(isChecked, mActivity);
                         }
+                    }
+                });
+                 */
+
+
+                int imageResource = (SharedPreferencesHelper.isDarkModeSet(mContext)) ? R.drawable.btn_yes : R.drawable.btn_no;
+                holder.switchView.setImageDrawable(ContextCompat.getDrawable(mContext, imageResource));
+
+                holder.switchView.setOnClickListener(v -> {
+                    VibrationHelper.vibrate(mContext, mContext.getResources().getInteger(R.integer.vibration_duration1));
+
+                    isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(mContext);
+
+                    if (isDarkModeSet) {
+                        SharedPreferencesHelper.setAndEditSharedPrefForLightMode(mContext);
+                    } else {
+                        SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(mContext);
+                    }
+                    if (mActivity instanceof MainViewActivity) {
+                        SharedPreferencesHelper.updateNavigationBarColor(isDarkModeSet, mActivity);
                     }
                 });
             } else {
