@@ -15,7 +15,7 @@
     <string name="add_add">Aggiungi</string>
     <string name="add_btn_add">[aggiungi]</string>
     <string name="add_name">Nome</string>
-    <string name="add_email">Email</string>
+    <string name="add_email">Email/Username</string>
     <string name="add_password">Password</string>
 
     <!--generate.xml-->
@@ -75,7 +75,7 @@
     <string name="account_added_successfully">Account aggiunto con successo</string>
     <string name="name_should_be_1_to">"Il nome deve essere compreso tra 1 e "</string>
     <string name="characters_long">" caratteri"</string>
-    <string name="email_should_be_4_to">"L'email deve essere compresa tra 1 e "</string>
+    <string name="email_should_be_0_to">"L'email deve essere compresa tra 0 e "</string>
     <string name="password_should_be_4_to">"La password deve essere compresa tra 1 e "</string>
 
     <string name="login_done">Login effettuato</string>

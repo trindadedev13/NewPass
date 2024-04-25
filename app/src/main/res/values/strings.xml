@@ -10,7 +10,7 @@
     <string name="add_add">Add</string>
     <string name="add_btn_add">[add]</string>
     <string name="add_name">Name</string>
-    <string name="add_email">Email</string>
+    <string name="add_email">Email/Username</string>
     <string name="add_password">Password</string>
     <string name="generate_create">Create</string>
     <string name="generate_a_password_for">A password for your\ndigital realm</string>
@@ -61,7 +61,7 @@
     <string name="account_added_successfully">Account added successfully</string>
     <string name="name_should_be_1_to">"Name should be 1 to "</string>
     <string name="characters_long">" characters long!"</string>
-    <string name="email_should_be_4_to">"Email should be 4 to "</string>
+    <string name="email_should_be_0_to">"Email should be 0 to "</string>
     <string name="password_should_be_4_to">"Password should be 4 to "</string>
     <string name="login_done">Login done</string>
     <string name="access_denied">Access Denied</string>

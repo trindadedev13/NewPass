@@ -9,7 +9,7 @@
     <string name="add_add">Agregar</string>
     <string name="add_btn_add">[agregar]</string>
     <string name="add_name">Nombre</string>
-    <string name="add_email">Correo electrónico</string>
+    <string name="add_email">Email/Username</string>
     <string name="add_password">Contraseña</string>
     <string name="generate_create">Crear</string>
     <string name="generate_a_password_for">Una contraseña para tu\nreino digital</string>
@@ -60,7 +60,7 @@
     <string name="account_added_successfully">Cuenta agregada con éxito</string>
     <string name="name_should_be_1_to">"El nombre debe tener de 1 a "</string>
     <string name="characters_long">" caracteres de longitud!"</string>
-    <string name="email_should_be_4_to">"El correo debe tener de 4 a "</string>
+    <string name="email_should_be_0_to">"El correo debe tener de 0 a "</string>
     <string name="password_should_be_4_to">"La contraseña debe tener de 4 a "</string>
     <string name="login_done">Inicio de sesión realizado</string>
     <string name="access_denied">Acceso denegado</string>

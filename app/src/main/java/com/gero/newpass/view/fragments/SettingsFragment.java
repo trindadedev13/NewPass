@@ -105,7 +105,6 @@ public class SettingsFragment extends Fragment {
 
                 case CHANGE_PASSWORD:
                     Log.i("ImageMenu", "CHANGE_PASSWORD");
-                    //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     showDialog();
                     break;
