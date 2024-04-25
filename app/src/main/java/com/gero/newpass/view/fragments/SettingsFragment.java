@@ -112,11 +112,15 @@ public class SettingsFragment extends Fragment {
                 case EXPORT:
                     Log.i("ImageMenu", "EXPORT");
                     //TODO
+                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
                     break;
 
                 case IMPORT:
                     Log.i("ImageMenu", "IMPORT");
                     //TODO
+                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
                     break;
 
                 case GITHUB:
