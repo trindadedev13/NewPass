@@ -101,34 +101,27 @@ public class LoginActivity extends AppCompatActivity {
             if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
                 Log.d("LOGIN_VM", "App can authenticate using biometrics or device credentials.");
 
-                buttonRegisterOrUnlock.setVisibility(View.GONE);
-                passwordEntry.setVisibility(View.GONE);
-                passwordBox.setVisibility(View.GONE);
-                welcomeTextView.setVisibility(View.GONE);
-                bgImage.setVisibility(View.GONE);
-
                 loginViewModel.loginUserWithBiometricAuth(this);
 
-            } else {
+                loginViewModel.getLoginSuccessLiveData().observe(this, state -> {
+                    Log.w("23057", String.valueOf(state));
 
+                    if(state) {
+                        buttonRegisterOrUnlock.setVisibility(View.GONE);
+                        passwordEntry.setVisibility(View.GONE);
+                        passwordBox.setVisibility(View.GONE);
+                        welcomeTextView.setVisibility(View.GONE);
+                        bgImage.setVisibility(View.GONE);
+
+                    } else {
+                        loginWithPassword(view);
+                    }
+                });
+
+            } else {
                 Log.d("LOGIN_VM", "No biometric or credential authentication features available on this device.");
 
-                view.setOnTouchListener((v, event) -> {
-
-                    String passwordInput = passwordEntry.getText().toString();
-
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration0));
-                            return true;
-                        case MotionEvent.ACTION_UP:
-                            v.performClick();
-                            loginViewModel.loginUserWithPassword(passwordInput, encryptedSharedPreferences);
-                            VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
-                            return true;
-                    }
-                    return false;
-                });
+                loginWithPassword(view);
             }
         } else {
 
@@ -140,6 +133,25 @@ public class LoginActivity extends AppCompatActivity {
                 VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
             });
         }
+    }
+
+    private void loginWithPassword(View view) {
+        view.setOnTouchListener((v, event) -> {
+
+            String passwordInput = passwordEntry.getText().toString();
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration0));
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    loginViewModel.loginUserWithPassword(passwordInput, encryptedSharedPreferences);
+                    VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+                    return true;
+            }
+            return false;
+        });
     }
 
 

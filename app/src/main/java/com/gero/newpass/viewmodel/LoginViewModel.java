@@ -59,6 +59,7 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
+                loginSuccessLiveData.postValue(false);
                 loginMessageLiveData.postValue(errString.toString());
             }
 
@@ -72,6 +73,7 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
+                loginSuccessLiveData.postValue(false);
                 loginMessageLiveData.postValue(resourceRepository.getString(R.string.access_denied));
             }
         });
