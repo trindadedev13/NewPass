@@ -204,7 +204,7 @@ public class SettingsFragment extends Fragment {
                     String inputOne = firstInput.getText().toString();
                     String inputTwo = secondInput.getText().toString();
 
-                    if (inputOne.equals(encryptedSharedPreferences.getString("password", ""))) {
+                    if (inputOne.equals(encryptedSharedPreferences.getString("password", "")) && inputTwo.length() >= 4) {
                         //Log.i("2895124", "Correct password");
 
                         SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
@@ -213,6 +213,9 @@ public class SettingsFragment extends Fragment {
 
                         //Log.w("Database123", "psw in the encryptedsharedpref aka new key: " + encryptedSharedPreferences.getString("password", ""));
                         DatabaseHelper.changeDBPassword(inputTwo, requireContext());
+                    } else if (inputTwo.length() < 4) {
+                        Toast.makeText(requireContext(), R.string.password_must_be_at_least_4_characters_long, Toast.LENGTH_SHORT).show();
+
                     } else {
                         //Log.i("2895124", "Incorrect password");
                         Toast.makeText(requireContext(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
