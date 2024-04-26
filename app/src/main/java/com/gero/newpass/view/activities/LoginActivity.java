@@ -101,19 +101,16 @@ public class LoginActivity extends AppCompatActivity {
             if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
                 Log.d("LOGIN_VM", "App can authenticate using biometrics or device credentials.");
 
+                hideUI(true);
+
                 loginViewModel.loginUserWithBiometricAuth(this);
 
                 loginViewModel.getLoginSuccessLiveData().observe(this, state -> {
                     Log.w("23057", String.valueOf(state));
 
-                    if(state) {
-                        buttonRegisterOrUnlock.setVisibility(View.GONE);
-                        passwordEntry.setVisibility(View.GONE);
-                        passwordBox.setVisibility(View.GONE);
-                        welcomeTextView.setVisibility(View.GONE);
-                        bgImage.setVisibility(View.GONE);
+                    if(!state) {
 
-                    } else {
+                        hideUI(false);
                         loginWithPassword(view);
                     }
                 });
@@ -132,6 +129,22 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
                 VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
             });
+        }
+    }
+
+    private void hideUI(boolean bool) {
+        if (bool) {
+            buttonRegisterOrUnlock.setVisibility(View.GONE);
+            passwordEntry.setVisibility(View.GONE);
+            passwordBox.setVisibility(View.GONE);
+            welcomeTextView.setVisibility(View.GONE);
+            bgImage.setVisibility(View.GONE);
+        } else {
+            buttonRegisterOrUnlock.setVisibility(View.VISIBLE);
+            passwordEntry.setVisibility(View.VISIBLE);
+            passwordBox.setVisibility(View.VISIBLE);
+            welcomeTextView.setVisibility(View.VISIBLE);
+            bgImage.setVisibility(View.VISIBLE);
         }
     }
 
