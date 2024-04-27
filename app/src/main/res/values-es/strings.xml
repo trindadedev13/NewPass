@@ -75,5 +75,6 @@
     <string name="wrong_password">Contraseña incorrecta</string>
     <string name="enter_the_old_password">Contraseña antigua</string>
     <string name="enter_the_new_password">Nueva contraseña</string>
+    <string name="use_screen_lock_to_unlock">Usar bloqueo de pantalla para desbloquear</string>
 
 </resources>

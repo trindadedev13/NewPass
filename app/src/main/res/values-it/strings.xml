@@ -91,7 +91,7 @@
     <string name="wrong_password">Password errata</string>
     <string name="enter_the_old_password">Password attuale</string>
     <string name="enter_the_new_password">Nuova password</string>
-
+    <string name="use_screen_lock_to_unlock">Usa il blocco schermo per sbloccare</string>
 
 
 </resources>

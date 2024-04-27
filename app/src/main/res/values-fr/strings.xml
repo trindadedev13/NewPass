@@ -75,5 +75,6 @@
     <string name="wrong_password">Mot de passe incorrect</string>
     <string name="enter_the_old_password">Ancien mot de passe</string>
     <string name="enter_the_new_password">Nouveau mot de passe</string>
+    <string name="use_screen_lock_to_unlock">Utiliser le verrouillage de l\'écran pour déverrouiller</string>
 
 </resources>

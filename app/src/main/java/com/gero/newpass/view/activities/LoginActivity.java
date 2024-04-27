@@ -91,9 +91,17 @@ public class LoginActivity extends AppCompatActivity {
     public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
 
         if (!isPasswordEmpty) {
+            loginUser(view);
 
-            Log.d("LOGIN_VM", "Already launched before");
+        } else {
+            registerUser();
+        }
+    }
 
+    private void loginUser(View view) {
+        Log.d("LOGIN_VM", "Already launched before");
+
+        if (SharedPreferencesHelper.isScreenLockEnabled(this)) {
             BiometricManager biometricManager = BiometricManager.from(this);
 
             int canAuthenticate = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL);
@@ -121,15 +129,18 @@ public class LoginActivity extends AppCompatActivity {
                 loginWithPassword(view);
             }
         } else {
-
-            Log.d("LOGIN_VM", "First launch");
-
-            buttonRegisterOrUnlock.setOnClickListener(v -> {
-                String passwordInput = passwordEntry.getText().toString();
-                loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
-                VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
-            });
+            loginWithPassword(view);
         }
+    }
+
+    private void registerUser() {
+        Log.d("LOGIN_VM", "First launch");
+
+        buttonRegisterOrUnlock.setOnClickListener(v -> {
+            String passwordInput = passwordEntry.getText().toString();
+            loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
+            VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+        });
     }
 
     private void hideUI(boolean bool) {
