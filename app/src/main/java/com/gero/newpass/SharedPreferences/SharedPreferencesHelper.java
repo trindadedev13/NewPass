@@ -12,6 +12,7 @@ import com.gero.newpass.R;
 
 public class SharedPreferencesHelper {
 
+    private static final String SCREEN_LOCK_FLAG = "screenlock";
     public static String DARK_MODE_FLAG = "isDarkModeOn";
     public static String SHARED_PREF_FLAG = "SharedPref";
     public static String LANG_PREF_FLAG = "language";
@@ -99,5 +100,20 @@ public class SharedPreferencesHelper {
             // Additionally, if your navigation bar icons are not visible against the light background, you can make them dark:
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
+    }
+
+    //Return is dark mode is set or not from shared preferences, default value is true
+    public static Boolean isScreenLockEnabled(Context context) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return sharedPreferences.getBoolean(SCREEN_LOCK_FLAG, true);
+    }
+
+    public static void setUseScreenLockToUnlock(Context context) {
+        Boolean currentState = SharedPreferencesHelper.isScreenLockEnabled(context);
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(SCREEN_LOCK_FLAG, !currentState);
+        editor.apply();
     }
 }

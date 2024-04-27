@@ -78,36 +78,38 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
             if (setting.getSwitchPresence()) {
                 holder.switchView.setVisibility(View.VISIBLE);
 
-                int imageResource = (SharedPreferencesHelper.isDarkModeSet(mContext)) ? R.drawable.btn_yes : R.drawable.btn_no;
+                //int imageResource = (SharedPreferencesHelper.isDarkModeSet(mContext)) ? R.drawable.btn_yes : R.drawable.btn_no;
+                //holder.switchView.setImageDrawable(ContextCompat.getDrawable(mContext, imageResource));
+
+                int switchID = setting.getSwitchID();
+                int imageResource;
+
+                if (switchID == DARK_THEME_SWITCH) {
+                    imageResource = (SharedPreferencesHelper.isDarkModeSet(mContext)) ? R.drawable.btn_yes : R.drawable.btn_no;
+
+                } else if (switchID == SCREEN_LOCK_SWITCH) {
+                    imageResource = (SharedPreferencesHelper.isScreenLockEnabled(mContext)) ? R.drawable.btn_yes : R.drawable.btn_no;
+                    //Log.i("switches", String.valueOf(imageResource));
+                } else {
+                    imageResource = R.drawable.btn_yes; // Imposta un valore predefinito nel caso in cui l'ID dello switch non sia valido
+                }
+
                 holder.switchView.setImageDrawable(ContextCompat.getDrawable(mContext, imageResource));
 
                 holder.switchView.setOnClickListener(v -> {
                     VibrationHelper.vibrate(mContext, mContext.getResources().getInteger(R.integer.vibration_duration1));
 
-                    isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(mContext);
-
-                    int switchID = setting.getSwitchID();
 
                     switch (switchID) {
 
                         case DARK_THEME_SWITCH:
-                            if (isDarkModeSet) {
-                                SharedPreferencesHelper.setAndEditSharedPrefForLightMode(mContext);
-                            } else {
-                                SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(mContext);
-                            }
-                            if (mActivity instanceof MainViewActivity) {
-                                SharedPreferencesHelper.updateNavigationBarColor(isDarkModeSet, mActivity);
-                            }
+                            toggleDarkMode();
                             break;
 
                         case SCREEN_LOCK_SWITCH:
-                            Log.i("switches", "test");
-                            // TODO
-                            break;
+                            toggleScreenLock(holder);
 
                     }
-
                 });
             } else {
                 holder.switchView.setVisibility(View.GONE);
@@ -119,7 +121,25 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
                 holder.arrowImage.setVisibility(View.GONE);
             }
         }
-
         return convertView;
+    }
+
+    private void toggleDarkMode() {
+        boolean isDarkModeSet = SharedPreferencesHelper.isDarkModeSet(mContext);
+        if (isDarkModeSet) {
+            SharedPreferencesHelper.setAndEditSharedPrefForLightMode(mContext);
+        } else {
+            SharedPreferencesHelper.setAndEditSharedPrefForDarkMode(mContext);
+        }
+        if (mActivity instanceof MainViewActivity) {
+            SharedPreferencesHelper.updateNavigationBarColor(isDarkModeSet, mActivity);
+        }
+    }
+
+    private void toggleScreenLock(ViewHolder holder) {
+
+        SharedPreferencesHelper.setUseScreenLockToUnlock(mContext);
+        int imageResource = (SharedPreferencesHelper.isScreenLockEnabled(mContext)) ? R.drawable.btn_yes : R.drawable.btn_no;
+        holder.switchView.setImageDrawable(ContextCompat.getDrawable(mContext, imageResource));
     }
 }
