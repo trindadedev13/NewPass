@@ -3,6 +3,9 @@ package com.gero.newpass.view.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -87,7 +90,6 @@ public class SettingsFragment extends Fragment {
             switch(position) {
 
                 case CHANGE_LANGUAGE:
-                    Log.i("ImageMenu", "CHANGE_LANGUAGE");
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
                     DialogFragment languageDialogFragment = new LanguageDialogFragment();
@@ -97,27 +99,23 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case CHANGE_PASSWORD:
-                    Log.i("ImageMenu", "CHANGE_PASSWORD");
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     showDialog();
                     break;
 
                 case EXPORT:
-                    Log.i("ImageMenu", "EXPORT");
                     //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
                     break;
 
                 case IMPORT:
-                    Log.i("ImageMenu", "IMPORT");
                     //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
                     break;
 
                 case GITHUB:
-                    Log.i("ImageMenu", "GITHUB");
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     url = "https://github.com/6eero/NewPass";
                     intent = new Intent(Intent.ACTION_VIEW);
@@ -126,7 +124,6 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case SHARE:
-                    Log.i("ImageMenu", "SHARE");
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
@@ -135,7 +132,6 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case CONTACT:
-                    Log.i("ImageMenu", "CONTACT");
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     url = "https://t.me/geroED";
                     intent = new Intent(Intent.ACTION_VIEW);
@@ -144,7 +140,6 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case APP_VERSION:
-                    Log.i("ImageMenu", "APP_VERSION");
                     break;
             }
         });
