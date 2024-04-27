@@ -6,11 +6,29 @@ public class SettingData {
     private Boolean isSwitchPresent;
     private Boolean isImagePresent;
 
-    public SettingData(int image, String name, boolean isImagePresent, Boolean isSwitchPresent) {
+    public int getSwitchID() {
+        return switchID;
+    }
+
+    public void setSwitchID(int switchID) {
+        this.switchID = switchID;
+    }
+
+    private int switchID;
+
+    public SettingData(int image, String name, boolean isImagePresent, Boolean isSwitchPresent, int switchID) {
         this.image = image;
         this.name = name;
         this.isImagePresent = isImagePresent;
         this.isSwitchPresent = isSwitchPresent;
+        this.switchID = switchID;
+    }
+
+    public SettingData(int image, String name, Boolean isImagePresent) {
+        this.image = image;
+        this.name = name;
+        this.isImagePresent = isImagePresent;
+        isSwitchPresent = false;
     }
 
     public SettingData(int image, String name) {
@@ -18,13 +36,6 @@ public class SettingData {
         this.name = name;
         isSwitchPresent = false;
         isImagePresent = false;
-    }
-
-    public SettingData(int image, String name, boolean isImagePresent) {
-        this.image = image;
-        this.name = name;
-        isSwitchPresent = false;
-        this.isImagePresent = isImagePresent;
     }
 
     public int getImage() {

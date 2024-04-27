@@ -158,7 +158,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void createSettingsList(ArrayList<SettingData> arrayList) {
-        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, getString(R.string.settings_dark_theme), false, true));
+        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, getString(R.string.settings_dark_theme), false, true, 1));
+        arrayList.add(new SettingData(R.drawable.icon_open_lock, getString(R.string.use_screen_lock_to_unlock), false, true, 2));
         arrayList.add(new SettingData(R.drawable.settings_icon_language, getString(R.string.settings_change_language)));
         arrayList.add(new SettingData(R.drawable.settings_icon_lock, getString(R.string.settings_change_password)));
         arrayList.add(new SettingData(R.drawable.icon_export, getString(R.string.settings_export_db)));

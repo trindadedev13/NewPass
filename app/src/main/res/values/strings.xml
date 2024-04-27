@@ -77,4 +77,5 @@
     <string name="enter_the_old_password">Old password</string>
     <string name="enter_the_new_password">New Password</string>
     <string name="this_feature_will_be_available_soon" translatable="false">This feature will be available soon</string>
+    <string name="use_screen_lock_to_unlock">Use Screen Lock to Unlock</string>
 </resources>
