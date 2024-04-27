@@ -3,7 +3,6 @@ package com.gero.newpass.view.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -24,11 +23,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.gero.newpass.R;
-import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
@@ -45,17 +42,17 @@ public class SettingsFragment extends Fragment {
     private ListView listView;
     private String url;
     private Intent intent;
-    private Boolean isDarkModeSet;
     private EncryptedSharedPreferences encryptedSharedPreferences;
     static final int DARK_THEME = 0;
-    static final int CHANGE_LANGUAGE = 1;
-    static final int CHANGE_PASSWORD = 2;
-    static final int EXPORT = 3;
-    static final int IMPORT = 4;
-    static final int GITHUB = 5;
-    static final int SHARE = 6;
-    static final int CONTACT = 7;
-    static final int APP_VERSION = 8;
+    static final int USE_SCREENLOCK = 1;
+    static final int CHANGE_LANGUAGE = 2;
+    static final int CHANGE_PASSWORD = 3;
+    static final int EXPORT = 4;
+    static final int IMPORT = 5;
+    static final int GITHUB = 6;
+    static final int SHARE = 7;
+    static final int CONTACT = 8;
+    static final int APP_VERSION = 9;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,10 +85,6 @@ public class SettingsFragment extends Fragment {
         listView.setOnItemClickListener((parent, view1, position, id) -> {
 
             switch(position) {
-                case DARK_THEME:
-                    Log.i("ImageMenu", "DARK_THEME");
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
-                    break;
 
                 case CHANGE_LANGUAGE:
                     Log.i("ImageMenu", "CHANGE_LANGUAGE");
@@ -172,13 +165,11 @@ public class SettingsFragment extends Fragment {
 
     private String getAppVersion() {
         String versionName = "";
-        int versionCode = 0;
 
         try {
             PackageManager packageManager = requireActivity().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(requireActivity().getPackageName(), 0);
             versionName = packageInfo.versionName;
-            versionCode = packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
