@@ -76,7 +76,8 @@ git clone https://github.com/6eero/NewPass.git
 <br>
 
 ## 🫱🏻‍🫲🏼 Contributions and Development
-If you wish to contribute to the NewPass project or report bugs, we encourage you to do so through the GitHub issue system. I accept and appreciate community contributions to continually improve the application.
+If you wish to contribute to the NewPass project or report bugs, see the Instructions in [CONTRIBUTING.md](https://github.com/6eero/NewPass/blob/master/CONTRIBUTING.md).
+I accept and appreciate community contributions to continually improve the application.
 
 ### Contributors Wall:
 

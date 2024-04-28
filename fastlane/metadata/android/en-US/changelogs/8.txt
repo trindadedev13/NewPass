@@ -1,0 +1,9 @@
+Added:
+- Added new settings menu with a custom listview and a custom switch matching the NewPass design
+- Added a function to change the database password
+- Added ability to save passwords without email
+
+Improved:
+- Added more translations
+- Improved vibration feedback
+- Improved user experience
