@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +36,18 @@ import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.model.SettingData;
+import com.gero.newpass.utilities.PathUtil;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class SettingsFragment extends Fragment {
+    private static final int REQUEST_CODE_SAVE_DOCUMENT = 1;
     private ImageButton buttonBack;
     private FragmentSettingsBinding binding;
     private ListView listView;
@@ -108,7 +115,8 @@ public class SettingsFragment extends Fragment {
                     //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
                     //Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
-                    DatabaseHelper.exportDB(requireContext());
+                    //DatabaseHelper.exportDB(requireActivity(), requireContext());
+                    startFileSelection();
                     break;
 
                 case IMPORT:
@@ -214,5 +222,31 @@ public class SettingsFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void startFileSelection() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_TITLE, "Password.db");
+        startActivityForResult(intent, REQUEST_CODE_SAVE_DOCUMENT);
+    }
+
+    // Gestisci il risultato dell'attività di selezione del file
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SAVE_DOCUMENT && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.getData() != null) {
+
+                Uri uri = data.getData();
+
+                //String filePath = PathUtil.getPath(requireContext(), uri).substring(0, PathUtil.getPath(requireContext(), uri).lastIndexOf('/'));
+                //DatabaseHelper.exportDB(requireContext(), filePath);
+
+                DatabaseHelper.exportDB(requireContext(), null);
+
+            }
+        }
     }
 }

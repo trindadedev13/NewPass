@@ -1,7 +1,9 @@
 package com.gero.newpass.database;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
@@ -38,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EMAIL = "record_email";
     private static final String COLUMN_PASSWORD = "record_password";
     private static final String KEY_ENCRYPTION = StringHelper.getSharedString();
+    private static final int REQUEST_CODE_SAVE_DOCUMENT = 1;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -156,43 +159,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Toast.makeText(context, "Database password changed successfully!", Toast.LENGTH_SHORT).show();
     }
 
-    public static void exportDB(Context context) {
+
+    public static void exportDB(Context context, String selectedFilePath) {
         try {
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
-
-            // Ottieni la directory della memoria interna pubblica
             File backupDBDir = context.getExternalFilesDir(null);
-            if (backupDBDir != null) {
-                // Crea il percorso del file di backup nella directory della memoria interna pubblica
-                String backupDBPath = new File(backupDBDir, "PasswordBackup.db").getAbsolutePath();
 
-                Log.i("32890457", "db path: " + currentDBPath);
-                Log.i("32890457", "backup db path: " + backupDBPath);
 
-                File backupDB = new File(backupDBPath);
+            // Crea il percorso del file di backup nella directory della memoria interna pubblica
+            String backupDBPath = new File(backupDBDir, "Password.db").getAbsolutePath();
 
-                if (currentDB.exists()) {
-                    FileInputStream fis = new FileInputStream(currentDB);
-                    FileOutputStream fos = new FileOutputStream(backupDB);
-                    byte[] buffer = new byte[1024];
-                    int length;
 
-                    while ((length = fis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, length);
-                    }
+            File backupDB = new File(backupDBPath);
 
-                    fos.flush();
-                    fos.close();
-                    fis.close();
+            if (currentDB.exists()) {
+                FileInputStream fis = new FileInputStream(currentDB);
+                FileOutputStream fos = new FileOutputStream(backupDB);
+                byte[] buffer = new byte[1024];
+                int length;
 
-                    Toast.makeText(context, "Database exported successfully to: " + backupDBPath, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "No database found at: " + currentDBPath, Toast.LENGTH_SHORT).show();
+                while ((length = fis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, length);
                 }
+
+                fos.flush();
+                fos.close();
+                fis.close();
+
+                Toast.makeText(context, "Database exported successfully to: " + backupDBPath, Toast.LENGTH_SHORT).show();
             } else {
-                Log.e("32890457", "External files directory is null");
-                Toast.makeText(context, "Failed to export database: External files directory is null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No database found at: " + currentDBPath, Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -200,6 +197,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("32890457", Objects.requireNonNull(e.getMessage()));
         }
     }
-
-
 }
