@@ -6,14 +6,26 @@ import android.database.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.utilities.StringHelper;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -142,4 +154,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Toast.makeText(context, "Database password changed successfully!", Toast.LENGTH_SHORT).show();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public static void exportDB(Context context) {
+        try {
+            // Get the path of the database
+            String databasePath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+
+            // Create a file output stream using MediaStore
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "backup.db");
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "application/x-sqlite3");
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS);
+
+            Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), contentValues);
+
+
+            OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
+
+            // Backup the database
+            FileInputStream fis = new FileInputStream(databasePath);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            fis.close();
+
+            Toast.makeText(context, "Database exported successfully!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("430675", "Error exporting database", e);
+            Toast.makeText(context, "Error while exporting the database", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }
