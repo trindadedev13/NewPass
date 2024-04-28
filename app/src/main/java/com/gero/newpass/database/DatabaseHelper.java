@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -155,36 +156,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Toast.makeText(context, "Database password changed successfully!", Toast.LENGTH_SHORT).show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     public static void exportDB(Context context) {
         try {
-            // Get the path of the database
-            String databasePath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+            String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+            File currentDB = new File(currentDBPath);
 
-            // Create a file output stream using MediaStore
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "backup.db");
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "application/x-sqlite3");
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS);
+            // Ottieni la directory della memoria interna pubblica
+            File backupDBDir = context.getExternalFilesDir(null);
+            if (backupDBDir != null) {
+                // Crea il percorso del file di backup nella directory della memoria interna pubblica
+                String backupDBPath = new File(backupDBDir, "PasswordBackup.db").getAbsolutePath();
 
-            Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), contentValues);
+                Log.i("32890457", "db path: " + currentDBPath);
+                Log.i("32890457", "backup db path: " + backupDBPath);
 
+                File backupDB = new File(backupDBPath);
 
-            OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
+                if (currentDB.exists()) {
+                    FileInputStream fis = new FileInputStream(currentDB);
+                    FileOutputStream fos = new FileOutputStream(backupDB);
+                    byte[] buffer = new byte[1024];
+                    int length;
 
-            // Backup the database
-            FileInputStream fis = new FileInputStream(databasePath);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = fis.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
+                    while ((length = fis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, length);
+                    }
+
+                    fos.flush();
+                    fos.close();
+                    fis.close();
+
+                    Toast.makeText(context, "Database exported successfully to: " + backupDBPath, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "No database found at: " + currentDBPath, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Log.e("32890457", "External files directory is null");
+                Toast.makeText(context, "Failed to export database: External files directory is null", Toast.LENGTH_SHORT).show();
             }
-            fis.close();
-
-            Toast.makeText(context, "Database exported successfully!", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Log.e("430675", "Error exporting database", e);
-            Toast.makeText(context, "Error while exporting the database", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("32890457", Objects.requireNonNull(e.getMessage()));
         }
     }
 
