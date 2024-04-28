@@ -241,11 +241,14 @@ public class SettingsFragment extends Fragment {
 
                 Uri uri = data.getData();
 
-                //String filePath = PathUtil.getPath(requireContext(), uri).substring(0, PathUtil.getPath(requireContext(), uri).lastIndexOf('/'));
-                //DatabaseHelper.exportDB(requireContext(), filePath);
-
-                DatabaseHelper.exportDB(requireContext(), null);
-
+                String filePath = null;
+                try {
+                    filePath = PathUtil.getPath(requireContext(), uri).substring(0, PathUtil.getPath(requireContext(), uri).lastIndexOf('/'));
+                    Log.i("32890457", "filePath = " + filePath);
+                    DatabaseHelper.exportDB(requireContext(), filePath);
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

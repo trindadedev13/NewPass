@@ -164,11 +164,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
-            File backupDBDir = context.getExternalFilesDir(null);
+            File backupDBDir1 = context.getExternalFilesDir(null);
+            File backupDBDir2 = new File(selectedFilePath);
+
+            Log.i("32890457", "backupDBDir   = " + backupDBDir1);
+            Log.i("32890457", "backupDBDir2  = " + backupDBDir2);
 
 
             // Crea il percorso del file di backup nella directory della memoria interna pubblica
-            String backupDBPath = new File(backupDBDir, "Password.db").getAbsolutePath();
+            String backupDBPath = new File(backupDBDir2, "Password.db").getAbsolutePath();
 
 
             File backupDB = new File(backupDBPath);
