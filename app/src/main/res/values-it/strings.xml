@@ -92,6 +92,20 @@
     <string name="enter_the_old_password">Password attuale</string>
     <string name="enter_the_new_password">Nuova password</string>
     <string name="use_screen_lock_to_unlock">Usa il blocco schermo per sbloccare</string>
+    <string name="import_database">Importa Database</string>
+    <string name="confirm">Conferma</string>
+    <string name="incorrect_password_or_database_is_corrupt">Password errata o database è corrotto.</string>
+    <string name="database_password_changed_successfully">Password del database cambiata con successo!</string>
+    <string name="no_database_found_at">Nessun database trovato in: </string>
+    <string name="database_successfully_exported_to">Database esportato con successo in: </string>
+    <string name="export_failed">Esportazione fallita: </string>
+    <string name="database_imported_successfully">Database importato con successo!</string>
+    <string name="failed_to_import_database">Impossibile importare il database</string>
+    <string name="database_deleted_successfully">Database eliminato con successo!</string>
+    <string name="failed_to_delete_database">Impossibile eliminare il database</string>
+    <string name="database_not_found">Database non trovato</string>
+    <string name="file_is_not_a_database">Il file non è un database</string>
+
 
 
 </resources>

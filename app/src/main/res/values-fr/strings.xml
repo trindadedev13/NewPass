@@ -76,5 +76,19 @@
     <string name="enter_the_old_password">Ancien mot de passe</string>
     <string name="enter_the_new_password">Nouveau mot de passe</string>
     <string name="use_screen_lock_to_unlock">Utiliser le verrouillage de l\'écran pour déverrouiller</string>
+    <string name="import_database">Importer la base de données</string>
+    <string name="confirm">Confirmer</string>
+    <string name="incorrect_password_or_database_is_corrupt">Mot de passe incorrect ou base de données corrompue.</string>
+    <string name="database_password_changed_successfully">Mot de passe de la base de données changé avec succès!</string>
+    <string name="no_database_found_at">Aucune base de données trouvée à l\'emplacement suivant: </string>
+    <string name="database_successfully_exported_to">Base de données exportée avec succès vers: </string>
+    <string name="export_failed">Échec de l\'exportation: </string>
+    <string name="database_imported_successfully">Base de données importée avec succès!</string>
+    <string name="failed_to_import_database">Impossible d\'importer la base de données</string>
+    <string name="database_deleted_successfully">Base de données supprimée avec succès!</string>
+    <string name="failed_to_delete_database">Impossible de supprimer la base de données</string>
+    <string name="database_not_found">Base de données introuvable</string>
+    <string name="file_is_not_a_database">Le fichier n\'est pas une base de données</string>
+
 
 </resources>
