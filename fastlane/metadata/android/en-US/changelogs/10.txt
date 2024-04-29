@@ -1,0 +1,12 @@
+Added
+- Added an option to switch between biometric/device credentials or password to log in.
+- Added a function to export database.
+- Added a function to import database.
+
+Fixed
+- Provide fallback option to password mode when biometric/pattern/PIN is discarded.
+
+Minor Additions
+- Added minimum length of 4 characters to new password for database.
+- Added a new switch in the settings menu.
+- Added new translations.
