@@ -35,7 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EMAIL = "record_email";
     private static final String COLUMN_PASSWORD = "record_password";
     private static final String KEY_ENCRYPTION = StringHelper.getSharedString();
-    private static final int REQUEST_CODE_SAVE_DOCUMENT = 1;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -189,7 +188,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Toast.makeText(context, "No database found at: " + currentDBPath, Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            e.printStackTrace();
             Toast.makeText(context, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("32890457", "[EXPORT] Export failed: " + Objects.requireNonNull(e.getMessage()));
         }
@@ -202,7 +200,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i("32890457", "[IMPORT] selected full path:  " + path + "/" + name);
         Log.i("32890457", "[IMPORT] input password:      " + inputPassword);
 
-        try (SQLiteDatabase importedDatabase = SQLiteDatabase.openDatabase(path + "/" + name, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
+        try (SQLiteDatabase ignored = SQLiteDatabase.openDatabase(path + "/" + name, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
             Log.i("32890457", "Password correct, database opened successfully.");
 
             // Ottieni il percorso del database corrente
@@ -244,17 +242,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static class FileUtils {
         static boolean copyFile(File src, File dst) {
-            try (InputStream in = Files.newInputStream(src.toPath()); OutputStream out = new FileOutputStream(dst)) {
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, length);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                try (InputStream in = Files.newInputStream(src.toPath()); OutputStream out = Files.newOutputStream(dst.toPath())) {
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = in.read(buffer)) > 0) {
+                        out.write(buffer, 0, length);
+                    }
+                    return true;
+                } catch (IOException e) {
+                    Log.e("32890457", "copyFile exception: " + e);
+                    return false;
                 }
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
             }
+            return false;
         }
     }
 
