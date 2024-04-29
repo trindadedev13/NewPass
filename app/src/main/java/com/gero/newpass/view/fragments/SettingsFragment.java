@@ -128,13 +128,12 @@ public class SettingsFragment extends Fragment {
 
                     if (checkPermissions()) {
                         Log.i("32890457", "Permission already granted...");
+                        startFileSelection();
 
                     } else {
                         Log.i("32890457", "Permission was not granted, request...");
                         askPermissions();
                     }
-
-                    startFileSelection();
 
                     break;
 
