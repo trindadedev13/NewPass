@@ -81,4 +81,13 @@
     <string name="import_database">Import Database</string>
     <string name="confirm">Confirm</string>
     <string name="incorrect_password_or_database_is_corrupt">Incorrect password or database is corrupt.</string>
+    <string name="database_password_changed_successfully">Database password changed successfully!</string>
+    <string name="no_database_found_at">"No database found at: "</string>
+    <string name="database_successfully_exported_to">"Database exported successfully to: "</string>
+    <string name="export_failed">"Export failed: "</string>
+    <string name="database_imported_successfully">Database imported successfully!</string>
+    <string name="failed_to_import_database">Failed to import database</string>
+    <string name="database_deleted_successfully">Database deleted successfully!</string>
+    <string name="failed_to_delete_database">Failed to delete database</string>
+    <string name="database_not_found">Database not found</string>
 </resources>

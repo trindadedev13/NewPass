@@ -151,7 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
 
-        Toast.makeText(context, "Database password changed successfully!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.database_password_changed_successfully, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -162,12 +162,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             File currentDB = new File(currentDBPath);
             File exportDirecotry = new File(selectedFilePath);
 
-            Log.i("32890457", "[EXPORT] Exporting to " + exportDirecotry);
-
-
+            //Log.i("32890457", "[EXPORT] Exporting to " + exportDirecotry);
 
             String backupDBPath = new File(exportDirecotry, "Password.db").getAbsolutePath();
-
 
             File backupDB = new File(backupDBPath);
 
@@ -185,14 +182,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 fos.close();
                 fis.close();
 
-                Toast.makeText(context, "Database exported successfully to: " + backupDBPath, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.database_successfully_exported_to + backupDBPath, Toast.LENGTH_SHORT).show();
                 encryptAllPasswords(context);
             } else {
-                Toast.makeText(context, "No database found at: " + currentDBPath, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.no_database_found_at + currentDBPath, Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            Toast.makeText(context, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("32890457", "[EXPORT] Export failed: " + Objects.requireNonNull(e.getMessage()));
+            Toast.makeText(context, R.string.export_failed + e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Log.e("32890457", "[EXPORT] Export failed: " + Objects.requireNonNull(e.getMessage()));
         }
     }
 
@@ -204,24 +201,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Log.i("32890457", "[IMPORT] input password:      " + inputPassword);
 
         try (SQLiteDatabase ignored = SQLiteDatabase.openDatabase(path + "/" + name, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
-            Log.i("32890457", "[IMPORT] Password correct, database opened successfully.");
+            //Log.i("32890457", "[IMPORT] Password correct, database opened successfully.");
 
-            // Ottieni il percorso del database corrente
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
 
-            Log.w("32890457", "[IMPORT] chainging used database...");
+            //Log.w("32890457", "[IMPORT] chainging used database...");
 
-            // Copia il file del database importato nel percorso del database corrente
             boolean copySuccess = FileUtils.copyFile(new File(path, name), currentDB);
 
-            Log.w("32890457", "[IMPORT] encrypting all passwords...");
+            //Log.w("32890457", "[IMPORT] encrypting all passwords...");
             encryptAllPasswords(context);
 
             if (copySuccess) {
-                Toast.makeText(context, "Database imported successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.database_imported_successfully, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "Failed to import database", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.failed_to_import_database, Toast.LENGTH_SHORT).show();
             }
 
         } catch (SQLiteException e) {
@@ -239,47 +234,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             boolean deleted = context.deleteDatabase(DATABASE_NAME);
 
             if (deleted) {
-                Toast.makeText(context, "Database deleted successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.database_deleted_successfully, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "Failed to delete database", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.failed_to_delete_database, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(context, "Database not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.database_not_found, Toast.LENGTH_SHORT).show();
         }
     }
 
     private static void decryptAllPasswords(Context context) {
 
-        Log.w("32890457", "[EXPORT] decrypting passwords...");
+        //Log.w("32890457", "[EXPORT] decrypting passwords...");
 
-        // Apre il database
         SQLiteDatabase.loadLibs(context);
         SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
 
-        // Ottiene un cursore che contiene tutte le righe del database
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        // Itera su tutte le righe del database
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                // Ottiene l'ID della riga corrente
+
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-                // Ottiene la password cifrata dalla colonna COLUMN_PASSWORD
                 @SuppressLint("Range") String encryptedPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
-                // Decifra la password
                 String decryptedPassword = EncryptionHelper.decrypt(encryptedPassword);
 
-                Log.i("32890457", "[EXPORT] encrypted password: " + encryptedPassword + " decrupted password: " + decryptedPassword);
+                //Log.i("32890457", "[EXPORT] encrypted password: " + encryptedPassword + " decrupted password: " + decryptedPassword);
 
-                // Aggiorna il valore della password nel database con la versione decifrata
                 ContentValues values = new ContentValues();
                 values.put(COLUMN_PASSWORD, decryptedPassword);
-                Log.w("32890457", "[EXPORT] putting decrypted password: " + decryptedPassword + " at id: " + id);
+
+                //Log.w("32890457", "[EXPORT] putting decrypted password: " + decryptedPassword + " at id: " + id);
+
                 db.update(TABLE_NAME, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
             } while (cursor.moveToNext());
         }
 
-        // Chiude il cursore e il database
         if (cursor != null) {
             cursor.close();
         }
@@ -287,30 +277,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public static void encryptAllPasswords(Context context) {
-        // Apre il database
+
         SQLiteDatabase.loadLibs(context);
         SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
 
-        // Ottiene un cursore che contiene tutte le righe del database
+
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        // Itera su tutte le righe del database
+
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                // Ottiene l'ID della riga corrente
+
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-                // Ottiene la password dalla colonna COLUMN_PASSWORD
                 @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
-                // Cifra la password
+
                 String encryptedPassword = EncryptionHelper.encrypt(password);
-                // Aggiorna il valore della password nel database con la versione cifrata
+
                 ContentValues values = new ContentValues();
                 values.put(COLUMN_PASSWORD, encryptedPassword);
                 db.update(TABLE_NAME, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
             } while (cursor.moveToNext());
         }
 
-        // Chiude il cursore e il database
+
         if (cursor != null) {
             cursor.close();
         }
@@ -330,7 +319,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     }
                     return true;
                 } catch (IOException e) {
-                    Log.e("32890457", "[IMPORT] copyFile exception: " + e);
+                    //Log.e("32890457", "[IMPORT] copyFile exception: " + e);
                     return false;
                 }
             }
