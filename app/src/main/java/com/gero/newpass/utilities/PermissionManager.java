@@ -32,13 +32,13 @@ public class PermissionManager {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        Log.e("32890457", "onActivityResult: ");
+                        //Log.e("32890457", "onActivityResult: ");
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             if (Environment.isExternalStorageManager()) {
-                                Log.e("32890457", "onActivityResult: Manage External Storage is granted");
+                                //Log.e("32890457", "onActivityResult: Manage External Storage is granted");
                                 //...
                             } else {
-                                Log.e("32890457", "onActivityResult: Manage External Storage is denied");
+                                //Log.e("32890457", "onActivityResult: Manage External Storage is denied");
                             }
 
                         } else {
@@ -87,10 +87,10 @@ public class PermissionManager {
                 boolean read = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                 if (write && read) {
-                    Log.e("32890457", "onRequestPermissionsResult: External Storage permission granted");
+                    //Log.e("32890457", "onRequestPermissionsResult: External Storage permission granted");
                     //...
                 } else {
-                    Log.e("32890457", "onRequestPermissionsResult: External Storage permission denied");
+                    //Log.e("32890457", "onRequestPermissionsResult: External Storage permission denied");
                 }
             }
         }

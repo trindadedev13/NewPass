@@ -116,11 +116,11 @@ public class SettingsFragment extends Fragment {
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
                     if (permissionManager.checkStoragePermissions()) {
-                        Log.i("32890457", "Permission already granted...");
+                        Log.w("32890457", "Permission already granted...");
                         startFileExporting();
 
                     } else {
-                        Log.i("32890457", "Permission was not granted, request...");
+                        Log.w("32890457", "Permission was not granted, request...");
                         permissionManager.askStoragePermissions();
                     }
 
@@ -130,11 +130,11 @@ public class SettingsFragment extends Fragment {
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
                     if (permissionManager.checkStoragePermissions()) {
-                        Log.i("32890457", "Permission already granted...");
+                        Log.w("32890457", "Permission already granted...");
                         startFileImportig();
 
                     } else {
-                        Log.i("32890457", "Permission was not granted, request...");
+                        Log.w("32890457", "Permission was not granted, request...");
                         permissionManager.askStoragePermissions();
                     }
 

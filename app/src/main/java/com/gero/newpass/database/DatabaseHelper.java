@@ -1,5 +1,6 @@
 package com.gero.newpass.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -140,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         SQLiteDatabase db = SQLiteDatabase.openDatabase(databasePath, KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
-        Log.w("32890457", "db opened with the old key at path: " + databasePath);
+        //Log.w("32890457", "db opened with the old key at path: " + databasePath);
 
 
         db.rawExecSQL("PRAGMA rekey = '" + newPassword + "'");
@@ -156,6 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static void exportDB(Context context, String selectedFilePath) {
         try {
+            decryptAllPasswords(context);
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
             File exportDirecotry = new File(selectedFilePath);
@@ -184,6 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 fis.close();
 
                 Toast.makeText(context, "Database exported successfully to: " + backupDBPath, Toast.LENGTH_SHORT).show();
+                encryptAllPasswords(context);
             } else {
                 Toast.makeText(context, "No database found at: " + currentDBPath, Toast.LENGTH_SHORT).show();
             }
@@ -201,7 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i("32890457", "[IMPORT] input password:      " + inputPassword);
 
         try (SQLiteDatabase ignored = SQLiteDatabase.openDatabase(path + "/" + name, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
-            Log.i("32890457", "Password correct, database opened successfully.");
+            Log.i("32890457", "[IMPORT] Password correct, database opened successfully.");
 
             // Ottieni il percorso del database corrente
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
@@ -212,18 +215,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             if (copySuccess) {
                 Toast.makeText(context, "Database imported successfully", Toast.LENGTH_SHORT).show();
+                Log.w("32890457", "[IMPORT] encrypting all passwords...");
+                encryptAllPasswords(context);
+
             } else {
                 Toast.makeText(context, "Failed to import database", Toast.LENGTH_SHORT).show();
             }
 
         } catch (SQLiteException e) {
-            Log.e("32890457", String.valueOf(R.string.incorrect_password_or_database_is_corrupt), e);
+            Log.e("32890457", "[IMPORT]" + String.valueOf(R.string.incorrect_password_or_database_is_corrupt), e);
             Toast.makeText(context, R.string.incorrect_password_or_database_is_corrupt, Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    private static void deleteCurrentDB(Context context) {
+    public static void deleteCurrentDB(Context context) {
         String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
         File currentDB = new File(currentDBPath);
 
@@ -240,6 +246,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    private static void decryptAllPasswords(Context context) {
+
+        Log.w("32890457", "[EXPORT] decrypting passwords...");
+
+        // Apre il database
+        SQLiteDatabase.loadLibs(context);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
+
+        // Ottiene un cursore che contiene tutte le righe del database
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        // Itera su tutte le righe del database
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                // Ottiene l'ID della riga corrente
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                // Ottiene la password cifrata dalla colonna COLUMN_PASSWORD
+                @SuppressLint("Range") String encryptedPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+                // Decifra la password
+                String decryptedPassword = EncryptionHelper.decrypt(encryptedPassword);
+
+                Log.i("32890457", "[EXPORT] encrypted password: " + encryptedPassword + " decrupted password: " + decryptedPassword);
+
+                // Aggiorna il valore della password nel database con la versione decifrata
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_PASSWORD, decryptedPassword);
+                Log.w("32890457", "[EXPORT] putting decrypted password: " + decryptedPassword + " at id: " + id);
+                db.update(TABLE_NAME, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+            } while (cursor.moveToNext());
+        }
+
+        // Chiude il cursore e il database
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+    }
+
+    public static void encryptAllPasswords(Context context) {
+        // Apre il database
+        SQLiteDatabase.loadLibs(context);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
+
+        // Ottiene un cursore che contiene tutte le righe del database
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        // Itera su tutte le righe del database
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                // Ottiene l'ID della riga corrente
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                // Ottiene la password dalla colonna COLUMN_PASSWORD
+                @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+                // Cifra la password
+                String encryptedPassword = EncryptionHelper.encrypt(password);
+                // Aggiorna il valore della password nel database con la versione cifrata
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_PASSWORD, encryptedPassword);
+                db.update(TABLE_NAME, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+            } while (cursor.moveToNext());
+        }
+
+        // Chiude il cursore e il database
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+    }
+
+
+
     private static class FileUtils {
         static boolean copyFile(File src, File dst) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -251,7 +328,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     }
                     return true;
                 } catch (IOException e) {
-                    Log.e("32890457", "copyFile exception: " + e);
+                    Log.e("32890457", "[IMPORT] copyFile exception: " + e);
                     return false;
                 }
             }
