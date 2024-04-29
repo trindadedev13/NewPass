@@ -52,14 +52,6 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
 
         DatabaseServiceLocator.init(getApplicationContext());
 
-        if (checkPermissions()) {
-            Log.e("32890457", "Permission already granted...");
-            //...
-        } else {
-            Log.e("32890457", "Permission was not granted, request...");
-            askPermissions();
-        }
-
         SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
         // Initial fragment setup, showing the 'AddFragment' by default
@@ -122,79 +114,4 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
 
     @Override
     public void onNegativeButtonClicked() { }
-
-    private void askPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                Log.d("32890457", "aksPermission: try");
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
-                intent.setData(uri);
-                storageActivityResultLauncher.launch(intent);
-
-            } catch (Exception e) {
-                Log.e("32890457", "aksPermission: catch", e);
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                storageActivityResultLauncher.launch(intent);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-        }
-    }
-
-    private ActivityResultLauncher<Intent> storageActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult o) {
-                    Log.e("32890457", "onActivityResult: ");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        if (Environment.isExternalStorageManager()) {
-                            Log.e("32890457", "onActivityResult: Manage External Storage is granted");
-                            //...
-                        } else {
-                            Log.e("32890457", "onActivityResult: Manage External Storage is denied");
-                            Toast.makeText(MainViewActivity.this, "onActivityResult: Manage External Storage is denied", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } else {
-
-                    }
-                }
-            }
-
-    );
-
-    private boolean checkPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            return Environment.isExternalStorageManager();
-        } else {
-            int write = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            int read = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-
-            return write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0) {
-                boolean write = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                boolean read = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-
-                if (write && read) {
-                    Log.e("32890457", "onRequestPermissionsResult: External Storage permission granted");
-                    //...
-                } else {
-                    Log.e("32890457", "onRequestPermissionsResult: External Storage permission denied");
-                    Toast.makeText(MainViewActivity.this, "External Storage permission denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
 }

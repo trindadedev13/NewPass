@@ -1,5 +1,6 @@
 package com.gero.newpass.view.fragments;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,16 +13,25 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +64,7 @@ public class SettingsFragment extends Fragment {
     private String url;
     private Intent intent;
     private EncryptedSharedPreferences encryptedSharedPreferences;
+    private final int STORAGE_PERMISSION_CODE = 100;
     static final int DARK_THEME = 0;
     static final int USE_SCREENLOCK = 1;
     static final int CHANGE_LANGUAGE = 2;
@@ -114,9 +125,17 @@ public class SettingsFragment extends Fragment {
                 case EXPORT:
                     //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
-                    //Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
-                    //DatabaseHelper.exportDB(requireActivity(), requireContext());
+
+                    if (checkPermissions()) {
+                        Log.i("32890457", "Permission already granted...");
+
+                    } else {
+                        Log.i("32890457", "Permission was not granted, request...");
+                        askPermissions();
+                    }
+
                     startFileSelection();
+
                     break;
 
                 case IMPORT:
@@ -248,6 +267,79 @@ public class SettingsFragment extends Fragment {
                     DatabaseHelper.exportDB(requireContext(), filePath);
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    private void askPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                Log.d("32890457", "aksPermission: try");
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                Uri uri = Uri.fromParts("package", requireContext().getPackageName(), null);
+                intent.setData(uri);
+                storageActivityResultLauncher.launch(intent);
+
+            } catch (Exception e) {
+                Log.e("32890457", "aksPermission: catch", e);
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                storageActivityResultLauncher.launch(intent);
+            }
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        }
+    }
+
+    private ActivityResultLauncher<Intent> storageActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+                    Log.e("32890457", "onActivityResult: ");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        if (Environment.isExternalStorageManager()) {
+                            Log.e("32890457", "onActivityResult: Manage External Storage is granted");
+                            //...
+                        } else {
+                            Log.e("32890457", "onActivityResult: Manage External Storage is denied");
+                        }
+
+                    } else {
+
+                    }
+                }
+            }
+
+    );
+
+    private boolean checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else {
+            int write = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int read = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+
+            return write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0) {
+                boolean write = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean read = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (write && read) {
+                    Log.e("32890457", "onRequestPermissionsResult: External Storage permission granted");
+                    //...
+                } else {
+                    Log.e("32890457", "onRequestPermissionsResult: External Storage permission denied");
                 }
             }
         }
