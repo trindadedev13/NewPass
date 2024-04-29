@@ -101,7 +101,9 @@ I accept and appreciate community contributions to continually improve the appli
 <br>
 
 ## ⚒️ To-do
-- [ ] Allow exporting/importing backups.
+- [ ] Add option to autofill.
+- [ ] Add an optional place holder in the add/update menu.
+- [x] Allow exporting/importing backups.
 - [x] Add an option to change the app password.
 - [x] Implement login to NewPass with device lock screen credentials.
 - [x] Add a vibration feedback.
