@@ -127,12 +127,17 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case IMPORT:
-                    //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
-                    startFileImportig();
+                    if (permissionManager.checkStoragePermissions()) {
+                        Log.i("32890457", "Permission already granted...");
+                        startFileImportig();
 
-                    //DatabaseHelper.importDB(requireContext());
+                    } else {
+                        Log.i("32890457", "Permission was not granted, request...");
+                        permissionManager.askStoragePermissions();
+                    }
+
                     break;
 
                 case GITHUB:
