@@ -116,11 +116,11 @@ public class SettingsFragment extends Fragment {
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
                     if (permissionManager.checkStoragePermissions()) {
-                        Log.w("32890457", "Permission already granted...");
+                        //Log.w("32890457", "Permission already granted...");
                         startFileExporting();
 
                     } else {
-                        Log.w("32890457", "Permission was not granted, request...");
+                        //Log.w("32890457", "Permission was not granted, request...");
                         permissionManager.askStoragePermissions();
                     }
 
@@ -130,11 +130,11 @@ public class SettingsFragment extends Fragment {
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
                     if (permissionManager.checkStoragePermissions()) {
-                        Log.w("32890457", "Permission already granted...");
+                        //Log.w("32890457", "Permission already granted...");
                         startFileImportig();
 
                     } else {
-                        Log.w("32890457", "Permission was not granted, request...");
+                        //Log.w("32890457", "Permission was not granted, request...");
                         permissionManager.askStoragePermissions();
                     }
 
@@ -191,7 +191,7 @@ public class SettingsFragment extends Fragment {
             PackageInfo packageInfo = packageManager.getPackageInfo(requireActivity().getPackageName(), 0);
             versionName = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("AppVersion", "Error getting app version", e);
+            //Log.e("AppVersion", "Error getting app version", e);
         }
         return versionName;
     }
@@ -305,7 +305,7 @@ public class SettingsFragment extends Fragment {
                     showImportingDialog(fileToImportPath, fileToImportName);
 
                 } else {
-                    Toast.makeText(requireContext(), "File is not a database", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.file_is_not_a_database, Toast.LENGTH_SHORT).show();
                 }
 
             } catch (URISyntaxException e) {
