@@ -89,6 +89,7 @@
     <string name="failed_to_delete_database">Error al eliminar la base de datos</string>
     <string name="database_not_found">Base de datos no encontrada</string>
     <string name="file_is_not_a_database">El archivo no es una base de datos</string>
+    <string name="enter_password">Entrez mdp database</string>
 
 
 </resources>
