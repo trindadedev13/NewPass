@@ -198,10 +198,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static void importDB(Context context, String path, String name, String inputPassword) {
 
-        Log.i("32890457", "[IMPORT] selected file path:  " + path);
-        Log.i("32890457", "[IMPORT] selected file name:  " + name);
-        Log.i("32890457", "[IMPORT] selected full path:  " + path + "/" + name);
-        Log.i("32890457", "[IMPORT] input password:      " + inputPassword);
+        //Log.i("32890457", "[IMPORT] selected file path:  " + path);
+        //Log.i("32890457", "[IMPORT] selected file name:  " + name);
+        //Log.i("32890457", "[IMPORT] selected full path:  " + path + "/" + name);
+        //Log.i("32890457", "[IMPORT] input password:      " + inputPassword);
 
         try (SQLiteDatabase ignored = SQLiteDatabase.openDatabase(path + "/" + name, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
             Log.i("32890457", "[IMPORT] Password correct, database opened successfully.");
@@ -210,14 +210,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
 
+            Log.w("32890457", "[IMPORT] chainging used database...");
+
             // Copia il file del database importato nel percorso del database corrente
             boolean copySuccess = FileUtils.copyFile(new File(path, name), currentDB);
 
+            Log.w("32890457", "[IMPORT] encrypting all passwords...");
+            encryptAllPasswords(context);
+
             if (copySuccess) {
                 Toast.makeText(context, "Database imported successfully", Toast.LENGTH_SHORT).show();
-                Log.w("32890457", "[IMPORT] encrypting all passwords...");
-                encryptAllPasswords(context);
-
             } else {
                 Toast.makeText(context, "Failed to import database", Toast.LENGTH_SHORT).show();
             }
