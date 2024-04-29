@@ -37,19 +37,20 @@ import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
-    private static final int REQUEST_CODE_SAVE_DOCUMENT = 1;
+    private static final int REQUEST_CODE_EXPORT_DOCUMENT = 1;
+    private static final int REQUEST_CODE_IMPORT_DOCUMENT = 2;
     private ImageButton buttonBack;
     private FragmentSettingsBinding binding;
     private ListView listView;
     private String url;
     private Intent intent;
     private EncryptedSharedPreferences encryptedSharedPreferences;
-    private final int STORAGE_PERMISSION_CODE = 100;
     private PermissionManager permissionManager;
     static final int DARK_THEME = 0;
     static final int USE_SCREENLOCK = 1;
@@ -61,6 +62,8 @@ public class SettingsFragment extends Fragment {
     static final int SHARE = 7;
     static final int CONTACT = 8;
     static final int APP_VERSION = 9;
+    View dialogView;
+    private String inputPassword;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,7 +96,7 @@ public class SettingsFragment extends Fragment {
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
 
-            switch(position) {
+            switch (position) {
 
                 case CHANGE_LANGUAGE:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
@@ -106,16 +109,15 @@ public class SettingsFragment extends Fragment {
 
                 case CHANGE_PASSWORD:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
-                    showDialog();
+                    showChangePasswordDialog();
                     break;
 
                 case EXPORT:
-                    //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
                     if (permissionManager.checkStoragePermissions()) {
                         Log.i("32890457", "Permission already granted...");
-                        startFileSelection();
+                        startFileExporting();
 
                     } else {
                         Log.i("32890457", "Permission was not granted, request...");
@@ -127,7 +129,10 @@ public class SettingsFragment extends Fragment {
                 case IMPORT:
                     //TODO
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
-                    Toast.makeText(requireContext(), R.string.this_feature_will_be_available_soon, Toast.LENGTH_SHORT).show();
+
+                    startFileImportig();
+
+                    //DatabaseHelper.importDB(requireContext());
                     break;
 
                 case GITHUB:
@@ -191,7 +196,7 @@ public class SettingsFragment extends Fragment {
         listView = binding.listView;
     }
 
-    private void showDialog() {
+    private void showChangePasswordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_inputs, null);
@@ -229,30 +234,77 @@ public class SettingsFragment extends Fragment {
         dialog.show();
     }
 
-    public void startFileSelection() {
+    private String showImportingDialog(String fileToImportPath, String fileToImportName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_import_db, null);
+        builder.setView(dialogView);
+        EditText input = dialogView.findViewById(R.id.input);
+
+        builder.setTitle(R.string.import_database)
+                .setPositiveButton(R.string.confirm, (dialog, id) -> {
+
+                    inputPassword = input.getText().toString();
+                    DatabaseHelper.importDB(requireContext(), fileToImportPath, fileToImportName, inputPassword);
+                })
+                .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return inputPassword;
+    }
+
+    public void startFileExporting() {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_TITLE, "Password.db");
-        startActivityForResult(intent, REQUEST_CODE_SAVE_DOCUMENT);
+        startActivityForResult(intent, REQUEST_CODE_EXPORT_DOCUMENT);
+    }
+
+    private void startFileImportig() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*");
+        startActivityForResult(intent, REQUEST_CODE_IMPORT_DOCUMENT);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SAVE_DOCUMENT && resultCode == Activity.RESULT_OK) {
+
+
+        if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getData() != null) {
-
                 Uri uri = data.getData();
-
-                String filePath;
+                String fileToExportPath;
                 try {
-                    filePath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
-                    Log.i("32890457", "filePath = " + filePath);
-                    DatabaseHelper.exportDB(requireContext(), filePath);
+                    fileToExportPath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
+                    DatabaseHelper.exportDB(requireContext(), fileToExportPath);
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        } else if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            File file = new File(uri.getPath());
+            String fileToImportName = file.getName();
+
+            String fileToImportPath;
+
+            try {
+
+                if (fileToImportName.toLowerCase().endsWith(".db")) {
+                    fileToImportPath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
+
+                    showImportingDialog(fileToImportPath, fileToImportName);
+
+                } else {
+                    Toast.makeText(requireContext(), "File is not a database", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
             }
         }
     }

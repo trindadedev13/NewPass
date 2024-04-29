@@ -1,22 +1,16 @@
 package com.gero.newpass.database;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteException;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
@@ -26,8 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -146,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         SQLiteDatabase db = SQLiteDatabase.openDatabase(databasePath, KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
-        //Log.i("Database123", "db opened with the old key");
+        Log.w("32890457", "db opened with the old key at path: " + databasePath);
 
 
         db.rawExecSQL("PRAGMA rekey = '" + newPassword + "'");
@@ -164,15 +159,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
-            File backupDBDir1 = context.getExternalFilesDir(null);
-            File backupDBDir2 = new File(selectedFilePath);
+            File exportDirecotry = new File(selectedFilePath);
 
-            Log.i("32890457", "backupDBDir   = " + backupDBDir1);
-            Log.i("32890457", "backupDBDir2  = " + backupDBDir2);
+            Log.i("32890457", "[EXPORT] Exporting to " + exportDirecotry);
 
 
-            // Crea il percorso del file di backup nella directory della memoria interna pubblica
-            String backupDBPath = new File(backupDBDir2, "Password.db").getAbsolutePath();
+
+            String backupDBPath = new File(exportDirecotry, "Password.db").getAbsolutePath();
 
 
             File backupDB = new File(backupDBPath);
@@ -198,7 +191,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(context, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("32890457", Objects.requireNonNull(e.getMessage()));
+            Log.e("32890457", "[EXPORT] Export failed: " + Objects.requireNonNull(e.getMessage()));
         }
     }
+
+    public static void importDB(Context context, String path, String name, String inputPassword) {
+
+        Log.i("32890457", "[IMPORT] selected file path:  " + path);
+        Log.i("32890457", "[IMPORT] selected file name:  " + name);
+        Log.i("32890457", "[IMPORT] selected full path:  " + path + "/" + name);
+        Log.i("32890457", "[IMPORT] input password:      " + inputPassword);
+
+        try (SQLiteDatabase importedDatabase = SQLiteDatabase.openDatabase(path + "/" + name, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
+            Log.i("32890457", "Password correct, database opened successfully.");
+
+            // Ottieni il percorso del database corrente
+            String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+            File currentDB = new File(currentDBPath);
+
+            // Copia il file del database importato nel percorso del database corrente
+            boolean copySuccess = FileUtils.copyFile(new File(path, name), currentDB);
+
+            if (copySuccess) {
+                Toast.makeText(context, "Database imported successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Failed to import database", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (SQLiteException e) {
+            Log.e("32890457", String.valueOf(R.string.incorrect_password_or_database_is_corrupt), e);
+            Toast.makeText(context, R.string.incorrect_password_or_database_is_corrupt, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private static void deleteCurrentDB(Context context) {
+        String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+        File currentDB = new File(currentDBPath);
+
+        if (currentDB.exists()) {
+            boolean deleted = context.deleteDatabase(DATABASE_NAME);
+
+            if (deleted) {
+                Toast.makeText(context, "Database deleted successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Failed to delete database", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(context, "Database not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static class FileUtils {
+        static boolean copyFile(File src, File dst) {
+            try (InputStream in = Files.newInputStream(src.toPath()); OutputStream out = new FileOutputStream(dst)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, length);
+                }
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
 }

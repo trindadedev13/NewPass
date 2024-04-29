@@ -78,4 +78,7 @@
     <string name="enter_the_new_password">New Password</string>
     <string name="this_feature_will_be_available_soon" translatable="false">This feature will be available soon</string>
     <string name="use_screen_lock_to_unlock">Use Screen Lock to Unlock</string>
+    <string name="import_database">Import Database</string>
+    <string name="confirm">Confirm</string>
+    <string name="incorrect_password_or_database_is_corrupt">Incorrect password or database is corrupt.</string>
 </resources>
