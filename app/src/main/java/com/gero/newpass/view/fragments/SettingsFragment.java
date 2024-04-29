@@ -1,37 +1,22 @@
 package com.gero.newpass.view.fragments;
 
-import android.Manifest;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
-import android.os.Environment;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +37,9 @@ import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
-import java.io.File;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
     private static final int REQUEST_CODE_SAVE_DOCUMENT = 1;
@@ -197,7 +181,7 @@ public class SettingsFragment extends Fragment {
             PackageInfo packageInfo = packageManager.getPackageInfo(requireActivity().getPackageName(), 0);
             versionName = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("AppVersion", "Error getting app version", e);
         }
         return versionName;
     }
@@ -261,9 +245,9 @@ public class SettingsFragment extends Fragment {
 
                 Uri uri = data.getData();
 
-                String filePath = null;
+                String filePath;
                 try {
-                    filePath = PathUtil.getPath(requireContext(), uri).substring(0, PathUtil.getPath(requireContext(), uri).lastIndexOf('/'));
+                    filePath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
                     Log.i("32890457", "filePath = " + filePath);
                     DatabaseHelper.exportDB(requireContext(), filePath);
                 } catch (URISyntaxException e) {
