@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -160,11 +159,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             decryptAllPasswords(context);
             String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
             File currentDB = new File(currentDBPath);
-            File exportDirecotry = new File(selectedFilePath);
+            File exportDirectory = new File(selectedFilePath);
 
             //Log.i("32890457", "[EXPORT] Exporting to " + exportDirecotry);
 
-            String backupDBPath = new File(exportDirecotry, "Password.db").getAbsolutePath();
+            String backupDBPath = new File(exportDirectory, "Password.db").getAbsolutePath();
 
             File backupDB = new File(backupDBPath);
 
@@ -220,7 +219,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (SQLiteException e) {
-            Log.e("32890457", "[IMPORT]" + String.valueOf(R.string.incorrect_password_or_database_is_corrupt), e);
+            Log.e("32890457", "[IMPORT]" + R.string.incorrect_password_or_database_is_corrupt, e);
             Toast.makeText(context, R.string.incorrect_password_or_database_is_corrupt, Toast.LENGTH_SHORT).show();
         }
     }
