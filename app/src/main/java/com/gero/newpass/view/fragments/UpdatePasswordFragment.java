@@ -6,6 +6,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,10 +39,10 @@ public class UpdatePasswordFragment extends Fragment {
 
     private FragmentUpdatePasswordBinding binding;
 
-    private EditText name_input, email_input, password_input;
+    private EditText name_input, email_input, passwordInput;
     private String entry, name, email, password;
-    //private UpdateViewModel updateViewModel;
-    private ImageButton updateButton, deleteButton, copyButtonPassword, copyButtonEmail, backButton;
+    private ImageButton updateButton, deleteButton, copyButtonPassword, copyButtonEmail, backButton, buttonPasswordVisibility;
+    private Boolean isPasswordVisible = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class UpdatePasswordFragment extends Fragment {
 
         name_input.setText(name);
         email_input.setText(email);
-        password_input.setText(decryptedPassword);
+        passwordInput.setText(decryptedPassword);
 
         // Observe any feedback messages from the ViewModel
         updateViewModel.getMessageLiveData().observe(getViewLifecycleOwner(), message ->
@@ -83,7 +86,7 @@ public class UpdatePasswordFragment extends Fragment {
 
             name = name_input.getText().toString().trim();
             email = email_input.getText().toString().trim();
-            password = password_input.getText().toString().trim();
+            password = passwordInput.getText().toString().trim();
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -159,7 +162,7 @@ public class UpdatePasswordFragment extends Fragment {
         );
 
         copyButtonPassword.setOnClickListener(v -> {
-            copyToClipboard(password_input.getText().toString().trim());
+            copyToClipboard(passwordInput.getText().toString().trim());
             VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
             Toast.makeText(this.getContext(), R.string.update_password_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
@@ -168,6 +171,19 @@ public class UpdatePasswordFragment extends Fragment {
             copyToClipboard(email_input.getText().toString().trim());
             VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
             Toast.makeText(this.getContext(), R.string.update_email_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
+        });
+
+        buttonPasswordVisibility.setOnClickListener(v -> {
+
+            if (isPasswordVisible) {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.icon_visibility_on));
+                passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            } else {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.icon_visibility_off));
+                passwordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+
+            isPasswordVisible = !isPasswordVisible;
         });
 
         backButton.setOnClickListener(v -> {
@@ -208,11 +224,12 @@ public class UpdatePasswordFragment extends Fragment {
     private void initViews(FragmentUpdatePasswordBinding binding) {
         name_input = binding.nameInput2;
         email_input = binding.emailInput2;
-        password_input = binding.passwordInput2;
+        passwordInput = binding.passwordInput2;
         updateButton = binding.updateButton;
         backButton = binding.backButton;
         deleteButton = binding.deleteButton;
         copyButtonPassword = binding.copyButtonPassword;
         copyButtonEmail = binding.copyButtonEmail;
+        buttonPasswordVisibility = binding.passwordVisibilityButton;
     }
 }

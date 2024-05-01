@@ -6,9 +6,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +25,7 @@ import com.gero.newpass.databinding.FragmentAddPasswordBinding;
 import com.gero.newpass.factory.ViewMoldelsFactory;
 import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.utilities.VibrationHelper;
+import com.gero.newpass.view.activities.LoginActivity;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.AddViewModel;
 
@@ -29,8 +33,9 @@ import com.gero.newpass.viewmodel.AddViewModel;
 public class AddPasswordFragment extends Fragment {
 
     private EditText nameInput, emailInput, passwordInput;
-    private ImageButton buttonAdd, buttonBack;
+    private ImageButton buttonAdd, buttonBack, buttonPasswordVisibility;
     private FragmentAddPasswordBinding binding;
+    private Boolean isPasswordVisible = false;
 
 
     @Override
@@ -53,6 +58,19 @@ public class AddPasswordFragment extends Fragment {
         initViews(binding);
 
         Activity activity = this.getActivity();
+
+        buttonPasswordVisibility.setOnClickListener(v -> {
+
+            if (isPasswordVisible) {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.icon_visibility_on));
+                passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            } else {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.icon_visibility_off));
+                passwordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+
+            isPasswordVisible = !isPasswordVisible;
+        });
 
         buttonAdd.setOnTouchListener((v, event) -> {
 
@@ -104,5 +122,6 @@ public class AddPasswordFragment extends Fragment {
         passwordInput = binding.passwordInput;
         buttonAdd = binding.addButton;
         buttonBack = binding.backButton;
+        buttonPasswordVisibility = binding.passwordVisibilityButton;
     }
 }
