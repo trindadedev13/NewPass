@@ -170,12 +170,14 @@ public class LoginActivity extends AppCompatActivity {
             passwordBox.setVisibility(View.GONE);
             welcomeTextView.setVisibility(View.GONE);
             bgImage.setVisibility(View.GONE);
+            buttonPasswordVisibility.setVisibility(View.GONE);
         } else {
             buttonRegisterOrUnlock.setVisibility(View.VISIBLE);
             passwordEntry.setVisibility(View.VISIBLE);
             passwordBox.setVisibility(View.VISIBLE);
             welcomeTextView.setVisibility(View.VISIBLE);
             bgImage.setVisibility(View.VISIBLE);
+            buttonPasswordVisibility.setVisibility(View.VISIBLE);
         }
     }
 
