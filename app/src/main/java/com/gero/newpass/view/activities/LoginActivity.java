@@ -2,6 +2,7 @@ package com.gero.newpass.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
@@ -12,6 +13,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.service.controls.actions.BooleanAction;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,11 +42,12 @@ import java.util.Locale;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText passwordEntry;
-    private ImageButton buttonRegisterOrUnlock;
+    private ImageButton buttonRegisterOrUnlock, buttonPasswordVisibility;
     private ImageView passwordBox, bgImage;
     private TextView welcomeTextView, textViewRegisterOrUnlock;
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private LoginViewModel loginViewModel;
+    private Boolean state = true;
 
 
     @SuppressLint("SetTextI18n")
@@ -85,6 +90,21 @@ public class LoginActivity extends AppCompatActivity {
             welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
 
         }
+
+        buttonPasswordVisibility.setOnClickListener(v -> {
+
+            if (state) {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.icon_visibility_off));
+                passwordEntry.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.icon_visibility_on));
+                passwordEntry.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+
+            state = !state;
+        });
+
+
         buttonRegisterOrUnlockListener(buttonRegisterOrUnlock, isPasswordEmpty);
     }
 
@@ -186,6 +206,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegisterOrUnlock = binding.registerOrUnlockTextView;
         passwordBox = binding.backgroundInputbox2;
         bgImage = binding.logoLogin;
+        buttonPasswordVisibility = binding.passwordVisibilityButton;
     }
 
     @Override
