@@ -51,11 +51,19 @@ NewPass is a secure password management application designed to generate and sto
 ## 📸 App Screenshots
 <table>
   <tr>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/17e31b41-2da1-455e-940b-ab41342ecb93" alt="Screenshot 1"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/638a1b08-3fe4-46d0-82c8-7e1ed29c3082" alt="Screenshot 2"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/b07d9717-65a3-4c2a-bb8f-ecaf7d94516f" alt="Screenshot 3"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/2751be07-78ab-4854-b929-bfcf20a98d91" alt="Screenshot 4"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/e4108359-667f-4277-aa9a-1e84e9fc8375" alt="Screenshot 5"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/9cf382a4-1eff-4ab4-a91d-7654e300ebae" alt="Screenshot 1"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/d3065b87-5393-4a72-9a7f-8bee75e04c7f" alt="Screenshot 2"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/60d88e97-4ad8-4da2-9aa7-208d0afd69c5" alt="Screenshot 3"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/c611b2fb-975e-44e5-a47a-c61a3592b953" alt="Screenshot 4"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/c6d05c7f-3d80-4962-a711-aef95d6f286d" alt="Screenshot 5"></td>
+  </tr>
+  <!-- Nuova riga aggiunta sotto -->
+  <tr>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/52c4e34f-e462-4c16-ad7c-d96e94666521" alt="Screenshot 6"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/cfc3eb38-0322-4914-9aaa-accab8f9f4f3" alt="Screenshot 7"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/4df32579-de49-4b6c-9758-12b60b1da108" alt="Screenshot 8"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/eceda8b0-ef6f-4e28-aabe-9ff32abd9e6c" alt="Screenshot 9"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/2d0f1969-71be-4013-89bd-cc586484e693" alt="Screenshot 10"></td>
   </tr>
 </table>
 <br>
@@ -93,7 +101,9 @@ I accept and appreciate community contributions to continually improve the appli
 <br>
 
 ## ⚒️ To-do
-- [ ] Allow exporting/importing backups.
+- [ ] Add option to autofill.
+- [ ] Add an optional place holder in the add/update menu.
+- [x] Allow exporting/importing backups.
 - [x] Add an option to change the app password.
 - [x] Implement login to NewPass with device lock screen credentials.
 - [x] Add a vibration feedback.
