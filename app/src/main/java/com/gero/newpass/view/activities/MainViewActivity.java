@@ -47,7 +47,7 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.gero.newpass.databinding.ActivityMainViewBinding binding = ActivityMainViewBinding.inflate(getLayoutInflater());
+        ActivityMainViewBinding binding = ActivityMainViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         DatabaseServiceLocator.init(getApplicationContext());
