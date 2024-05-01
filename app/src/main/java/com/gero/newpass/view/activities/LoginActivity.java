@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.service.controls.actions.BooleanAction;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView welcomeTextView, textViewRegisterOrUnlock;
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private LoginViewModel loginViewModel;
-    private Boolean state = true;
+    private Boolean isPasswordVisible = false;
 
 
     @SuppressLint("SetTextI18n")
@@ -93,15 +92,15 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonPasswordVisibility.setOnClickListener(v -> {
 
-            if (state) {
-                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.icon_visibility_off));
-                passwordEntry.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            } else {
+            if (isPasswordVisible) {
                 buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.icon_visibility_on));
                 passwordEntry.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            } else {
+                buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.icon_visibility_off));
+                passwordEntry.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             }
 
-            state = !state;
+            isPasswordVisible = !isPasswordVisible;
         });
 
 
