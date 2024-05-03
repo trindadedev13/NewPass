@@ -369,11 +369,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             importedDatabase.close();
 
+            encryptAllPasswords(context);
+
             Toast.makeText(context, R.string.database_imported_successfully, Toast.LENGTH_SHORT).show();
 
         } catch (SQLiteException e) {
             Log.e("32890457", "Error importing database", e);
             Toast.makeText(context, R.string.error_importing_database, Toast.LENGTH_SHORT).show();
+            deleteDatabase(pathOfDatabaseDirectory, IMPORTED_DATABASE_NAME);
         }
     }
 
