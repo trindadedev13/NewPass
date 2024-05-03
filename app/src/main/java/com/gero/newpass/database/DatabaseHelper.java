@@ -234,10 +234,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public static void encryptAllPasswords(Context context) {
 
-        SQLiteDatabase.loadLibs(context);
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
+        EncryptedSharedPreferences encryptedSharedPreferences;
+        encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(context);
 
-        Log.d("32890457", "KEY_ENCRYPTION: " + KEY_ENCRYPTION);
+        String key = encryptedSharedPreferences.getString("password", "");
+
+        //Log.i("32890457", "Password used for encryption: " + key);
+
+        SQLiteDatabase.loadLibs(context);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(
+                context.getDatabasePath(DATABASE_NAME).getAbsolutePath(),
+                key,
+                null,
+                SQLiteDatabase.OPEN_READWRITE
+        );
+
+        //Log.d("32890457", "KEY_ENCRYPTION: " + KEY_ENCRYPTION);
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
@@ -334,13 +346,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             EncryptedSharedPreferences encryptedSharedPreferences;
             encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(context);
 
-            Log.i("32890457", "current db pass: " + encryptedSharedPreferences.getString("password", ""));
+            //Log.i("32890457", "current db pass: " + encryptedSharedPreferences.getString("password", ""));
 
             SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
             editor.putString("password", inputPassword);
             editor.apply();
 
-            Log.i("32890457", "new db pass: " + encryptedSharedPreferences.getString("password", ""));
+            //Log.i("32890457", "new db pass: " + encryptedSharedPreferences.getString("password", ""));
 
             StringHelper.setSharedString(inputPassword);
 
@@ -357,8 +369,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             importedDatabase.close();
 
+            Toast.makeText(context, R.string.database_imported_successfully, Toast.LENGTH_SHORT).show();
+
         } catch (SQLiteException e) {
             Log.e("32890457", "Error importing database", e);
+            Toast.makeText(context, R.string.error_importing_database, Toast.LENGTH_SHORT).show();
         }
     }
 
