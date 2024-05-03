@@ -64,6 +64,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+
     /**
      * Adds a new entry with the given name, email, and password to the database.
      *
@@ -85,6 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     /**
      * Reads all data from the database table.
      *
@@ -97,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return db.rawQuery(query, null);
     }
+
 
 
     /**
@@ -119,6 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     /**
      * Deletes a row from the database with the specified row ID.
      *
@@ -129,6 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
         db.delete(TABLE_NAME, "id=?", new String[]{rowId});
     }
+
 
 
     /**
@@ -157,6 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     /**
      * Changes the password used to encrypt the database.
      *
@@ -182,6 +189,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Toast.makeText(context, R.string.database_password_changed_successfully, Toast.LENGTH_SHORT).show();
     }
+
 
 
     /**
@@ -222,6 +230,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         db.close();
     }
+
 
 
     /**
@@ -272,6 +281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     /**
      * Exports the encrypted database to the specified file URL.
      *
@@ -308,12 +318,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-
-
-
-
-
-
+    /**
+     * Imports a database from a specified URI, replaces the existing database, updates the database password,
+     * and ensures the new database is fully integrated and writable within the app. If the operation fails,
+     * it cleans up by removing the imported database file.
+     *
+     * @param context The context through which the application can access the current state and resources, including the filesystem and database paths.
+     * @param uri The URI of the database file to be imported. This URI must be accessible through the context's ContentResolver.
+     * @param inputPassword The password to be used for opening the newly imported database, ensuring it's encrypted or protected as required.
+     * @throws IOException If there are I/O errors during the database file transfer or when attempting to open the new database file.
+     *                      This can occur if the URI is invalid, the file is inaccessible, or the filesystem operations fail.
+     */
     public static void importDatabase(Context context, Uri uri, String inputPassword) throws IOException {
 
         // Copy the imported database to the database directory of the app: /data/user/0/com.gero.newpass/databases/
