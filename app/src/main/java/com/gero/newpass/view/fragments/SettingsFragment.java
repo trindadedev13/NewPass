@@ -4,6 +4,7 @@ package com.gero.newpass.view.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -31,16 +32,20 @@ import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.model.SettingData;
-import com.gero.newpass.utilities.PathUtil;
 import com.gero.newpass.utilities.PermissionManager;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
-import java.io.File;
-import java.net.URISyntaxException;
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.FileOutputStream;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
     private static final int REQUEST_CODE_EXPORT_DOCUMENT = 1;
@@ -51,7 +56,6 @@ public class SettingsFragment extends Fragment {
     private String url;
     private Intent intent;
     private EncryptedSharedPreferences encryptedSharedPreferences;
-    private PermissionManager permissionManager;
     static final int DARK_THEME = 0;
     static final int USE_SCREENLOCK = 1;
     static final int CHANGE_LANGUAGE = 2;
@@ -65,6 +69,7 @@ public class SettingsFragment extends Fragment {
     View dialogView;
     private String inputPassword;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
@@ -77,7 +82,6 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(binding);
         Activity activity = this.getActivity();
-        permissionManager = new PermissionManager(this);
 
         ArrayList<SettingData> arrayList = new ArrayList<>();
         encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(requireContext());
@@ -115,28 +119,23 @@ public class SettingsFragment extends Fragment {
                 case EXPORT:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
-                    if (permissionManager.checkStoragePermissions()) {
-                        //Log.w("32890457", "Permission already granted...");
-                        startFileExporting();
+                    Intent intentExport = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    intentExport.addCategory(Intent.CATEGORY_OPENABLE);
+                    intentExport.setType("*/*");
+                    intentExport.putExtra(Intent.EXTRA_TITLE, "Password.db");
 
-                    } else {
-                        //Log.w("32890457", "Permission was not granted, request...");
-                        permissionManager.askStoragePermissions();
-                    }
+                    startActivityForResult(intentExport, REQUEST_CODE_EXPORT_DOCUMENT);
 
                     break;
 
                 case IMPORT:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
-                    if (permissionManager.checkStoragePermissions()) {
-                        //Log.w("32890457", "Permission already granted...");
-                        startFileImportig();
+                    Intent intentImport = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intentImport.addCategory(Intent.CATEGORY_OPENABLE);
+                    intentImport.setType("*/*");
 
-                    } else {
-                        //Log.w("32890457", "Permission was not granted, request...");
-                        permissionManager.askStoragePermissions();
-                    }
+                    startActivityForResult(intentImport, REQUEST_CODE_IMPORT_DOCUMENT);
 
                     break;
 
@@ -239,7 +238,7 @@ public class SettingsFragment extends Fragment {
         dialog.show();
     }
 
-    private String showImportingDialog(String fileToImportPath, String fileToImportName) {
+    private String showImportingDialog(Context context, Uri fileURL) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         dialogView = inflater.inflate(R.layout.dialog_import_db, null);
@@ -250,66 +249,49 @@ public class SettingsFragment extends Fragment {
                 .setPositiveButton(R.string.confirm, (dialog, id) -> {
 
                     inputPassword = input.getText().toString();
-                    DatabaseHelper.importDB(requireContext(), fileToImportPath, fileToImportName, inputPassword);
+                    //Log.i("32890457", inputPassword);
+
+                    try {
+
+                        DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
+                        //DatabaseHelper.encryptAllPasswords(requireContext());
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
 
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
         return inputPassword;
     }
 
-    public void startFileExporting() {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_TITLE, "Password.db");
-        startActivityForResult(intent, REQUEST_CODE_EXPORT_DOCUMENT);
-    }
 
-    private void startFileImportig() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("*/*");
-        startActivityForResult(intent, REQUEST_CODE_IMPORT_DOCUMENT);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri fileURL = null;
 
+        if ( resultCode == Activity.RESULT_OK) {
 
-        if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT && resultCode == Activity.RESULT_OK) {
-            if (data != null && data.getData() != null) {
-                Uri uri = data.getData();
-                String fileToExportPath;
-                try {
-                    fileToExportPath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
-                    DatabaseHelper.exportDB(requireContext(), fileToExportPath);
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
+            if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT) {
+                if (data != null) {
+                    fileURL = data.getData();
+                    DatabaseHelper.exportDatabase(requireContext(), fileURL);
                 }
             }
-        } else if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT && resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-            File file = new File(uri.getPath());
-            String fileToImportName = file.getName();
 
-            String fileToImportPath;
+            if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT) {
+                if (data != null) {
+                    fileURL = data.getData();
 
-            try {
-
-                if (fileToImportName.toLowerCase().endsWith(".db")) {
-                    fileToImportPath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
-
-                    showImportingDialog(fileToImportPath, fileToImportName);
-
-                } else {
-                    Toast.makeText(requireContext(), R.string.file_is_not_a_database, Toast.LENGTH_SHORT).show();
+                    showImportingDialog(requireContext(), fileURL);
                 }
-
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
             }
         }
     }
