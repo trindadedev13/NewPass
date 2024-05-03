@@ -3,6 +3,7 @@ package com.gero.newpass.database;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteException;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
@@ -37,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "record_name";
     private static final String COLUMN_EMAIL = "record_email";
     private static final String COLUMN_PASSWORD = "record_password";
-    private static final String KEY_ENCRYPTION = StringHelper.getSharedString();
+    private static String KEY_ENCRYPTION = StringHelper.getSharedString();
     private static final String IMPORTED_DATABASE_NAME = "Password_backup.db";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -338,6 +340,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             Log.i("32890457", "Password is correct, i'm going to replace the old database with the imported one...");
 
+            EncryptedSharedPreferences encryptedSharedPreferences;
+            encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(context);
+
+            Log.i("32890457", "current db pass: " + encryptedSharedPreferences.getString("password", ""));
+
+            SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+            editor.putString("password", inputPassword);
+            editor.apply();
+
+            Log.i("32890457", "new db pass: " + encryptedSharedPreferences.getString("password", ""));
+
+            KEY_ENCRYPTION = inputPassword;
+
+            changeDBPassword(inputPassword, context);
+
+
             deleteDatabase(pathOfDatabaseDirectory, DATABASE_NAME);
 
             File oldDatabase = new File(pathOfDatabaseDirectory, IMPORTED_DATABASE_NAME);
@@ -345,11 +363,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             if (oldDatabase.renameTo(newDatabase)) {
                 Log.i("32890457", oldDatabase + " successfully renamed to " + newDatabase);
+                encryptAllPasswords(context);
             }
 
-            encryptAllPasswords(context);
-
-            // TODO: Update Encrypted Shared Preferences with the new database password
 
         } catch (SQLiteException e) {
 
