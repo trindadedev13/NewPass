@@ -252,7 +252,7 @@ public class SettingsFragment extends Fragment {
                     Log.i("32890457", inputPassword);
 
                     try {
-                        DatabaseHelper.importDatabase(requireContext(), fileURL);
+                        DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

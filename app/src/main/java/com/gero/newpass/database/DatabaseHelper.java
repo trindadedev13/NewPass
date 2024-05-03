@@ -299,27 +299,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public static void importDatabase (Context context, Uri uri) throws IOException {
+    public static void importDatabase (Context context, Uri uri, String inputPassword) throws IOException {
 
-        String currentDBPath =  context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
 
-        InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        OutputStream outputStream = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            outputStream = Files.newOutputStream(Paths.get(currentDBPath));
+        String databaseToImportPath = "/storage/emulated/0/Documents/Password.db";
+
+        try (SQLiteDatabase ignored = SQLiteDatabase.openDatabase(databaseToImportPath, inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
+
+            String currentDBPath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            OutputStream outputStream = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                outputStream = Files.newOutputStream(Paths.get(currentDBPath));
+            }
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            inputStream.close();
+            outputStream.flush();
+            outputStream.close();
+            encryptAllPasswords(context);
+            Log.i("32890457", "File copied successfully to: " + currentDBPath);
+
+        } catch (SQLiteException e) {
+
+            Log.e("32890457", "[IMPORT]" + R.string.incorrect_password_or_database_is_corrupt, e);
+            Toast.makeText(context, R.string.incorrect_password_or_database_is_corrupt, Toast.LENGTH_SHORT).show();
         }
-
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length);
-        }
-
-        inputStream.close();
-        outputStream.flush();
-        outputStream.close();
-        encryptAllPasswords(context);
-        Log.i("32890457", "File copied successfully to: " + currentDBPath);
     }
 
 }
