@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,9 @@ import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -64,6 +67,10 @@ public class SettingsFragment extends Fragment {
     static final int APP_VERSION = 9;
     View dialogView;
     private String inputPassword;
+
+    private static final int CREATE_CODE = 40;
+    private static final int READ_CODE = 41;
+    private static final int WRITE_CODE = 42;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,6 +122,7 @@ public class SettingsFragment extends Fragment {
                 case EXPORT:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
+                    /*
                     if (permissionManager.checkStoragePermissions()) {
                         //Log.w("32890457", "Permission already granted...");
                         startFileExporting();
@@ -123,6 +131,10 @@ public class SettingsFragment extends Fragment {
                         //Log.w("32890457", "Permission was not granted, request...");
                         permissionManager.askStoragePermissions();
                     }
+                     */
+
+                    createFileForExport();
+
 
                     break;
 
@@ -260,13 +272,16 @@ public class SettingsFragment extends Fragment {
         return inputPassword;
     }
 
-    public void startFileExporting() {
+
+
+    public void createFileForExport() {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_TITLE, "Password.db");
-        startActivityForResult(intent, REQUEST_CODE_EXPORT_DOCUMENT);
+        intent.putExtra(Intent.EXTRA_TITLE, "Password.txt");
+        startActivityForResult(intent, WRITE_CODE);
     }
+
 
     private void startFileImportig() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -277,40 +292,36 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri fileURL = null;
 
+        if ( resultCode == Activity.RESULT_OK) {
 
-        if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT && resultCode == Activity.RESULT_OK) {
-            if (data != null && data.getData() != null) {
-                Uri uri = data.getData();
-                String fileToExportPath;
-                try {
-                    fileToExportPath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
-                    DatabaseHelper.exportDB(requireContext(), fileToExportPath);
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
+            if (requestCode == WRITE_CODE) {
+                if (data != null) {
+                    fileURL = data.getData();
+                    writeRemoteFile(fileURL);
                 }
             }
-        } else if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT && resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-            File file = new File(uri.getPath());
-            String fileToImportName = file.getName();
+        }
+    }
 
-            String fileToImportPath;
+    /**
+     * write data to a file specified by a URI
+     * @param uri url of the file on remote storage
+     */
+    private void writeRemoteFile (Uri uri) {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor = requireContext().getContentResolver().openFileDescriptor(uri, "w");
+            FileOutputStream fileOutputStream = new FileOutputStream(parcelFileDescriptor.getFileDescriptor());
+            String dataToWrite = "negro";
+            fileOutputStream.write(dataToWrite.getBytes());
+            fileOutputStream.close();
+            parcelFileDescriptor.close();
 
-            try {
+            Log.i("32890457", "File is written successfully");
 
-                if (fileToImportName.toLowerCase().endsWith(".db")) {
-                    fileToImportPath = Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).substring(0, Objects.requireNonNull(PathUtil.getPath(requireContext(), uri)).lastIndexOf('/'));
-
-                    showImportingDialog(fileToImportPath, fileToImportName);
-
-                } else {
-                    Toast.makeText(requireContext(), R.string.file_is_not_a_database, Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
