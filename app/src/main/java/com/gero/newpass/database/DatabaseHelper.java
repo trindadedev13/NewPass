@@ -355,11 +355,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Log.e("32890457", "Failed to rename imported database.");
                 return;
             }
-
-            // Encrypt the passwords in the newly imported database
-            //encryptAllPasswords(context);
-
-            // Close the imported database
             importedDatabase.close();
 
         } catch (SQLiteException e) {

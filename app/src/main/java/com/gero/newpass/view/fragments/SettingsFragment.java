@@ -253,6 +253,8 @@ public class SettingsFragment extends Fragment {
 
                     try {
                         DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
+                        DatabaseHelper.encryptAllPasswords(requireContext());
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
