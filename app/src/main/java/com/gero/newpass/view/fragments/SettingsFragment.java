@@ -4,6 +4,7 @@ package com.gero.newpass.view.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -17,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,14 @@ import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.FileOutputStream;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class SettingsFragment extends Fragment {
@@ -46,7 +56,6 @@ public class SettingsFragment extends Fragment {
     private String url;
     private Intent intent;
     private EncryptedSharedPreferences encryptedSharedPreferences;
-    private PermissionManager permissionManager;
     static final int DARK_THEME = 0;
     static final int USE_SCREENLOCK = 1;
     static final int CHANGE_LANGUAGE = 2;
@@ -60,9 +69,6 @@ public class SettingsFragment extends Fragment {
     View dialogView;
     private String inputPassword;
 
-    private static final int CREATE_CODE = 40;
-    private static final int READ_CODE = 41;
-    private static final int WRITE_CODE = 42;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +82,6 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(binding);
         Activity activity = this.getActivity();
-        permissionManager = new PermissionManager(this);
 
         ArrayList<SettingData> arrayList = new ArrayList<>();
         encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(requireContext());
@@ -119,21 +124,18 @@ public class SettingsFragment extends Fragment {
                     intentExport.setType("*/*");
                     intentExport.putExtra(Intent.EXTRA_TITLE, "Password.db");
 
-                    startActivityForResult(intentExport, WRITE_CODE);
+                    startActivityForResult(intentExport, REQUEST_CODE_EXPORT_DOCUMENT);
 
                     break;
 
                 case IMPORT:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
-                    if (permissionManager.checkStoragePermissions()) {
-                        //Log.w("32890457", "Permission already granted...");
-                        startFileImportig();
+                    Intent intentImport = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intentImport.addCategory(Intent.CATEGORY_OPENABLE);
+                    intentImport.setType("*/*");
 
-                    } else {
-                        //Log.w("32890457", "Permission was not granted, request...");
-                        permissionManager.askStoragePermissions();
-                    }
+                    startActivityForResult(intentImport, REQUEST_CODE_IMPORT_DOCUMENT);
 
                     break;
 
@@ -236,7 +238,7 @@ public class SettingsFragment extends Fragment {
         dialog.show();
     }
 
-    private String showImportingDialog(String fileToImportPath, String fileToImportName) {
+    private String showImportingDialog(Context context, Uri fileURL) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         dialogView = inflater.inflate(R.layout.dialog_import_db, null);
@@ -247,21 +249,25 @@ public class SettingsFragment extends Fragment {
                 .setPositiveButton(R.string.confirm, (dialog, id) -> {
 
                     inputPassword = input.getText().toString();
-                    DatabaseHelper.importDB(requireContext(), fileToImportPath, fileToImportName, inputPassword);
+                    Log.i("32890457", inputPassword);
+
+                    try {
+                        DatabaseHelper.importDatabase(requireContext(), fileURL);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
 
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
         return inputPassword;
     }
 
-    private void startFileImportig() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("*/*");
-        startActivityForResult(intent, REQUEST_CODE_IMPORT_DOCUMENT);
-    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -270,10 +276,18 @@ public class SettingsFragment extends Fragment {
 
         if ( resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == WRITE_CODE) {
+            if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT) {
                 if (data != null) {
                     fileURL = data.getData();
                     DatabaseHelper.exportDatabase(requireContext(), fileURL);
+                }
+            }
+
+            if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT) {
+                if (data != null) {
+                    fileURL = data.getData();
+
+                    showImportingDialog(requireContext(), fileURL);
                 }
             }
         }

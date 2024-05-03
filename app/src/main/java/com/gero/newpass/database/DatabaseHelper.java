@@ -20,10 +20,12 @@ import com.gero.newpass.utilities.StringHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -297,28 +299,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public static void importDB(Context context, String path, String name, String inputPassword) {
+    public static void importDatabase (Context context, Uri uri) throws IOException {
 
-    }
+        String currentDBPath =  context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
 
-
-    private static class FileUtils {
-        static boolean copyFile(File src, File dst) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                try (InputStream in = Files.newInputStream(src.toPath()); OutputStream out = Files.newOutputStream(dst.toPath())) {
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = in.read(buffer)) > 0) {
-                        out.write(buffer, 0, length);
-                    }
-                    return true;
-                } catch (IOException e) {
-                    //Log.e("32890457", "[IMPORT] copyFile exception: " + e);
-                    return false;
-                }
-            }
-            return false;
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        OutputStream outputStream = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            outputStream = Files.newOutputStream(Paths.get(currentDBPath));
         }
+
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length);
+        }
+
+        inputStream.close();
+        outputStream.flush();
+        outputStream.close();
+        encryptAllPasswords(context);
+        Log.i("32890457", "File copied successfully to: " + currentDBPath);
     }
 
 }
