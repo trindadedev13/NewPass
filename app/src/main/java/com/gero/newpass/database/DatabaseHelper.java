@@ -237,6 +237,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase.loadLibs(context);
         SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
 
+        Log.d("32890457", "KEY_ENCRYPTION: " + KEY_ENCRYPTION);
+
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -302,43 +304,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public static void importDatabase (Context context, Uri uri, String inputPassword) throws IOException {
+    public static void importDatabase(Context context, Uri uri, String inputPassword) throws IOException {
 
-        // Copy the imported database to the database sitectory of the app: /data/user/0/com.gero.newpass/databases/
+        // Copy the imported database to the database directory of the app: /data/user/0/com.gero.newpass/databases/
+        String pathOfDatabaseDirectory = context.getDatabasePath(DATABASE_NAME).getParent();
+        String currentDBPath = pathOfDatabaseDirectory + File.separator + DATABASE_NAME;
+        String importedDBPath = pathOfDatabaseDirectory + File.separator + IMPORTED_DATABASE_NAME;
 
-        String pathOfDatabaseDirectory = context.getDatabasePath(DATABASE_NAME).getAbsolutePath().substring(0, context.getDatabasePath(DATABASE_NAME).getAbsolutePath().lastIndexOf("/")) + "/";
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            OutputStream outputStream = new FileOutputStream(importedDBPath);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            inputStream.close();
+            outputStream.close();
 
-        String currentDBPath = pathOfDatabaseDirectory + DATABASE_NAME;
-        String importedDB = pathOfDatabaseDirectory + IMPORTED_DATABASE_NAME;
+            // Open the imported DB with the specified password
+            SQLiteDatabase importedDatabase = SQLiteDatabase.openDatabase(importedDBPath, inputPassword, null, SQLiteDatabase.OPEN_READWRITE);
 
-        Log.i("32890457", "Path to imported DB: " + importedDB);
-        Log.i("32890457", "Path to current DB : " + currentDBPath);
-
-        Log.w("32890457", "I'm copying " + IMPORTED_DATABASE_NAME + " to " + pathOfDatabaseDirectory + "...");
-
-        InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        OutputStream outputStream = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            outputStream = Files.newOutputStream(Paths.get(importedDB));
-        }
-
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length);
-        }
-
-        inputStream.close();
-        outputStream.flush();
-        outputStream.close();
-
-        Log.w("32890457", "Database " + IMPORTED_DATABASE_NAME + " successfully copied to " + importedDB);
-
-
-        // Try to open the imported DB with the password sepcified by the user
-        try (SQLiteDatabase ignored = SQLiteDatabase.openDatabase(context.getDatabasePath(IMPORTED_DATABASE_NAME).getAbsolutePath(), inputPassword, null, SQLiteDatabase.OPEN_READWRITE)) {
-
-            Log.i("32890457", "Password is correct, i'm going to replace the old database with the imported one...");
+            // Ensure the imported database is writable
+            if (importedDatabase.isReadOnly()) {
+                Log.e("32890457", "Imported database is read-only.");
+                return;
+            }
 
             EncryptedSharedPreferences encryptedSharedPreferences;
             encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(context);
@@ -351,30 +342,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             Log.i("32890457", "new db pass: " + encryptedSharedPreferences.getString("password", ""));
 
-            KEY_ENCRYPTION = inputPassword;
-
-            changeDBPassword(inputPassword, context);
+            StringHelper.setSharedString(inputPassword);
 
 
+            // Rename the current database
             deleteDatabase(pathOfDatabaseDirectory, DATABASE_NAME);
-
-            File oldDatabase = new File(pathOfDatabaseDirectory, IMPORTED_DATABASE_NAME);
-            File newDatabase = new File(pathOfDatabaseDirectory, DATABASE_NAME);
-
-            if (oldDatabase.renameTo(newDatabase)) {
-                Log.i("32890457", oldDatabase + " successfully renamed to " + newDatabase);
-                encryptAllPasswords(context);
+            File oldDatabase = new File(currentDBPath);
+            File newDatabase = new File(importedDBPath);
+            if (newDatabase.renameTo(oldDatabase)) {
+                Log.i("32890457", "Imported database renamed successfully.");
+            } else {
+                Log.e("32890457", "Failed to rename imported database.");
+                return;
             }
 
+            // Encrypt the passwords in the newly imported database
+            //encryptAllPasswords(context);
+
+            // Close the imported database
+            importedDatabase.close();
 
         } catch (SQLiteException e) {
-
-            Log.e("32890457", "Password is wrong, i'm going to delete the new database from the databases directory of the app...");
-            Toast.makeText(context, R.string.incorrect_password_or_database_is_corrupt, Toast.LENGTH_SHORT).show();
-
-            deleteDatabase(pathOfDatabaseDirectory, IMPORTED_DATABASE_NAME);
+            Log.e("32890457", "Error importing database", e);
         }
     }
+
 
 
     /**

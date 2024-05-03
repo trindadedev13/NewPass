@@ -249,7 +249,7 @@ public class SettingsFragment extends Fragment {
                 .setPositiveButton(R.string.confirm, (dialog, id) -> {
 
                     inputPassword = input.getText().toString();
-                    Log.i("32890457", inputPassword);
+                    //Log.i("32890457", inputPassword);
 
                     try {
                         DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
