@@ -8,6 +8,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteException;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -305,8 +307,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-
-
     private static class FileUtils {
         static boolean copyFile(File src, File dst) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -323,6 +323,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
             return false;
+        }
+    }
+
+
+    public static void exportTestDB(Context context, Uri fileURL) {
+        try {
+            File dbFile = context.getDatabasePath(DATABASE_NAME);
+            FileInputStream fis = new FileInputStream(dbFile);
+            OutputStream os = context.getContentResolver().openOutputStream(fileURL);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                assert os != null;
+                os.write(buffer, 0, length);
+            }
+
+            assert os != null;
+            os.flush();
+            os.close();
+            fis.close();
+
+            Log.i("32890457", "[EXPORT] Database exported successfully to: " + fileURL);
+
+        } catch (IOException e) {
+            Log.e("32890457", Objects.requireNonNull(e.getMessage()));
         }
     }
 

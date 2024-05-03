@@ -122,19 +122,12 @@ public class SettingsFragment extends Fragment {
                 case EXPORT:
                     VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
 
-                    /*
-                    if (permissionManager.checkStoragePermissions()) {
-                        //Log.w("32890457", "Permission already granted...");
-                        startFileExporting();
+                    Intent intentExport = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    intentExport.addCategory(Intent.CATEGORY_OPENABLE);
+                    intentExport.setType("*/*");
+                    intentExport.putExtra(Intent.EXTRA_TITLE, "Password.db");
 
-                    } else {
-                        //Log.w("32890457", "Permission was not granted, request...");
-                        permissionManager.askStoragePermissions();
-                    }
-                     */
-
-                    createFileForExport();
-
+                    startActivityForResult(intentExport, WRITE_CODE);
 
                     break;
 
@@ -272,17 +265,6 @@ public class SettingsFragment extends Fragment {
         return inputPassword;
     }
 
-
-
-    public void createFileForExport() {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_TITLE, "Password.txt");
-        startActivityForResult(intent, WRITE_CODE);
-    }
-
-
     private void startFileImportig() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("*/*");
@@ -299,29 +281,9 @@ public class SettingsFragment extends Fragment {
             if (requestCode == WRITE_CODE) {
                 if (data != null) {
                     fileURL = data.getData();
-                    writeRemoteFile(fileURL);
+                    DatabaseHelper.exportTestDB(requireContext(), fileURL);
                 }
             }
-        }
-    }
-
-    /**
-     * write data to a file specified by a URI
-     * @param uri url of the file on remote storage
-     */
-    private void writeRemoteFile (Uri uri) {
-        try {
-            ParcelFileDescriptor parcelFileDescriptor = requireContext().getContentResolver().openFileDescriptor(uri, "w");
-            FileOutputStream fileOutputStream = new FileOutputStream(parcelFileDescriptor.getFileDescriptor());
-            String dataToWrite = "negro";
-            fileOutputStream.write(dataToWrite.getBytes());
-            fileOutputStream.close();
-            parcelFileDescriptor.close();
-
-            Log.i("32890457", "File is written successfully");
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
