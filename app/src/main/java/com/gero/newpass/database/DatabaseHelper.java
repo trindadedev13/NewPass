@@ -26,8 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -39,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "record_name";
     private static final String COLUMN_EMAIL = "record_email";
     private static final String COLUMN_PASSWORD = "record_password";
-    private static String KEY_ENCRYPTION = StringHelper.getSharedString();
+    private static final String KEY_ENCRYPTION = StringHelper.getSharedString();
     private static final String IMPORTED_DATABASE_NAME = "Password_backup.db";
 
     public DatabaseHelper(@Nullable Context context) {
