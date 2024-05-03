@@ -17,8 +17,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
-import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,18 +30,12 @@ import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.model.SettingData;
-import com.gero.newpass.utilities.PathUtil;
 import com.gero.newpass.utilities.PermissionManager;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
     private static final int REQUEST_CODE_EXPORT_DOCUMENT = 1;
@@ -281,7 +273,7 @@ public class SettingsFragment extends Fragment {
             if (requestCode == WRITE_CODE) {
                 if (data != null) {
                     fileURL = data.getData();
-                    DatabaseHelper.exportTestDB(requireContext(), fileURL);
+                    DatabaseHelper.exportDatabase(requireContext(), fileURL);
                 }
             }
         }
