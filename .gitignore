@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/release
+NewPass.ai
+phoneScreenshot.ai
