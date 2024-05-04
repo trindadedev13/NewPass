@@ -51,22 +51,15 @@ NewPass is a secure password management application designed to generate and sto
 ## 📸 App Screenshots
 <table>
   <tr>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/9cf382a4-1eff-4ab4-a91d-7654e300ebae" alt="Screenshot 1"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/d3065b87-5393-4a72-9a7f-8bee75e04c7f" alt="Screenshot 2"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/60d88e97-4ad8-4da2-9aa7-208d0afd69c5" alt="Screenshot 3"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/c611b2fb-975e-44e5-a47a-c61a3592b953" alt="Screenshot 4"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/c6d05c7f-3d80-4962-a711-aef95d6f286d" alt="Screenshot 5"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/079abefd-15d8-4bc1-8df4-b6525354cf15" alt="Dark theme"></td>
   </tr>
   <!-- Nuova riga aggiunta sotto -->
   <tr>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/52c4e34f-e462-4c16-ad7c-d96e94666521" alt="Screenshot 6"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/cfc3eb38-0322-4914-9aaa-accab8f9f4f3" alt="Screenshot 7"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/4df32579-de49-4b6c-9758-12b60b1da108" alt="Screenshot 8"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/eceda8b0-ef6f-4e28-aabe-9ff32abd9e6c" alt="Screenshot 9"></td>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/2d0f1969-71be-4013-89bd-cc586484e693" alt="Screenshot 10"></td>
+    <td><img src="https://github.com/6eero/NewPass/assets/114809573/d616adec-eb79-4bc7-8307-c8b472698ce5" alt="Light theme"></td>
   </tr>
 </table>
 <br>
+
 
 ## ⬇️ Download 
 [<img src="https://s1.ax1x.com/2023/01/12/pSu1a36.png" alt="Get it on GitHub" height="80">](https://github.com/6eero/NewPass/releases)
@@ -116,8 +109,13 @@ The NewPass project is distributed under the open-source GNU GPL v3.0 ©. Please
 <br>
 <br>
 
-## 💰 Buy me a coffe
-BTC: bc1qlkm4wgtr0z3y72w9ag90vyejy895fc3fj3djtx or [PayPal](https://www.paypal.com/paypalme/geeero)
+## ☕ Buy me a coffe
+BTC: `₿ bc1qlkm4wgtr0z3y72w9ag90vyejy895fc3fj3djtx` or you can
+<p>
+<a href="https://www.paypal.com/paypalme/geeero">
+<img width="15%" src="https://raw.githubusercontent.com/oneHamidreza/Meow-Framework-MVVM/master/Resources/img_support.png"/>
+</a>
+</p>
 <br>
 <br>
 
