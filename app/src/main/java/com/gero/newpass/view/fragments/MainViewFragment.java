@@ -2,6 +2,8 @@ package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -12,11 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,7 +43,7 @@ public class MainViewFragment extends Fragment {
     private TextView noData, count;
     private ImageView empty_imageview;
     private RecyclerView recyclerView;
-    private ImageButton buttonGenerate, buttonAdd, buttonSettings, buttonSearch;
+    private ImageButton buttonGenerate, buttonAdd, buttonSettings, buttonSearch, buttonCancel;
     private MainViewModel mainViewModel;
 
 
@@ -103,24 +107,12 @@ public class MainViewFragment extends Fragment {
             });
 
             buttonSearch.setOnClickListener(v -> {
-                String searchTerm = "Instagra";
-                mainViewModel.storeSearchedDataInArrays(searchTerm);
+                showInputDialog();
+            });
 
-                mainViewModel.getSearchedDataList().observe(getViewLifecycleOwner(), searchedDataList -> {
-                    CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), searchedDataList);
-                    recyclerView.setAdapter(customAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-                    count.setText("[" + customAdapter.getItemCount() + "]");
-
-                    if (customAdapter.getItemCount() == 0) {
-                        empty_imageview.setVisibility(View.VISIBLE);
-                        noData.setVisibility(View.VISIBLE);
-                    } else {
-                        empty_imageview.setVisibility(View.GONE);
-                        noData.setVisibility(View.GONE);
-                    }
-                });
+            buttonCancel.setOnClickListener(v -> {
+                populateUI();
+                buttonCancel.setVisibility(View.GONE);
             });
         }
 
@@ -177,6 +169,48 @@ public class MainViewFragment extends Fragment {
         empty_imageview = binding.emptyImageview;
         noData = binding.noData;
         buttonSearch = binding.buttonSearch;
+        buttonCancel = binding.buttonCancel;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showInputDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Input");
+        builder.setMessage("Enter your search term:");
+
+
+        final EditText input = new EditText(requireContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+
+            buttonCancel.setVisibility(View.VISIBLE);
+
+            String searchTerm = input.getText().toString().toLowerCase();
+
+            mainViewModel.storeSearchedDataInArrays(searchTerm);
+
+            mainViewModel.getSearchedDataList().observe(getViewLifecycleOwner(), searchedDataList -> {
+                CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), searchedDataList);
+                recyclerView.setAdapter(customAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+                count.setText("[" + customAdapter.getItemCount() + "]");
+
+                if (customAdapter.getItemCount() == 0) {
+                    empty_imageview.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.VISIBLE);
+                } else {
+                    empty_imageview.setVisibility(View.GONE);
+                    noData.setVisibility(View.GONE);
+                }
+            });
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
     }
 
 }

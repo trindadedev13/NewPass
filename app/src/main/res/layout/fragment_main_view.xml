@@ -114,6 +114,21 @@
         app:layout_constraintStart_toEndOf="@+id/textView_All" />
 
     <ImageButton
+        android:id="@+id/button_cancel"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="22dp"
+        android:visibility="gone"
+        android:backgroundTint="@android:color/transparent"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/button_cancel"
+        app:layout_constraintBottom_toBottomOf="@+id/button_Search"
+        app:layout_constraintEnd_toStartOf="@+id/button_Search"
+        app:layout_constraintTop_toTopOf="@+id/button_Search"
+        app:layout_constraintVertical_bias="0.555" />
+
+    <ImageButton
         android:id="@+id/button_Search"
         android:layout_width="22dp"
         android:layout_height="22dp"
