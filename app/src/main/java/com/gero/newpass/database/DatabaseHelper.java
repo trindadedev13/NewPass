@@ -1,6 +1,7 @@
 package com.gero.newpass.database;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -101,6 +102,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+
+
+    /**
+     * Searches for items in the database based on the provided search query.
+     *
+     * @param itemToSearch The search query used to find matching items in the database.
+     * @return A Cursor object containing the results of the search.
+     * @throws SQLiteException If there's an error accessing the database.
+     */
+    public Cursor searchItem(String itemToSearch) {
+        SQLiteDatabase db = this.getReadableDatabase(KEY_ENCRYPTION);
+
+        String query = "SELECT * " +
+                "FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_NAME + " LIKE '%" + itemToSearch.toLowerCase() + "%'";
+
+        return db.rawQuery(query, null);
+    }
 
 
     /**
@@ -414,5 +433,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("32890457", pathOfDatabaseDirectory + nameOfTheDBToDelete + " doesn't exists");
         }
     }
-
 }

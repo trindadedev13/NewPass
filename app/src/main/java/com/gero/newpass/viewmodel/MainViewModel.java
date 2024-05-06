@@ -1,6 +1,7 @@
 package com.gero.newpass.viewmodel;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class MainViewModel extends ViewModel {
 
-    private MutableLiveData<ArrayList<UserData>> userDataList;
+    private MutableLiveData<ArrayList<UserData>> userDataList, searchedDataList;
     private final DatabaseHelper myDB;
 
     public MainViewModel() {
@@ -38,6 +39,34 @@ public class MainViewModel extends ViewModel {
             }
         }
         userDataList.postValue(localList);
+    }
+
+    public void storeSearchedDataInArrays(String searchedData) {
+        searchedDataList = new MutableLiveData<>();
+        ArrayList<UserData> localList = new ArrayList<>();
+        Cursor cursor = myDB.searchItem(searchedData);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                UserData userData = new UserData(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3)
+                );
+                Log.i("235903425", cursor.getString(0) + ", "
+                        + cursor.getString(1) + ", "
+                        + cursor.getString(2) + ", "
+                        + cursor.getString(3));
+
+                localList.add(userData);
+            }
+        }
+        searchedDataList.postValue(localList);
+    }
+
+    public LiveData<ArrayList<UserData>> getSearchedDataList() {
+        return searchedDataList;
     }
 
     public LiveData<ArrayList<UserData>> getUserDataList() {
