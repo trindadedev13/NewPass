@@ -110,9 +110,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor searchItem(String itemToSearch) {
         SQLiteDatabase db = this.getReadableDatabase(KEY_ENCRYPTION);
 
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " +
-                COLUMN_NAME + " LIKE '%" + itemToSearch.toLowerCase() + "%' OR ";
-                // + COLUMN_EMAIL + " LIKE '%" + itemToSearch.toLowerCase() + "%'";
+        String query = "SELECT * " +
+                "FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_NAME + " LIKE '%" + itemToSearch.toLowerCase() + "%'";
 
         return db.rawQuery(query, null);
     }

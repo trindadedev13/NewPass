@@ -177,18 +177,24 @@ public class MainViewFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Input");
-        builder.setMessage("Enter your search term:");
+        builder.setMessage(R.string.enter_your_search_term);
 
 
         final EditText input = new EditText(requireContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
-        builder.setPositiveButton("OK", (dialog, which) -> {
+        builder.setPositiveButton(R.string.ok, (dialog, which) -> {
 
-            buttonCancel.setVisibility(View.VISIBLE);
+
 
             String searchTerm = input.getText().toString().toLowerCase();
+
+            if (searchTerm.isEmpty()) {
+                buttonCancel.setVisibility(View.GONE);
+            } else {
+                buttonCancel.setVisibility(View.VISIBLE);
+            }
 
             mainViewModel.storeSearchedDataInArrays(searchTerm);
 
@@ -208,7 +214,7 @@ public class MainViewFragment extends Fragment {
                 }
             });
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
 
         builder.show();
     }
