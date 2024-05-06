@@ -2,6 +2,7 @@ package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gero.newpass.R;
+import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentMainViewBinding;
 
 import com.gero.newpass.utilities.VibrationHelper;
@@ -36,7 +39,7 @@ public class MainViewFragment extends Fragment {
     private TextView noData, count;
     private ImageView empty_imageview;
     private RecyclerView recyclerView;
-    private ImageButton buttonGenerate, buttonAdd, buttonSettings;
+    private ImageButton buttonGenerate, buttonAdd, buttonSettings, buttonSearch;
     private MainViewModel mainViewModel;
 
 
@@ -98,6 +101,27 @@ public class MainViewFragment extends Fragment {
                 }
                 return false;
             });
+
+            buttonSearch.setOnClickListener(v -> {
+                String searchTerm = "Instagra";
+                mainViewModel.storeSearchedDataInArrays(searchTerm);
+
+                mainViewModel.getSearchedDataList().observe(getViewLifecycleOwner(), searchedDataList -> {
+                    CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), searchedDataList);
+                    recyclerView.setAdapter(customAdapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+                    count.setText("[" + customAdapter.getItemCount() + "]");
+
+                    if (customAdapter.getItemCount() == 0) {
+                        empty_imageview.setVisibility(View.VISIBLE);
+                        noData.setVisibility(View.VISIBLE);
+                    } else {
+                        empty_imageview.setVisibility(View.GONE);
+                        noData.setVisibility(View.GONE);
+                    }
+                });
+            });
         }
 
     }
@@ -130,6 +154,8 @@ public class MainViewFragment extends Fragment {
             recyclerView.setAdapter(customAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+            Log.i("235903425", "sus");
+
             count.setText("[" + customAdapter.getItemCount() + "]");
 
             if (customAdapter.getItemCount() == 0) {
@@ -150,6 +176,7 @@ public class MainViewFragment extends Fragment {
         count = binding.textViewCount;
         empty_imageview = binding.emptyImageview;
         noData = binding.noData;
+        buttonSearch = binding.buttonSearch;
     }
 
 }
