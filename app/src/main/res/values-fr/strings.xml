@@ -75,7 +75,7 @@
     <string name="wrong_password">Mot de passe incorrect</string>
     <string name="enter_the_old_password">Ancien mot de passe</string>
     <string name="enter_the_new_password">Nouveau mot de passe</string>
-    <string name="use_screen_lock_to_unlock">Utiliser le verrouillage de l\'écran pour déverrouiller</string>
+    <string name="use_screen_lock_to_unlock">Utilisez le verrouillage d\'écran</string>
     <string name="import_database">Importer la base de données</string>
     <string name="confirm">Confirmer</string>
     <string name="incorrect_password_or_database_is_corrupt">Mot de passe incorrect ou base de données corrompue.</string>

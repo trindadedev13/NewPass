@@ -12,9 +12,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,7 +65,19 @@ public class LoginActivity extends AppCompatActivity {
         initViews(binding);
 
         textViewRegisterOrUnlock.setText(getString(R.string.create_password_button_text));
-        welcomeTextView.setText(getString(R.string.welcome_newpass_text));
+
+        String fullString = getString(R.string.welcome_newpass_text);
+        String firstHalf = fullString.substring(0, fullString.lastIndexOf("\n"));
+        String secondHalf = fullString.substring(firstHalf.length() + 1, fullString.lastIndexOf("!"));
+
+        SpannableString spannableSecondHalf = new SpannableString(secondHalf);
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.accent));
+        spannableSecondHalf.setSpan(colorSpan, 0, secondHalf.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        CharSequence finalText = TextUtils.concat(firstHalf, "\n", spannableSecondHalf, "!");
+
+
+        // Imposta il testo colorato nella TextView
+        welcomeTextView.setText(finalText);
 
         loginViewModel = new ViewModelProvider(this, new ViewMoldelsFactory(new ResourceRepository(getApplicationContext()))).get(LoginViewModel.class);
 
@@ -86,7 +103,17 @@ public class LoginActivity extends AppCompatActivity {
         Boolean isPasswordEmpty = password.isEmpty();
         if (!isPasswordEmpty) {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
-            welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
+
+            fullString = getString(R.string.welcome_back_newpass_text);
+            firstHalf = fullString.substring(0, fullString.lastIndexOf(" "));
+            secondHalf = fullString.substring(firstHalf.length() + 1, fullString.lastIndexOf("!"));
+
+            spannableSecondHalf = new SpannableString(secondHalf);
+            colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.accent));
+            spannableSecondHalf.setSpan(colorSpan, 0, secondHalf.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            finalText = TextUtils.concat(firstHalf, " ", spannableSecondHalf, "!");
+
+            welcomeTextView.setText(finalText);
 
         }
 

@@ -75,7 +75,7 @@
     <string name="wrong_password">Contraseña incorrecta</string>
     <string name="enter_the_old_password">Contraseña antigua</string>
     <string name="enter_the_new_password">Nueva contraseña</string>
-    <string name="use_screen_lock_to_unlock">Usar bloqueo de pantalla para desbloquear</string>
+    <string name="use_screen_lock_to_unlock">Usa la pantalla de bloqueo</string>
     <string name="import_database">Importar base de datos</string>
     <string name="confirm">Confirmar</string>
     <string name="incorrect_password_or_database_is_corrupt">Contraseña incorrecta o base de datos corrupta.</string>
