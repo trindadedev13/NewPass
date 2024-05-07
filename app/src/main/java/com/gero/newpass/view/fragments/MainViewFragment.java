@@ -3,8 +3,6 @@ package com.gero.newpass.view.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gero.newpass.R;
-import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentMainViewBinding;
 
 import com.gero.newpass.utilities.VibrationHelper;
@@ -106,14 +103,10 @@ public class MainViewFragment extends Fragment {
                 return false;
             });
 
-            buttonSearch.setOnClickListener(v -> {
-                showInputDialog();
-            });
+            buttonSearch.setOnClickListener(v -> showInputDialog());
 
-            buttonCancel.setOnClickListener(v -> {
-                populateUI();
-                buttonCancel.setVisibility(View.GONE);
-            });
+            buttonCancel.setOnClickListener(v -> populateUI());
+
         }
 
     }
@@ -139,6 +132,7 @@ public class MainViewFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void populateUI() {
+        buttonCancel.setVisibility(View.GONE);
         mainViewModel.storeDataInArrays();
 
         mainViewModel.getUserDataList().observe(getViewLifecycleOwner(), userDataList -> {
@@ -160,18 +154,6 @@ public class MainViewFragment extends Fragment {
         });
     }
 
-    private void initViews() {
-        recyclerView = binding.recyclerView;
-        buttonGenerate = binding.buttonGenerate;
-        buttonAdd = binding.buttonAdd;
-        buttonSettings = binding.buttonSettings;
-        count = binding.textViewCount;
-        empty_imageview = binding.emptyImageview;
-        noData = binding.noData;
-        buttonSearch = binding.buttonSearch;
-        buttonCancel = binding.buttonCancel;
-    }
-
     @SuppressLint("SetTextI18n")
     private void showInputDialog() {
 
@@ -186,9 +168,7 @@ public class MainViewFragment extends Fragment {
 
         builder.setPositiveButton(R.string.ok, (dialog, which) -> {
 
-
-
-            String searchTerm = input.getText().toString().toLowerCase();
+            String searchTerm = input.getText().toString().toLowerCase().trim();
 
             if (searchTerm.isEmpty()) {
                 buttonCancel.setVisibility(View.GONE);
@@ -217,6 +197,18 @@ public class MainViewFragment extends Fragment {
         builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
 
         builder.show();
+    }
+
+    private void initViews() {
+        recyclerView = binding.recyclerView;
+        buttonGenerate = binding.buttonGenerate;
+        buttonAdd = binding.buttonAdd;
+        buttonSettings = binding.buttonSettings;
+        count = binding.textViewCount;
+        empty_imageview = binding.emptyImageview;
+        noData = binding.noData;
+        buttonSearch = binding.buttonSearch;
+        buttonCancel = binding.buttonCancel;
     }
 
 }

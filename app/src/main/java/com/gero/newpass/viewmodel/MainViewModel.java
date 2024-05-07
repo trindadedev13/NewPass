@@ -54,10 +54,12 @@ public class MainViewModel extends ViewModel {
                         cursor.getString(2),
                         cursor.getString(3)
                 );
+                /*
                 Log.i("235903425", cursor.getString(0) + ", "
                         + cursor.getString(1) + ", "
                         + cursor.getString(2) + ", "
                         + cursor.getString(3));
+                 */
 
                 localList.add(userData);
             }
