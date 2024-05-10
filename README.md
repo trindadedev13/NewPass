@@ -18,15 +18,19 @@
     </a>
 </div>
 <div align="center">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=github&logoColor=ebebf0&labelColor=23232F">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=pkgsrc&logoColor=ebebf0&labelColor=23232F">
     <a href="https://github.com/6eero/NewPass/releases">
-        <img src="https://img.shields.io/github/v/release/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=pkgsrc&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
+        <img src="https://img.shields.io/github/v/release/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=github&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
+    </a>
+    <a href="https://f-droid.org/packages/com.gero.newpass/">
+        <img src="https://img.shields.io/f-droid/v/com.gero.newpass.svg?logo=F-Droid&color=D0BCFF&style=for-the-badge&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
     </a>
 </div>
 <br>
 <p align="right">
-   <img src="https://github.com/6eero/NewPass/assets/114809573/72a2d172-8b44-4bf9-bc70-573284ea1e1a" title="UI">
+    <img src="https://github.com/6eero/NewPass/assets/114809573/72a2d172-8b44-4bf9-bc70-573284ea1e1a" title="UI">
 </p>
+
 <br>
 
 
@@ -62,8 +66,9 @@ NewPass is a secure password management application designed to generate and sto
 
 
 ## ⬇️ Download 
-[<img src="https://s1.ax1x.com/2023/01/12/pSu1a36.png" alt="Get it on GitHub" height="80">](https://github.com/6eero/NewPass/releases)
-[<img src="https://github.com/6eero/NewPass/assets/114809573/113b2ce8-fd57-490e-bce0-9db1e55f52ba" alt="Get it on aaaa" height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.gero.newpass/)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">](https://f-droid.org/packages/com.gero.newpass/)
+[<img src="https://s1.ax1x.com/2023/01/12/pSu1a36.png" height="75">](https://github.com/6eero/NewPass/releases)
+[<img src="https://github.com/6eero/NewPass/assets/114809573/113b2ce8-fd57-490e-bce0-9db1e55f52ba" height="75">](https://apt.izzysoft.de/fdroid/index/apk/com.gero.newpass/)
 <br>
 
 ## 🧱 Build
