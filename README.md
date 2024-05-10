@@ -52,14 +52,22 @@ NewPass is a secure password management application designed to generate and sto
 ## 📸 App Screenshots
 <table>
   <tr>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/079abefd-15d8-4bc1-8df4-b6525354cf15" alt="Dark theme"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/dark_1.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/dark_2.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/dark_3.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/dark_4.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/dark_5.png"></td>
   </tr>
-  <!-- Nuova riga aggiunta sotto -->
   <tr>
-    <td><img src="https://github.com/6eero/NewPass/assets/114809573/d616adec-eb79-4bc7-8307-c8b472698ce5" alt="Light theme"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/light_1.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/light_2.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/light_3.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/light_4.png"></td>
+    <td><img src="https://github.com/6eero/NewPass/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/light_5.png"></td>
   </tr>
 </table>
 <br>
+
 
 
 ## ⬇️ Download 
