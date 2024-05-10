@@ -10,27 +10,24 @@
     <a href="LICENSE">
         <img src="https://img.shields.io/github/license/6eero/newpass.svg?color=D0BCFF&style=for-the-badge&logo=gitbook&logoColor=ebebf0&labelColor=23232F" alt="License">
     </a>
-    <a href="https://github.com/6eero/NewPass/releases">
-        <img src="https://img.shields.io/github/downloads/6eero/NewPass/total.svg?color=D0BCFF&style=for-the-badge&logo=github&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
+    <a href="https://f-droid.org/packages/com.gero.newpass/">
+        <img src="https://img.shields.io/f-droid/v/com.gero.newpass.svg?logo=F-Droid&color=D0BCFF&style=for-the-badge&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
     </a>
-    <a href="https://github.com/6eero/NewPass/stargazers">
-        <img src="https://img.shields.io/github/stars/6eero/NewPass.svg?color=D0BCFF&style=for-the-badge&logo=apachespark&logoColor=ebebf0&labelColor=23232F" alt="Stars Count">
-    </a>
-</div>
-<div align="center">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=pkgsrc&logoColor=ebebf0&labelColor=23232F">
     <a href="https://github.com/6eero/NewPass/releases">
         <img src="https://img.shields.io/github/v/release/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=github&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
     </a>
-    <a href="https://f-droid.org/packages/com.gero.newpass/">
-        <img src="https://img.shields.io/f-droid/v/com.gero.newpass.svg?logo=F-Droid&color=D0BCFF&style=for-the-badge&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/6eero/NewPass?color=D0BCFF&style=for-the-badge&logo=pkgsrc&logoColor=ebebf0&labelColor=23232F">
+    <a href="https://github.com/6eero/NewPass/stargazers">
+        <img src="https://img.shields.io/github/stars/6eero/NewPass.svg?color=D0BCFF&style=for-the-badge&logo=apachespark&logoColor=ebebf0&labelColor=23232F" alt="Stars Count">
+    </a>
+    <a href="https://github.com/6eero/NewPass/releases">
+        <img src="https://img.shields.io/github/downloads/6eero/NewPass/total.svg?color=D0BCFF&style=for-the-badge&logo=github&logoColor=ebebf0&labelColor=23232F" alt="GitHub release">
     </a>
 </div>
 <br>
 <p align="right">
     <img src="https://github.com/6eero/NewPass/assets/114809573/72a2d172-8b44-4bf9-bc70-573284ea1e1a" title="UI">
 </p>
-
 <br>
 
 
