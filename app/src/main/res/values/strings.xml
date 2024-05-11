@@ -13,7 +13,7 @@
     <string name="add_email">Email/Username</string>
     <string name="add_password">Password</string>
     <string name="generate_create">Create</string>
-    <string name="generate_a_password_for">A password for your digital realm</string>
+    <string name="generate_a_password_for">A password for your\ndigital realm</string>
     <string name="generate_length">Length</string>
     <string name="generate_length_example">Length</string>
     <string name="generate_uppercase">Uppercase</string>
