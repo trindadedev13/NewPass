@@ -158,42 +158,42 @@ public class MainViewFragment extends Fragment {
     private void showInputDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Input");
-        builder.setMessage(R.string.enter_your_search_term);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_search, null);
+        builder.setView(dialogView);
 
 
-        final EditText input = new EditText(requireContext());
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        EditText input = dialogView.findViewById(R.id.input);
 
-        builder.setPositiveButton(R.string.ok, (dialog, which) -> {
+        builder.setTitle(R.string.search_password)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
 
-            String searchTerm = input.getText().toString().toLowerCase().trim();
+                    String searchTerm = input.getText().toString().toLowerCase().trim();
 
-            if (searchTerm.isEmpty()) {
-                buttonCancel.setVisibility(View.GONE);
-            } else {
-                buttonCancel.setVisibility(View.VISIBLE);
-            }
+                    if (searchTerm.isEmpty()) {
+                        buttonCancel.setVisibility(View.GONE);
+                    } else {
+                        buttonCancel.setVisibility(View.VISIBLE);
+                    }
 
-            mainViewModel.storeSearchedDataInArrays(searchTerm);
+                    mainViewModel.storeSearchedDataInArrays(searchTerm);
 
-            mainViewModel.getSearchedDataList().observe(getViewLifecycleOwner(), searchedDataList -> {
-                CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), searchedDataList);
-                recyclerView.setAdapter(customAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                    mainViewModel.getSearchedDataList().observe(getViewLifecycleOwner(), searchedDataList -> {
+                        CustomAdapter customAdapter = new CustomAdapter(this.getActivity(), this.getContext(), searchedDataList);
+                        recyclerView.setAdapter(customAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-                count.setText("[" + customAdapter.getItemCount() + "]");
+                        count.setText("[" + customAdapter.getItemCount() + "]");
 
-                if (customAdapter.getItemCount() == 0) {
-                    empty_imageview.setVisibility(View.VISIBLE);
-                    noData.setVisibility(View.VISIBLE);
-                } else {
-                    empty_imageview.setVisibility(View.GONE);
-                    noData.setVisibility(View.GONE);
-                }
-            });
-        });
+                        if (customAdapter.getItemCount() == 0) {
+                            empty_imageview.setVisibility(View.VISIBLE);
+                            noData.setVisibility(View.VISIBLE);
+                        } else {
+                            empty_imageview.setVisibility(View.GONE);
+                            noData.setVisibility(View.GONE);
+                        }
+                    });
+                });
         builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
 
         builder.show();
