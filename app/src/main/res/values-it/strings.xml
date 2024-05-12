@@ -107,6 +107,7 @@
     <string name="file_is_not_a_database">Il file non è un database</string>
     <string name="enter_password">Inserisci password</string>
     <string name="error_importing_database">Errore durante l\'importazione del database</string>
+    <string name="ok">OK</string>
     <string name="enter_your_search_term">Inserisci l\'account da cercare</string>
     <string name="search_password">Cerca una password</string>
     <string name="language_changed">Lingua cambiata. Riavvia per vedere le modifiche</string>

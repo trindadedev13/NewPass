@@ -91,6 +91,7 @@
     <string name="file_is_not_a_database">文件不是数据库</string>
     <string name="enter_password">输入数据库密码</string>
     <string name="error_importing_database">导入数据库时出错</string>
+    <string name="ok">好的</string>
     <string name="enter_your_search_term">输入要搜索的帐户</string>
     <string name="search_password">搜索密码</string>
     <string name="language_changed">语言已更改。重新启动以查看更改</string>
