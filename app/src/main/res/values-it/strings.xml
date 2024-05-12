@@ -109,6 +109,7 @@
     <string name="error_importing_database">Errore durante l\'importazione del database</string>
     <string name="enter_your_search_term">Inserisci l\'account da cercare</string>
     <string name="search_password">Cerca una password</string>
+    <string name="language_changed">Lingua cambiata. Riavvia per vedere le modifiche</string>
 
 
 </resources>

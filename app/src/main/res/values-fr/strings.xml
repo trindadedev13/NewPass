@@ -93,6 +93,7 @@
     <string name="error_importing_database">Erreur lors de l\'importation de la base de données</string>
     <string name="enter_your_search_term">Saisissez le compte à rechercher</string>
     <string name="search_password">Cherche un mot de passe</string>
+    <string name="language_changed">Langue changée. Redémarrez pour voir les modifications</string>
 
 
 </resources>

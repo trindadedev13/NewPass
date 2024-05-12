@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gero.newpass.R;
+import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.encryption.EncryptionHelper;

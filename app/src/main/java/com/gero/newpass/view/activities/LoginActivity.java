@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
         textViewRegisterOrUnlock.setText(getString(R.string.create_password_button_text));
 
+        /*
         String fullString = getString(R.string.welcome_newpass_text);
         String firstHalf = fullString.substring(0, fullString.lastIndexOf("\n"));
         String secondHalf = fullString.substring(firstHalf.length() + 1, fullString.lastIndexOf("!"));
@@ -78,6 +79,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // Imposta il testo colorato nella TextView
         welcomeTextView.setText(finalText);
+
+         */
+
+        welcomeTextView.setText(getString(R.string.welcome_newpass_text));
 
         loginViewModel = new ViewModelProvider(this, new ViewMoldelsFactory(new ResourceRepository(getApplicationContext()))).get(LoginViewModel.class);
 
@@ -104,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!isPasswordEmpty) {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
 
+            /*
             fullString = getString(R.string.welcome_back_newpass_text);
             firstHalf = fullString.substring(0, fullString.lastIndexOf(" "));
             secondHalf = fullString.substring(firstHalf.length() + 1, fullString.lastIndexOf("!"));
@@ -114,6 +120,9 @@ public class LoginActivity extends AppCompatActivity {
             finalText = TextUtils.concat(firstHalf, " ", spannableSecondHalf, "!");
 
             welcomeTextView.setText(finalText);
+
+             */
+            welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
 
         }
 

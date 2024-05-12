@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class LanguageDialogFragment extends DialogFragment {
@@ -40,9 +42,16 @@ public class LanguageDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         String currentLanguage = SharedPreferencesHelper.getCurrentLanguage(requireContext());
+
+        if (Objects.equals(currentLanguage, "zh")) {
+            currentLanguage = "中国人";
+        }
+
         String[] languageList = requireActivity().getResources().getStringArray(R.array.language_options);
 
-        position = getLanguagePosition(languageList, currentLanguage);
+        position = getLanguagePosition(languageList, currentLanguage.substring(0, 2));
+
+        Log.i("32465034", Arrays.toString(languageList) + " " + position + " " + currentLanguage.substring(0, 2));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -50,7 +59,7 @@ public class LanguageDialogFragment extends DialogFragment {
                 .setSingleChoiceItems(languageList, position, (dialog, which) -> position = which)
                 .setPositiveButton("Ok", (dialog, which) -> {
                     mListener.onPositiveButtonClicked(languageList, position);
-                    Toast.makeText(requireContext(), getString(R.string.language_set_to) + languageList[position].toLowerCase(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.language_changed), Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> mListener.onNegativeButtonClicked());
 
@@ -60,6 +69,7 @@ public class LanguageDialogFragment extends DialogFragment {
     private int getLanguagePosition(String[] languageList, String currentLanguage) {
 
         for (int i = 0; i < languageList.length; i++) {
+
             if (Objects.equals(languageList[i].toLowerCase().substring(0, 2), currentLanguage)) {
                 position = i;
                 break;

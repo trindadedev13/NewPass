@@ -39,6 +39,7 @@ import com.gero.newpass.view.fragments.LanguageDialogFragment;
 import com.gero.newpass.view.fragments.MainViewFragment;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainViewActivity extends AppCompatActivity implements LanguageDialogFragment.LanguageListener {
 
@@ -109,6 +110,11 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
     @Override
     public void onPositiveButtonClicked(String[] list, int position) {
         String selectedLanguage = list[position];
+
+        if (Objects.equals(selectedLanguage, "中国人")) {
+            selectedLanguage = "zh";
+        }
+
         SharedPreferencesHelper.setLanguage(this, selectedLanguage);
     }
 
