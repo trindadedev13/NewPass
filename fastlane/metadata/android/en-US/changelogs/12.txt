@@ -1,0 +1,15 @@
+Added
+- Added an icon and feature to search for an account in the database.
+- Introduced a third text input to confirm the password during the password change process.
+- Included Chinese language support.
+- Integrated Hindi language support.
+
+Removed
+- Removed WRITE_EXTERNAL_STORAGE permission.
+- Removed READ_EXTERNAL_STORAGE permission.
+
+Improvements
+- Enhanced the design of dialogs for improved user experience.
+
+Fixes
+- Resolved the issue where the status bar in light theme was not appearing.
