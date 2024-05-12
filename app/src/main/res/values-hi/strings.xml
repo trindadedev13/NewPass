@@ -75,7 +75,6 @@
     <string name="wrong_password">गलत पासवर्ड</string>
     <string name="enter_the_old_password">पुराना पासवर्ड दर्ज करें</string>
     <string name="enter_the_new_password">नया पासवर्ड दर्ज करें</string>
-    <string name="this_feature_will_be_available_soon" translatable="false">यह सुविधा जल्द ही उपलब्ध होगी</string>
     <string name="use_screen_lock_to_unlock">स्क्रीन लॉक का उपयोग करें।</string>
     <string name="import_database">डेटाबेस आयात करें</string>
     <string name="confirm">पुष्टि करें</string>
