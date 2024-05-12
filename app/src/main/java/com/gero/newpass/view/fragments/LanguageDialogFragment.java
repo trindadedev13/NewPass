@@ -43,7 +43,10 @@ public class LanguageDialogFragment extends DialogFragment {
 
         String currentLanguage = SharedPreferencesHelper.getCurrentLanguage(requireContext());
 
-        if (Objects.equals(currentLanguage, "zh")) {
+        if (currentLanguage.isEmpty()) {
+            currentLanguage = "English";
+
+        } else if (Objects.equals(currentLanguage, "zh")) {
             currentLanguage = "中国人";
         }
 

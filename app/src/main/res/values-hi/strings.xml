@@ -92,7 +92,6 @@
     <string name="file_is_not_a_database">फ़ाइल डेटाबेस नहीं है</string>
     <string name="enter_password">डेटाबेस पासवर्ड दर्ज करें</string>
     <string name="error_importing_database">डेटाबेस आयात करते समय त्रुटि</string>
-    <string name="ok" translatable="false">ठीक है</string>
     <string name="ok">ठीक है</string>
     <string name="enter_your_search_term">खाता खोजें</string>
     <string name="search_password">पासवर्ड खोजें</string>
