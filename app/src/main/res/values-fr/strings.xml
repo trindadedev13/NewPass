@@ -12,7 +12,7 @@
     <string name="add_email">Email/Username</string>
     <string name="add_password">Mot de passe</string>
     <string name="generate_create">Créer</string>
-    <string name="generate_a_password_for">Un mot de passe pour votre\nroyaume numérique</string>
+    <string name="generate_a_password_for">Un mot de passe pour\nvotre royaume numérique</string>
     <string name="generate_length">Longueur</string>
     <string name="generate_length_example">Longueur</string>
     <string name="generate_uppercase">Majuscule</string>
@@ -70,12 +70,12 @@
     <string name="settings_export_db">Exporter les mots de passe</string>
     <string name="login">Connectez-vous à NewPass</string>
     <string name="use_your_biometric_or_device_credentials">Utilisez vos identifiants biométriques ou de dispositif</string>
-    <string name="settings_change_password">Changer le mot de passe de verrouillage</string>
+    <string name="settings_change_password">Changer le mot de passe d\'accès</string>
     <string name="app_version">"Version de l'application: "</string>
     <string name="wrong_password">Mot de passe incorrect</string>
     <string name="enter_the_old_password">Ancien mot de passe</string>
     <string name="enter_the_new_password">Nouveau mot de passe</string>
-    <string name="use_screen_lock_to_unlock">Utilisez le verrouillage d\'écran</string>
+    <string name="use_screen_lock_to_unlock">Utilise le verrouillage</string>
     <string name="import_database">Importer la base de données</string>
     <string name="confirm">Confirmer</string>
     <string name="incorrect_password_or_database_is_corrupt">Mot de passe incorrect ou base de données corrompue.</string>
@@ -90,6 +90,9 @@
     <string name="database_not_found">Base de données introuvable</string>
     <string name="file_is_not_a_database">Le fichier n\'est pas une base de données</string>
     <string name="enter_password">Ingresa contraseña</string>
+    <string name="error_importing_database">Erreur lors de l\'importation de la base de données</string>
+    <string name="enter_your_search_term">Saisissez le compte à rechercher</string>
+    <string name="search_password">Cherche un mot de passe</string>
 
 
 </resources>

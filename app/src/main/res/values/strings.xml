@@ -94,7 +94,7 @@
     <string name="enter_password">Enter database password</string>
     <string name="error_importing_database">Error importing database</string>
     <string name="ok" translatable="false">OK</string>
-    <string name="enter_your_search_term">Enter the password to search</string>
+    <string name="enter_your_search_term">Enter the account to search</string>
     <string name="search_password">Search Password</string>
     <string name="language_set_to" translatable="false">"Language set to "</string>
 </resources>
