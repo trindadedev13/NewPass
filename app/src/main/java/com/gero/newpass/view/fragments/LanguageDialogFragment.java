@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,7 +48,10 @@ public class LanguageDialogFragment extends DialogFragment {
 
         builder.setTitle(R.string.languagedialog_select_your_choice)
                 .setSingleChoiceItems(languageList, position, (dialog, which) -> position = which)
-                .setPositiveButton("Ok", (dialog, which) -> mListener.onPositiveButtonClicked(languageList, position))
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    mListener.onPositiveButtonClicked(languageList, position);
+                    Toast.makeText(requireContext(), getString(R.string.language_set_to) + languageList[position].toLowerCase(), Toast.LENGTH_SHORT).show();
+                })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> mListener.onNegativeButtonClicked());
 
         return builder.create();

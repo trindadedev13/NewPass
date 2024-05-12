@@ -164,6 +164,7 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case APP_VERSION:
+                    Toast.makeText(requireContext(), "\uD83D\uDE80⚡", Toast.LENGTH_SHORT).show();
                     break;
             }
         });
