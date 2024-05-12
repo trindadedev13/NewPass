@@ -25,7 +25,6 @@ import com.gero.newpass.databinding.FragmentAddPasswordBinding;
 import com.gero.newpass.factory.ViewMoldelsFactory;
 import com.gero.newpass.repository.ResourceRepository;
 import com.gero.newpass.utilities.VibrationHelper;
-import com.gero.newpass.view.activities.LoginActivity;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.AddViewModel;
 
