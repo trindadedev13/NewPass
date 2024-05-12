@@ -74,7 +74,7 @@
     <string name="settings_change_password">Change Lock Password</string>
     <string name="app_version">"App Version: "</string>
     <string name="wrong_password">Wrong password</string>
-    <string name="enter_the_old_password">Old password</string>
+    <string name="enter_the_old_password">Old Password</string>
     <string name="enter_the_new_password">New Password</string>
     <string name="this_feature_will_be_available_soon" translatable="false">This feature will be available soon</string>
     <string name="use_screen_lock_to_unlock">Use Screen Lock to Unlock</string>
@@ -97,4 +97,6 @@
     <string name="enter_your_search_term">Enter the account to search</string>
     <string name="search_password">Search Password</string>
     <string name="language_changed">Language changed. Restart to see the changes</string>
+    <string name="reenter_the_new_password">Re-enter the Password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
 </resources>

@@ -95,4 +95,6 @@
     <string name="enter_your_search_term">输入要搜索的帐户</string>
     <string name="search_password">搜索密码</string>
     <string name="language_changed">语言已更改。重新启动以查看更改</string>
+    <string name="reenter_the_new_password">重新输入密码</string>
+    <string name="passwords_do_not_match">密码不匹配</string>
 </resources>

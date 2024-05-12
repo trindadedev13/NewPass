@@ -95,4 +95,6 @@
     <string name="enter_your_search_term">खाता खोजें</string>
     <string name="search_password">पासवर्ड खोजें</string>
     <string name="language_changed">भाषा बदल गई। परिवर्तन देखने के लिए पुनः आरंभ करें</string>
+    <string name="reenter_the_new_password">पासवर्ड पुनः दर्ज करें</string>
+    <string name="passwords_do_not_match">पासवर्ड मेल नहीं खाता</string>
 </resources>

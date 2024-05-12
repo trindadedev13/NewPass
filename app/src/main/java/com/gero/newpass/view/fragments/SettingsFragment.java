@@ -192,19 +192,21 @@ public class SettingsFragment extends Fragment {
     private void showChangePasswordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_inputs, null);
+        View dialogView = inflater.inflate(R.layout.dialog_change_password, null);
         builder.setView(dialogView);
 
         EditText firstInput = dialogView.findViewById(R.id.first_input);
         EditText secondInput = dialogView.findViewById(R.id.second_input);
+        EditText thirdInput = dialogView.findViewById(R.id.third_input);
 
         builder.setTitle(R.string.settings_change_password)
                 .setPositiveButton(R.string.update_alertdialog_yes, (dialog, id) -> {
 
                     String inputOne = firstInput.getText().toString();
                     String inputTwo = secondInput.getText().toString();
+                    String inputThree = thirdInput.getText().toString();
 
-                    if (inputOne.equals(encryptedSharedPreferences.getString("password", "")) && inputTwo.length() >= 4) {
+                    if (inputOne.equals(encryptedSharedPreferences.getString("password", "")) && inputTwo.length() >= 4 && inputTwo.equals(inputThree)) {
                         //Log.i("2895124", "Correct password");
 
                         SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
@@ -215,6 +217,9 @@ public class SettingsFragment extends Fragment {
                         DatabaseHelper.changeDBPassword(inputTwo, requireContext());
                     } else if (inputTwo.length() < 4) {
                         Toast.makeText(requireContext(), R.string.password_must_be_at_least_4_characters_long, Toast.LENGTH_SHORT).show();
+
+                    } else if (!inputTwo.equals(inputThree)) {
+                            Toast.makeText(requireContext(), R.string.passwords_do_not_match, Toast.LENGTH_SHORT).show();
 
                     } else {
                         //Log.i("2895124", "Incorrect password");

@@ -95,6 +95,8 @@
     <string name="enter_your_search_term">Saisissez le compte à rechercher</string>
     <string name="search_password">Cherche un mot de passe</string>
     <string name="language_changed">Langue changée. Redémarrez pour voir les modifications</string>
+    <string name="reenter_the_new_password">Ressaisissez le mot de passe</string>
+    <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
 
 
 </resources>
