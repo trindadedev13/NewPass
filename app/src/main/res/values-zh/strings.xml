@@ -24,8 +24,7 @@
     <string name="generate_special_example">[?#%]</string>
     <string name="generate_number">数字</string>
     <string name="generate_number_example">[123]</string>
-    <string name="main_saved_password">已保存的
-\n密码</string>
+    <string name="main_saved_password">已保存的密码</string>
     <string name="main__btn_add">[添加]</string>
     <string name="main_btn_generate">[生成]</string>
     <string name="main_all">全部</string>
