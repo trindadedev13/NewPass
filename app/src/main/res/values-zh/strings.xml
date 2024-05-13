@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unlock_newpass_button_text">[解锁 NewPass]</string>
     <string name="create_password_button_text">[创建密码]</string>
     <string name="welcome_newpass_text">欢迎来到\nNewPass！</string>
-    <string name="welcome_back_newpass_text">欢迎回来\n至 NewPass！</string>
+    <string name="welcome_back_newpass_text">欢迎回到
+\nNewPass！</string>
     <string name="login_text">文本</string>
     <string name="login_password">密码</string>
     <string name="login_button">TextView_button</string>
@@ -12,7 +14,8 @@
     <string name="add_email">电子邮件/用户名</string>
     <string name="add_password">密码</string>
     <string name="generate_create">创建</string>
-    <string name="generate_a_password_for">为您的\n数字领域创建密码</string>
+    <string name="generate_a_password_for">为您的数字领域
+\n创建密码</string>
     <string name="generate_length">长度</string>
     <string name="generate_length_example">长度</string>
     <string name="generate_uppercase">大写</string>
@@ -21,7 +24,8 @@
     <string name="generate_special_example">[?#%]</string>
     <string name="generate_number">数字</string>
     <string name="generate_number_example">[123]</string>
-    <string name="main_saved_password">已保存\n密码</string>
+    <string name="main_saved_password">已保存的
+\n密码</string>
     <string name="main__btn_add">[添加]</string>
     <string name="main_btn_generate">[生成]</string>
     <string name="main_all">全部</string>
@@ -94,7 +98,7 @@
     <string name="ok">好的</string>
     <string name="enter_your_search_term">输入要搜索的帐户</string>
     <string name="search_password">搜索密码</string>
-    <string name="language_changed">语言已更改。重新启动以查看更改</string>
+    <string name="language_changed">语言已更改。重启以查看更改</string>
     <string name="reenter_the_new_password">重新输入密码</string>
     <string name="passwords_do_not_match">密码不匹配</string>
 </resources>
