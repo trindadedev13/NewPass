@@ -94,6 +94,10 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
             selectedLanguage = "zh";
         }
 
+        if (Objects.equals(selectedLanguage, "Русский")) {
+            selectedLanguage = "ru";
+        }
+
         SharedPreferencesHelper.setLanguage(this, selectedLanguage);
     }
 

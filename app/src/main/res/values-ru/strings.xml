@@ -75,7 +75,7 @@
     <string name="wrong_password">Неверный пароль</string>
     <string name="enter_the_old_password">Старый пароль</string>
     <string name="enter_the_new_password">Новый пароль</string>
-    <string name="use_screen_lock_to_unlock">Используйте блокировку экрана, чтобы разблокировать</string>
+    <string name="use_screen_lock_to_unlock">использовать блок</string>
     <string name="import_database">Импортировать базу данных</string>
     <string name="confirm">Подтвердить</string>
     <string name="incorrect_password_or_database_is_corrupt">Неверный пароль или база данных повреждена.</string>

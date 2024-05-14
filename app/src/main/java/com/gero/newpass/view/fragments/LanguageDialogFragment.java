@@ -48,6 +48,9 @@ public class LanguageDialogFragment extends DialogFragment {
 
         } else if (Objects.equals(currentLanguage, "zh")) {
             currentLanguage = "中国人";
+
+        } else if (Objects.equals(currentLanguage, "ru")) {
+            currentLanguage = "Русский";
         }
 
         String[] languageList = requireActivity().getResources().getStringArray(R.array.language_options);
