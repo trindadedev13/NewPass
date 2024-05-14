@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.gero.newpass.R;
 
+import java.util.Objects;
+
 public class SharedPreferencesHelper {
 
     private static final String SCREEN_LOCK_FLAG = "screenlock";
@@ -24,10 +26,33 @@ public class SharedPreferencesHelper {
 
     public static String getCurrentLanguage(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
-        return sharedPreferences.getString(LANG_PREF_FLAG, "");
+
+        String currentLanguage = sharedPreferences.getString(LANG_PREF_FLAG, "");
+
+        if (currentLanguage.isEmpty()) {
+            currentLanguage = "English";
+
+        } else if (Objects.equals(currentLanguage, "zh")) {
+            currentLanguage = "中国人";
+
+        } else if (Objects.equals(currentLanguage, "ru")) {
+            currentLanguage = "Русский";
+        }
+
+
+        return currentLanguage;
     }
 
     public static void setLanguage(Context context, String selectedLanguage) {
+
+        if (Objects.equals(selectedLanguage, "中国人")) {
+            selectedLanguage = "zh";
+        }
+
+        if (Objects.equals(selectedLanguage, "Русский")) {
+            selectedLanguage = "ru";
+        }
+
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 

@@ -89,15 +89,6 @@ public class MainViewActivity extends AppCompatActivity implements LanguageDialo
     @Override
     public void onPositiveButtonClicked(String[] list, int position) {
         String selectedLanguage = list[position];
-
-        if (Objects.equals(selectedLanguage, "中国人")) {
-            selectedLanguage = "zh";
-        }
-
-        if (Objects.equals(selectedLanguage, "Русский")) {
-            selectedLanguage = "ru";
-        }
-
         SharedPreferencesHelper.setLanguage(this, selectedLanguage);
     }
 
