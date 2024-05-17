@@ -1,11 +1,5 @@
 package com.gero.newpass.view.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricManager;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.security.crypto.EncryptedSharedPreferences;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,19 +16,25 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.ContextWrapper.NewPassContextWrapper;
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
+import com.gero.newpass.databinding.ActivityLoginBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.factory.ViewMoldelsFactory;
 import com.gero.newpass.repository.ResourceRepository;
+import com.gero.newpass.utilities.AnimationsUtility;
 import com.gero.newpass.utilities.StringHelper;
 import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.viewmodel.LoginViewModel;
-import com.gero.newpass.databinding.ActivityLoginBinding;
 
 import java.util.Locale;
 
@@ -65,7 +65,9 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = new ViewModelProvider(this, new ViewMoldelsFactory(new ResourceRepository(getApplicationContext()))).get(LoginViewModel.class);
 
-        loginViewModel.getLoginMessageLiveData().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+        loginViewModel.getLoginMessageLiveData().observe(this, message -> {
+            // Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
 
         loginViewModel.getLoginSuccessLiveData().observe(this, success -> {
             String savedPasswordSharedPreferences = encryptedSharedPreferences.getString("password", "");
@@ -75,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                 StringHelper.setSharedString(savedPasswordSharedPreferences);
                 startActivity(intent);
                 finish();
+            } else {
+                AnimationsUtility.errorAnimation(buttonRegisterOrUnlock, textViewRegisterOrUnlock);
             }
         });
 
