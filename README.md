@@ -93,7 +93,7 @@ I accept and appreciate community contributions to continually improve the appli
 ### Contributors Wall:
 
 <a href="https://github.com/6eero/NewPass/graphs/contributors">
-  <img alt="contributors graph" src=" " />
+  <img alt="contributors graph" src="https://contrib.rocks/image?repo=6eero/NewPass" />
 </a>
 <br>
 
