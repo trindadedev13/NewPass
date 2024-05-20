@@ -33,9 +33,7 @@
 
 # 📍Intro
 NewPass is a secure password management application designed to generate and store strong passwords locally on your device. With NewPass, you can create highly secure passwords for your accounts and services without the need to remember them.
-> To support our free open source project, please give it a star. ⭐
-> This means a lot to us. Thank you so much! [![GitHub Repo stars](https://img.shields.io/github/stars/6eero/NewPass?style=social)](https://github.com/6eero/NewPass/stargazers)
-<br>
+> ⚠️ Please refrain from storing your passwords in NewPass at the moment, as it is currently undergoing active development and may not be completely secure. It's advisable to use NewPass solely for testing purposes and contributions until its security has been thoroughly vetted. ⚠️
 
 ## 🗝️ Key Features:
 - **Password Generation**: NewPass provides a robust password generator that allows you to create complex and secure passwords tailored to your specific requirements. You can customize the length and the character set (Uppercase, Numbers and Special).
