@@ -3,13 +3,6 @@ package com.gero.newpass.view.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -19,6 +12,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.gero.newpass.R;
 import com.gero.newpass.databinding.FragmentAddPasswordBinding;
@@ -79,12 +78,12 @@ public class AddPasswordFragment extends Fragment {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                     return true;
                 case MotionEvent.ACTION_UP:
                     v.performClick();
                     addViewModel.addEntry(name, email, password);
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
                     return true;
             }
             return false;

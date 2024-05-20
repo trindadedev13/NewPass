@@ -10,13 +10,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.security.crypto.EncryptedSharedPreferences;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +17,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
@@ -91,7 +90,7 @@ public class SettingsFragment extends Fragment {
             switch (position) {
 
                 case CHANGE_LANGUAGE:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
 
                     DialogFragment languageDialogFragment = new LanguageDialogFragment();
                     languageDialogFragment.setCancelable(false);
@@ -100,12 +99,12 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case CHANGE_PASSWORD:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
                     showChangePasswordDialog();
                     break;
 
                 case EXPORT:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
 
                     Intent intentExport = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                     intentExport.addCategory(Intent.CATEGORY_OPENABLE);
@@ -117,7 +116,7 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case IMPORT:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
 
                     Intent intentImport = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intentImport.addCategory(Intent.CATEGORY_OPENABLE);
@@ -128,7 +127,7 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case GITHUB:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
                     url = "https://github.com/6eero/NewPass";
                     intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(url));
@@ -136,7 +135,7 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case SHARE:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.settings_share_text));
@@ -144,7 +143,7 @@ public class SettingsFragment extends Fragment {
                     break;
 
                 case CONTACT:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
                     url = "https://t.me/geroED";
                     intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(url));
@@ -219,7 +218,7 @@ public class SettingsFragment extends Fragment {
                         Toast.makeText(requireContext(), R.string.password_must_be_at_least_4_characters_long, Toast.LENGTH_SHORT).show();
 
                     } else if (!inputTwo.equals(inputThree)) {
-                            Toast.makeText(requireContext(), R.string.passwords_do_not_match, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.passwords_do_not_match, Toast.LENGTH_SHORT).show();
 
                     } else {
                         //Log.i("2895124", "Incorrect password");
@@ -264,13 +263,12 @@ public class SettingsFragment extends Fragment {
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri fileURL;
 
-        if ( resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT) {
                 if (data != null) {

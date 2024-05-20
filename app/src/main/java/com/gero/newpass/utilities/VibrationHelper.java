@@ -1,32 +1,27 @@
 package com.gero.newpass.utilities;
 
-import android.content.Context;
-import android.os.Vibrator;
+import android.view.HapticFeedbackConstants;
+import android.view.View;
+
 
 public class VibrationHelper {
 
-    public static void vibrate(Context context, long milliseconds) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (vibrator != null) {
-            if (vibrator.hasVibrator()) {
-                vibrator.vibrate(milliseconds);
-            }
-        }
+    /**
+     * Types of vibration.
+     */
+    public enum VibrationType {
+        Weak, Strong
     }
 
-    public static void vibratePattern(Context context, long[] pattern, int repeat) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (vibrator != null) {
-            if (vibrator.hasVibrator()) {
-                vibrator.vibrate(pattern, repeat);
-            }
+    public static void vibrate(View view, VibrationType type) {
+        switch (type) {
+            case Weak:
+                view.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
+                break;
+            case Strong:
+                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                break;
         }
-    }
 
-    public static void cancelVibration(Context context) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (vibrator != null) {
-            vibrator.cancel();
-        }
     }
 }

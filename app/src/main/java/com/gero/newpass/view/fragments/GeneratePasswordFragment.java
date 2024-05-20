@@ -53,7 +53,7 @@ public class GeneratePasswordFragment extends Fragment {
         generatePasswordViewModel = new ViewModelProvider(this).get(GeneratePasswordViewModel.class);
 
         buttonRegenerate.setOnClickListener(v -> {
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+           VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
             generatePasswordViewModel.generatePassword();
         });
 
@@ -67,7 +67,7 @@ public class GeneratePasswordFragment extends Fragment {
 
         textViewPassword.setOnClickListener(v -> {
             copyToClipboard(textViewPassword.getText().toString());
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
             Toast.makeText(this.getContext(), R.string.generate_text_copied_to_clipboard, Toast.LENGTH_SHORT).show();
         });
 
@@ -76,7 +76,7 @@ public class GeneratePasswordFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 generatePasswordViewModel.setPasswordLength(progress);
-                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
                 textViewLength.setText("[" + progress + "]");
             }
 
@@ -93,15 +93,15 @@ public class GeneratePasswordFragment extends Fragment {
 
 
         buttonUppercase.setOnClickListener(v -> {
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
             generatePasswordViewModel.toggleUppercase();
         });
         buttonNumber.setOnClickListener(v -> {
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
             generatePasswordViewModel.toggleNumber();
     });
         buttonSpecial.setOnClickListener(v -> {
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
             generatePasswordViewModel.toggleSpecial();
         });
 

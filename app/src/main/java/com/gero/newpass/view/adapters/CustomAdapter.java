@@ -69,8 +69,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.row_email_txt.setText(email);
 
         holder.mainLayout.setOnClickListener(view -> {
-
-            VibrationHelper.vibrate(this.context, context.getResources().getInteger(R.integer.vibration_duration0));
+            VibrationHelper.vibrate(view, VibrationHelper.VibrationType.Weak);
 
             UpdatePasswordFragment updatePasswordFragment = new UpdatePasswordFragment();
             Bundle args = new Bundle();

@@ -90,12 +90,12 @@ public class UpdatePasswordFragment extends Fragment {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                     return true;
                 case MotionEvent.ACTION_UP:
                     v.performClick();
                     updateViewModel.updateEntry(entry, name, email, password);
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                     return true;
             }
             return false;
@@ -119,7 +119,7 @@ public class UpdatePasswordFragment extends Fragment {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                     return true;
                 case MotionEvent.ACTION_UP:
                     v.performClick();
@@ -142,7 +142,7 @@ public class UpdatePasswordFragment extends Fragment {
                     });
                     builder.create().show();
 
-                    VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                     return true;
             }
             return false;
@@ -163,13 +163,13 @@ public class UpdatePasswordFragment extends Fragment {
 
         copyButtonPassword.setOnClickListener(v -> {
             copyToClipboard(passwordInput.getText().toString().trim());
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
             Toast.makeText(this.getContext(), R.string.update_password_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
 
         copyButtonEmail.setOnClickListener(v -> {
             copyToClipboard(email_input.getText().toString().trim());
-            VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration2));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
             Toast.makeText(this.getContext(), R.string.update_email_copied_to_the_clipboard, Toast.LENGTH_SHORT).show();
         });
 
