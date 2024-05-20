@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.getLoginSuccessLiveData().observe(this, state -> {
                     Log.w("23057", String.valueOf(state));
 
-                    if(!state) {
+                    if (!state) {
 
                         hideUI(false);
                         loginWithPassword(view);
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonRegisterOrUnlock.setOnClickListener(v -> {
             String passwordInput = passwordEntry.getText().toString();
             loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
-            VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
         });
     }
 
@@ -192,12 +192,12 @@ public class LoginActivity extends AppCompatActivity {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration0));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                     return true;
                 case MotionEvent.ACTION_UP:
                     v.performClick();
                     loginViewModel.loginUserWithPassword(passwordInput, encryptedSharedPreferences);
-                    VibrationHelper.vibrate(this, getResources().getInteger(R.integer.vibration_duration1));
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
                     return true;
             }
             return false;

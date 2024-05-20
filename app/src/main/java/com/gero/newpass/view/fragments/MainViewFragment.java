@@ -68,7 +68,7 @@ public class MainViewFragment extends Fragment {
 
 
             buttonSettings.setOnClickListener(v -> {
-                VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                 ((MainViewActivity) activity).openFragment(new SettingsFragment());
             });
 
@@ -76,11 +76,11 @@ public class MainViewFragment extends Fragment {
             buttonAdd.setOnTouchListener((v, event) -> {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                        VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                         return true;
                     case MotionEvent.ACTION_UP:
                         v.performClick();
-                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                        VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
                         ((MainViewActivity) activity).openFragment(new AddPasswordFragment());
                         return true;
                 }
@@ -91,11 +91,11 @@ public class MainViewFragment extends Fragment {
             buttonGenerate.setOnTouchListener((v, event) -> {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration0));
+                        VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
                         return true;
                     case MotionEvent.ACTION_UP:
                         v.performClick();
-                        VibrationHelper.vibrate(requireContext(), getResources().getInteger(R.integer.vibration_duration1));
+                        VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
                         ((MainViewActivity) activity).openFragment(new GeneratePasswordFragment());
                         return true;
                 }

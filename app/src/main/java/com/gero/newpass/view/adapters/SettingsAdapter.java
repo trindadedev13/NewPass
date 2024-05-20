@@ -97,8 +97,7 @@ public class SettingsAdapter extends ArrayAdapter<SettingData> {
                 holder.switchView.setImageDrawable(ContextCompat.getDrawable(mContext, imageResource));
 
                 holder.switchView.setOnClickListener(v -> {
-                    VibrationHelper.vibrate(mContext, mContext.getResources().getInteger(R.integer.vibration_duration1));
-
+                    VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
 
                     switch (switchID) {
 
