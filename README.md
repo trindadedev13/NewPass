@@ -40,7 +40,7 @@ NewPass is a secure password management application designed to generate and sto
 
 - **Local Storage**: Your passwords are stored locally on your device, ensuring complete privacy and control over your data. NewPass does not store any passwords on external servers, minimizing the risk of unauthorized access (If you uninstall the app, your password are lost!).
 
-- **AES Encryption**: NewPass encrypts all stored passwords using Advanced Encryption Standard (AES) with Cipher Block Chaining (CBC) mode before saving them in the local database.
+- **AES Encryption**: NewPass encrypts all stored passwords using Advanced Encryption Standard (AES) with [Galois/Counter Mode](https://en.wikipedia.org/wiki/Galois/Counter_Mode) (GCM) to ensure integrity and confidentiality before saving them in the local database.
 
 - **SQLite Cipher**: NewPass utilizes SQLite Cipher, an extension for SQLite databases, to bolster security further by encrypting entirely the database, ensuring robust protection against unauthorized access. The encryption key is chosen by the user upon the first launch of the app, and it remains saved and encrypted in an EncryptedSharedPreferences. It is then requested every time the app is launched. 
 
