@@ -86,6 +86,11 @@ git clone https://github.com/6eero/NewPass.git
 
 ## 🫱🏻‍🫲🏼 Contributions and Development
 If you wish to contribute to the NewPass project or report bugs, see the Instructions in [CONTRIBUTING.md](https://github.com/6eero/NewPass/blob/master/CONTRIBUTING.md).
+
+### Contact us Securely
+If you discover a security vulnerability, please inform us promptly. We prioritize investigating all legitimate reports and are committed to resolving issues promptly. For secure communication, encrypt messages using [NewPass's GPG key](https://github.com/6eero/NewPass/blob/master/public_key.asc) and send it to 
+ `security@newpass.solutions`. Further guidance is available [here](https://github.com/6eero/NewPass/blob/master/SECURITY.md).
+ 
 I accept and appreciate community contributions to continually improve the application.
 
 ### Contributors Wall:
