@@ -37,6 +37,8 @@
                 android:text="Name 1"
                 android:textColor="@color/text_primary"
                 android:textSize="20dp"
+                android:maxLines="1"
+                android:lines="1"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/icon_entry"
                 app:layout_constraintTop_toTopOf="@+id/icon_entry" />
@@ -47,6 +49,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/jetbrainsmonoregular"
                 android:text="Email 1"
+                android:maxLines="1"
+                android:lines="1"
                 android:textColor="@color/text_secondary"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_entry"
                 app:layout_constraintStart_toStartOf="@+id/row_name_txt" />
