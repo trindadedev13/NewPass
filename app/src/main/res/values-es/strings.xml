@@ -61,7 +61,7 @@
     <string name="name_should_be_1_to">"El nombre debe tener de 1 a "</string>
     <string name="characters_long">" caracteres de longitud!"</string>
     <string name="email_should_be_0_to">"El correo debe tener de 0 a "</string>
-    <string name="password_should_be_4_to">"La contraseña debe tener de 4 a "</string>
+    <string name="password_should_be_at_least_4_ch_long">"La contraseña debe tener de 4 a "</string>
     <string name="login_done">Inicio de sesión realizado</string>
     <string name="access_denied">Acceso denegado</string>
     <string name="user_created_successfully">¡Usuario creado con éxito!</string>

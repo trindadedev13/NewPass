@@ -61,7 +61,7 @@
     <string name="name_should_be_1_to">"Имя должно быть от 1 "</string>
     <string name="characters_long">" знаков длиной!"</string>
     <string name="email_should_be_0_to">"Почта должна быть от 0 "</string>
-    <string name="password_should_be_4_to">"Пароль должен быть от 4 "</string>
+    <string name="password_should_be_at_least_4_ch_long">"Пароль должен быть от 4 "</string>
     <string name="login_done">Вы успешно вошли</string>
     <string name="access_denied">Неверный пароль</string>
     <string name="user_created_successfully">Пользователь успешно создан!</string>

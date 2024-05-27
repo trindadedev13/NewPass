@@ -33,12 +33,11 @@ public class AddViewModel extends ViewModel {
 
         int NAME_MAX_LENGTH = 30;
         int EMAIL_MAX_LENGTH = 30;
-        int PASSWORD_MAX_LENGTH = 30;
 
         if (
                 !name.isEmpty() && name.length() <= NAME_MAX_LENGTH &&
                         email.length() <= EMAIL_MAX_LENGTH &&
-                        password.length() >= 4 && password.length() <= PASSWORD_MAX_LENGTH
+                        password.length() >= 4
             ) {
 
                 if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
@@ -60,7 +59,7 @@ public class AddViewModel extends ViewModel {
                     messageLiveData.setValue(resourceRepository.getString(R.string.email_should_be_0_to) + EMAIL_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
 
                 } else {
-                    messageLiveData.setValue(resourceRepository.getString(R.string.password_should_be_4_to) + PASSWORD_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
+                    messageLiveData.setValue(resourceRepository.getString(R.string.password_must_be_at_least_4_characters_long));
                 }
             }
     }

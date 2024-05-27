@@ -62,7 +62,6 @@
     <string name="name_should_be_1_to">"Name should be 1 to "</string>
     <string name="characters_long">" characters long!"</string>
     <string name="email_should_be_0_to">"Email should be 0 to "</string>
-    <string name="password_should_be_4_to">"Password should be 4 to "</string>
     <string name="login_done">Login done</string>
     <string name="access_denied">Access Denied</string>
     <string name="user_created_successfully">User created successfully!</string>

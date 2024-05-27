@@ -37,12 +37,11 @@ public class UpdateViewModel extends ViewModel {
 
         int nameMaxLen = 30;
         int emailMaxLen = 30;
-        int passwordMaxLen = 30;
 
         if (
                 !name.isEmpty() && name.length() <= nameMaxLen &&
                         email.length() <= emailMaxLen &&
-                        password.length() >= 4 && password.length() <= passwordMaxLen
+                        password.length() >= 4
         ) {
             databaseHelper.updateData(entry, name, email, encryptedPassword);
             messageLiveData.setValue(resourceRepository.getString(R.string.dbhelper_updated_successfully));
@@ -58,7 +57,7 @@ public class UpdateViewModel extends ViewModel {
                 messageLiveData.setValue(resourceRepository.getString(R.string.email_should_be_0_to) + emailMaxLen + resourceRepository.getString(R.string.characters_long));
 
             } else {
-                messageLiveData.setValue(resourceRepository.getString(R.string.password_should_be_4_to) + passwordMaxLen + resourceRepository.getString(R.string.characters_long));
+                messageLiveData.setValue(resourceRepository.getString(R.string.password_must_be_at_least_4_characters_long));
             }
         }
     }

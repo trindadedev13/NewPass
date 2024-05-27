@@ -76,7 +76,7 @@
     <string name="name_should_be_1_to">"Il nome deve essere compreso tra 1 e "</string>
     <string name="characters_long">" caratteri"</string>
     <string name="email_should_be_0_to">"L'email deve essere compresa tra 0 e "</string>
-    <string name="password_should_be_4_to">"La password deve essere compresa tra 1 e "</string>
+    <string name="password_should_be_at_least_4_ch_long">"La password deve essere compresa tra 1 e "</string>
 
     <string name="login_done">Login effettuato</string>
     <string name="access_denied">Password errata</string>
