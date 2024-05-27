@@ -31,16 +31,9 @@ public class AddViewModel extends ViewModel {
 
     public void addEntry(String name, String email, String password) {
 
-        int NAME_MAX_LENGTH = 30;
-        int EMAIL_MAX_LENGTH = 30;
+        if (!name.isEmpty() && !email.isEmpty() && password.length() >= 4) {
 
-        if (
-                !name.isEmpty() && name.length() <= NAME_MAX_LENGTH &&
-                        email.length() <= EMAIL_MAX_LENGTH &&
-                        password.length() >= 4
-            ) {
-
-                if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
+            if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
                     messageLiveData.setValue(resourceRepository.getString(R.string.this_account_already_exists));
                     successLiveData.setValue(false);
 
@@ -52,11 +45,11 @@ public class AddViewModel extends ViewModel {
 
             } else {
                 successLiveData.setValue(false);
-                if (name.isEmpty() || name.length() > NAME_MAX_LENGTH) {
-                    messageLiveData.setValue(resourceRepository.getString(R.string.name_should_be_1_to)+ NAME_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
+                if (name.isEmpty()) {
+                    messageLiveData.setValue(resourceRepository.getString(R.string.name_should_not_be_empty));
 
-                } else if (email.length() < 4 || email.length() > EMAIL_MAX_LENGTH) {
-                    messageLiveData.setValue(resourceRepository.getString(R.string.email_should_be_0_to) + EMAIL_MAX_LENGTH + resourceRepository.getString(R.string.characters_long));
+                } else if (email.isEmpty()) {
+                    messageLiveData.setValue(resourceRepository.getString(R.string.email_should_not_be_empty));
 
                 } else {
                     messageLiveData.setValue(resourceRepository.getString(R.string.password_must_be_at_least_4_characters_long));

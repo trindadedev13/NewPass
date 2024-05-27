@@ -98,4 +98,6 @@
     <string name="language_changed">Language changed. Restart to see the changes</string>
     <string name="reenter_the_new_password">Re-enter the Password</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="name_should_not_be_empty">Name should not be empty</string>
+    <string name="email_should_not_be_empty">Email/user should not be empty</string>
 </resources>

@@ -35,14 +35,7 @@ public class UpdateViewModel extends ViewModel {
 
         String encryptedPassword = EncryptionHelper.encrypt(password);
 
-        int nameMaxLen = 30;
-        int emailMaxLen = 30;
-
-        if (
-                !name.isEmpty() && name.length() <= nameMaxLen &&
-                        email.length() <= emailMaxLen &&
-                        password.length() >= 4
-        ) {
+        if (!name.isEmpty() && !email.isEmpty() && password.length() >= 4) {
             databaseHelper.updateData(entry, name, email, encryptedPassword);
             messageLiveData.setValue(resourceRepository.getString(R.string.dbhelper_updated_successfully));
             successUpdateLiveData.setValue(true);
@@ -50,11 +43,11 @@ public class UpdateViewModel extends ViewModel {
         } else {
             successUpdateLiveData.setValue(false);
 
-            if (name.isEmpty() || name.length() > nameMaxLen) {
-                messageLiveData.setValue(resourceRepository.getString(R.string.name_should_be_1_to)+ nameMaxLen + resourceRepository.getString(R.string.characters_long));
+            if (name.isEmpty()) {
+                messageLiveData.setValue(resourceRepository.getString(R.string.name_should_not_be_empty));
 
-            } else if (email.length() > emailMaxLen) {
-                messageLiveData.setValue(resourceRepository.getString(R.string.email_should_be_0_to) + emailMaxLen + resourceRepository.getString(R.string.characters_long));
+            } else if (email.isEmpty()) {
+                messageLiveData.setValue(resourceRepository.getString(R.string.email_should_not_be_empty));
 
             } else {
                 messageLiveData.setValue(resourceRepository.getString(R.string.password_must_be_at_least_4_characters_long));
