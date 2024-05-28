@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
-import com.gero.newpass.database.DatabaseServiceLocator;
 import com.gero.newpass.repository.ResourceRepository;
 
 import androidx.lifecycle.LiveData;
@@ -13,13 +12,11 @@ import androidx.lifecycle.ViewModel;
 
 public class AddViewModel extends ViewModel {
 
-    private final DatabaseHelper databaseHelper;
     private final MutableLiveData<String> messageLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> successLiveData = new MutableLiveData<>();
     private final ResourceRepository resourceRepository;
 
     public AddViewModel(ResourceRepository resourceRepository) {
-        this.databaseHelper = DatabaseServiceLocator.getDatabaseHelper();
         this.resourceRepository = resourceRepository;
     }
 
@@ -35,12 +32,12 @@ public class AddViewModel extends ViewModel {
 
         if (!name.isEmpty() && !email.isEmpty() && password.length() >= 4) {
 
-            if (databaseHelper.checkIfAccountAlreadyExist(name, email)) {
+            if (DatabaseHelper.checkIfAccountAlreadyExist(context, name, email)) {
                     messageLiveData.setValue(resourceRepository.getString(R.string.this_account_already_exists));
                     successLiveData.setValue(false);
 
                 } else  {
-                    databaseHelper.addEntry(context, name, email, password);
+                    DatabaseHelper.addEntry(context, name, email, password);
                     messageLiveData.setValue(resourceRepository.getString(R.string.account_added_successfully));
                     successLiveData.setValue(true);
                 }

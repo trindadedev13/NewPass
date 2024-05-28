@@ -177,8 +177,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return True if an account with the given name and email exists; otherwise, false.
      * @throws SQLiteException If there's an error accessing the database.
      */
-    public boolean checkIfAccountAlreadyExist(String name, String email) {
-        SQLiteDatabase db = this.getReadableDatabase(KEY_ENCRYPTION);
+    public static boolean checkIfAccountAlreadyExist(Context context, String name, String email) {
+        //SQLiteDatabase db = context.getReadableDatabase(KEY_ENCRYPTION);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
 
         String selection = COLUMN_NAME + " = ? AND " + COLUMN_EMAIL + " = ?";
         String[] selectionArgs = {name, email};
@@ -287,7 +288,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String email = jsonObject.getString(COLUMN_EMAIL);
                 String password = jsonObject.getString(COLUMN_PASSWORD);
 
-                addEntry(context, name, email, password);
+                if (!checkIfAccountAlreadyExist(context, name, email)) {
+                    addEntry(context, name, email, password);
+                }
+                else {
+                    Log.e("8953467", "entry: " + name + " " + email + " already exists");
+                }
             }
 
             Log.d("8953467", "Data imported from JSON to database successfully");
