@@ -35,9 +35,9 @@ import com.gero.newpass.view.adapters.SettingsAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SettingsFragment extends Fragment {
-    private static final int REQUEST_CODE_EXPORT_DOCUMENT = 1;
     private static final int REQUEST_CODE_IMPORT_DOCUMENT = 2;
     private ImageButton buttonBack;
     private FragmentSettingsBinding binding;
@@ -105,14 +105,7 @@ public class SettingsFragment extends Fragment {
 
                 case EXPORT:
                     VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
-
-                    Intent intentExport = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                    intentExport.addCategory(Intent.CATEGORY_OPENABLE);
-                    intentExport.setType("*/*");
-                    intentExport.putExtra(Intent.EXTRA_TITLE, "Password.db");
-
-                    startActivityForResult(intentExport, REQUEST_CODE_EXPORT_DOCUMENT);
-
+                    DatabaseHelper.exportDatabaseToJson(requireContext());
                     break;
 
                 case IMPORT:
@@ -245,14 +238,8 @@ public class SettingsFragment extends Fragment {
                     inputPassword = input.getText().toString();
                     //Log.i("32890457", inputPassword);
 
-                    try {
-
-                        DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
-                        //DatabaseHelper.encryptAllPasswords(requireContext());
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    //DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
+                    DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
 
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
@@ -270,18 +257,12 @@ public class SettingsFragment extends Fragment {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == REQUEST_CODE_EXPORT_DOCUMENT) {
-                if (data != null) {
-                    fileURL = data.getData();
-                    DatabaseHelper.exportDatabase(requireContext(), fileURL);
-                }
-            }
-
             if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT) {
                 if (data != null) {
                     fileURL = data.getData();
 
-                    showImportingDialog(fileURL);
+                    //showImportingDialog(fileURL);
+                    DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
                 }
             }
         }

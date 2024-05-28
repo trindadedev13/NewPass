@@ -82,7 +82,7 @@ public class AddPasswordFragment extends Fragment {
                     return true;
                 case MotionEvent.ACTION_UP:
                     v.performClick();
-                    addViewModel.addEntry(name, email, password);
+                    addViewModel.addEntry(requireContext(), name, email, password);
                     VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
                     return true;
             }

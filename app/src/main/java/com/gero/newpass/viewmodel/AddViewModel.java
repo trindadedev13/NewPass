@@ -1,5 +1,7 @@
 package com.gero.newpass.viewmodel;
 
+import android.content.Context;
+
 import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.database.DatabaseServiceLocator;
@@ -29,7 +31,7 @@ public class AddViewModel extends ViewModel {
         return successLiveData;
     }
 
-    public void addEntry(String name, String email, String password) {
+    public void addEntry(Context context, String name, String email, String password) {
 
         if (!name.isEmpty() && !email.isEmpty() && password.length() >= 4) {
 
@@ -38,7 +40,7 @@ public class AddViewModel extends ViewModel {
                     successLiveData.setValue(false);
 
                 } else  {
-                    databaseHelper.addEntry(name, email, password);
+                    databaseHelper.addEntry(context, name, email, password);
                     messageLiveData.setValue(resourceRepository.getString(R.string.account_added_successfully));
                     successLiveData.setValue(true);
                 }
