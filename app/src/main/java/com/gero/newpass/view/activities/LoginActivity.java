@@ -2,6 +2,7 @@ package com.gero.newpass.view.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -17,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.core.content.ContextCompat;
@@ -93,6 +96,10 @@ public class LoginActivity extends AppCompatActivity {
         if (!isPasswordEmpty) {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
             welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
+
+        } else {
+            AlertDialog dialog = getAlertDialog();
+            dialog.show();
         }
 
         buttonPasswordVisibility.setOnClickListener(v -> {
@@ -110,6 +117,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
         buttonRegisterOrUnlockListener(buttonRegisterOrUnlock, isPasswordEmpty);
+    }
+
+    @NonNull
+    private AlertDialog getAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.welcome_newpass_text);
+        builder.setMessage(R.string.caution_message);
+        builder.setPositiveButton(R.string.continue_button, (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
