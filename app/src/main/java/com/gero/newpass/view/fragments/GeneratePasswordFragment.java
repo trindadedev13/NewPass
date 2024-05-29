@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +63,20 @@ public class GeneratePasswordFragment extends Fragment {
         generatePasswordViewModel.generatePassword();
 
         generatePasswordViewModel.getPasswordLiveData().observe(getViewLifecycleOwner(), newPassword -> {
-            textViewPassword.setText(newPassword);
+
+            // Crea una nuova SpannableString dalla stringa di input
+            SpannableString spannableString = new SpannableString(newPassword);
+
+            // Identifica i caratteri speciali e imposta il colore accent
+            for (int i = 0; i < newPassword.length(); i++) {
+                char c = newPassword.charAt(i);
+                if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
+                    // Carattere speciale trovato, impostane il colore
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.accent)), i, i + 1, 0);
+                }
+            }
+
+            textViewPassword.setText(spannableString);
             textViewLength.setText("[" + newPassword.length() + "]");
         });
 
