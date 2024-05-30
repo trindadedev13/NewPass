@@ -1,5 +1,8 @@
 package com.gero.newpass.viewmodel;
 
+import android.util.Log;
+import android.widget.ImageView;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,6 +11,10 @@ import java.security.SecureRandom;
 
 public class GeneratePasswordViewModel extends ViewModel {
 
+    private final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+    private final String NUMBERS = "0123456789";
+    private final String SPECIALS = "?#%{}@!$()[]";
     private final MutableLiveData<String> passwordLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> uppercaseStateLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> numberStateLiveData = new MutableLiveData<>();
@@ -15,7 +22,7 @@ public class GeneratePasswordViewModel extends ViewModel {
     private boolean uppercase = true;
     private boolean number = true;
     private boolean special = false;
-    private int length = 14;
+    private int length = 12;
 
     public GeneratePasswordViewModel() {
         generatePassword();
@@ -47,30 +54,57 @@ public class GeneratePasswordViewModel extends ViewModel {
         generatePassword();
     }
 
-    public void toggleUppercase() {
+    public int toggleUppercase(int optionsPerPosition) {
+        //Log.w("8953467", "entropy in ingresso: " + entropy);
         uppercase = !uppercase;
         uppercaseStateLiveData.setValue(uppercase);
         generatePassword();
+
+        if (uppercase) {
+            optionsPerPosition = optionsPerPosition + UPPERCASE.length();
+        } else {
+            optionsPerPosition = optionsPerPosition - UPPERCASE.length();
+        }
+        Log.w("8953467", "entropy in uscita: " + optionsPerPosition);
+        return optionsPerPosition;
     }
 
-    public void toggleNumber() {
+    public int toggleNumber(int optionsPerPosition) {
+        //Log.w("8953467", "optionsPerPosition in ingresso: " + optionsPerPosition);
         number = !number;
         numberStateLiveData.setValue(number);
         generatePassword();
+
+        if (number) {
+            optionsPerPosition = optionsPerPosition + NUMBERS.length();
+        } else {
+            optionsPerPosition = optionsPerPosition - NUMBERS.length();
+        }
+        Log.w("8953467", "optionsPerPosition in uscita: " + optionsPerPosition);
+        return optionsPerPosition;
     }
 
-    public void toggleSpecial() {
+    public int toggleSpecial(int optionsPerPosition) {
+        //Log.w("8953467", "optionsPerPosition in ingresso: " + optionsPerPosition);
         special = !special;
         specialStateLiveData.setValue(special);
         generatePassword();
+
+        if (special) {
+            optionsPerPosition = optionsPerPosition + SPECIALS.length();
+        } else {
+            optionsPerPosition = optionsPerPosition - SPECIALS.length();
+        }
+        Log.w("8953467", "optionsPerPosition in uscita: " + optionsPerPosition);
+        return optionsPerPosition;
     }
 
     private String generateRandomPassword(int length, boolean uppercase, boolean number, boolean special) {
 
-        String charSet1 = (uppercase) ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "";
-        String charSet2 = "abcdefghijklmnopqrstuvwxyz";
-        String charSet3 = (number) ? "0123456789" : "";
-        String charSet4 = (special) ? "?#%{}@!$()[]" : "";
+        String charSet1 = (uppercase) ? UPPERCASE : "";
+        String charSet2 = LOWERCASE;
+        String charSet3 = (number) ? NUMBERS : "";
+        String charSet4 = (special) ? SPECIALS : "";
 
 
         String characters = charSet1 + charSet2 + charSet3 + charSet4;

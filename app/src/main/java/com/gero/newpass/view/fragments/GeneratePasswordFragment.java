@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,10 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +31,20 @@ import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
 
+import java.util.Locale;
+
 
 public class GeneratePasswordFragment extends Fragment {
 
     private GeneratePasswordViewModel generatePasswordViewModel;
     private SeekBar seekBar;
-    private TextView textViewLength, textViewPassword;
+    private TextView textViewLength, textViewPassword, textViewEntropy;
     private ImageButton buttonUppercase, buttonNumber, buttonSpecial;
     private ImageButton buttonRegenerate, backButton;
     private FragmentGeneratePasswordBinding binding;
+    private int optionsPerPosition = 26+26+10;
+    private ImageView warningImageView;
+    private int positions = 12;
 
 
     @Override
@@ -64,20 +70,23 @@ public class GeneratePasswordFragment extends Fragment {
 
         generatePasswordViewModel.getPasswordLiveData().observe(getViewLifecycleOwner(), newPassword -> {
 
-            // Crea una nuova SpannableString dalla stringa di input
+
             SpannableString spannableString = new SpannableString(newPassword);
 
-            // Identifica i caratteri speciali e imposta il colore accent
-            for (int i = 0; i < newPassword.length(); i++) {
+            positions = newPassword.length();
+
+            for (int i = 0; i < positions; i++) {
                 char c = newPassword.charAt(i);
                 if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
-                    // Carattere speciale trovato, impostane il colore
                     spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.accent)), i, i + 1, 0);
                 }
             }
 
             textViewPassword.setText(spannableString);
-            textViewLength.setText("[" + newPassword.length() + "]");
+            textViewLength.setText("[" + positions + "]");
+
+            // TODO: Show entropy level
+            calculateAndSetEntropyLevel(optionsPerPosition, positions);
         });
 
 
@@ -110,15 +119,18 @@ public class GeneratePasswordFragment extends Fragment {
 
         buttonUppercase.setOnClickListener(v -> {
             VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
-            generatePasswordViewModel.toggleUppercase();
+            optionsPerPosition = generatePasswordViewModel.toggleUppercase(optionsPerPosition);
+            calculateAndSetEntropyLevel(optionsPerPosition, positions);
         });
         buttonNumber.setOnClickListener(v -> {
             VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
-            generatePasswordViewModel.toggleNumber();
+            optionsPerPosition = generatePasswordViewModel.toggleNumber(optionsPerPosition);
+            calculateAndSetEntropyLevel(optionsPerPosition, positions);
     });
         buttonSpecial.setOnClickListener(v -> {
             VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
-            generatePasswordViewModel.toggleSpecial();
+            optionsPerPosition = generatePasswordViewModel.toggleSpecial(optionsPerPosition);
+            calculateAndSetEntropyLevel(optionsPerPosition, positions);
         });
 
         generatePasswordViewModel.getUppercaseStateLiveData().observe(getViewLifecycleOwner(), uppercaseState -> {
@@ -145,6 +157,18 @@ public class GeneratePasswordFragment extends Fragment {
         });
     }
 
+    private void calculateAndSetEntropyLevel(int optionsPerPosition, int positions) {
+        double entropyLevel = Math.log(Math.pow(optionsPerPosition, positions))/(Math.log(2));
+        Log.i("8953467", "optionsPerPosition: " + optionsPerPosition + "        entropyLevel: " + entropyLevel);
+
+        textViewEntropy.setText(String.format(Locale.US, "%.2f", entropyLevel));
+        if (entropyLevel < 71.45) {
+            warningImageView.setVisibility(View.VISIBLE);
+        } else {
+            warningImageView.setVisibility(View.GONE);
+        }
+    }
+
     private void copyToClipboard(String text) {
 
         ClipboardManager clipboardManager = (ClipboardManager) this.requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -162,5 +186,7 @@ public class GeneratePasswordFragment extends Fragment {
         buttonSpecial = binding.buttonSpecial1;
         buttonRegenerate = binding.buttonRegenerate;
         backButton = binding.backButton;
+        textViewEntropy = binding.textViewEntropy;
+        warningImageView = binding.imageViewWarning;
     }
 }
