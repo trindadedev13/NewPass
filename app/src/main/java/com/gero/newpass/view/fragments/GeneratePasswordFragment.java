@@ -39,7 +39,7 @@ public class GeneratePasswordFragment extends Fragment {
     private GeneratePasswordViewModel generatePasswordViewModel;
     private SeekBar seekBar;
     private TextView textViewLength, textViewPassword, textViewEntropy;
-    private ImageButton buttonUppercase, buttonNumber, buttonSpecial;
+    private ImageButton buttonUppercase, buttonLowercase, buttonNumber, buttonSpecial;
     private ImageButton buttonRegenerate, backButton;
     private FragmentGeneratePasswordBinding binding;
     private int optionsPerPosition = 26+26+10;
@@ -85,15 +85,20 @@ public class GeneratePasswordFragment extends Fragment {
             textViewPassword.setText(spannableString);
             textViewLength.setText("[" + positions + "]");
 
-            // TODO: Show entropy level
             calculateAndSetEntropyLevel(optionsPerPosition, positions);
         });
 
 
         textViewPassword.setOnClickListener(v -> {
-            copyToClipboard(textViewPassword.getText().toString());
-            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
-            Toast.makeText(this.getContext(), R.string.generate_text_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+            if ( Boolean.TRUE.equals(generatePasswordViewModel.getUppercaseStateLiveData().getValue()) ||
+                    Boolean.TRUE.equals(generatePasswordViewModel.getLowercaseStateLiveData().getValue()) ||
+                    Boolean.TRUE.equals(generatePasswordViewModel.getNumberStateLiveData().getValue()) ||
+                    Boolean.TRUE.equals(generatePasswordViewModel.getSpecialStateLiveData().getValue())
+            ) {
+                copyToClipboard(textViewPassword.getText().toString());
+                VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
+                Toast.makeText(this.getContext(), R.string.generate_text_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+            }
         });
 
 
@@ -122,6 +127,11 @@ public class GeneratePasswordFragment extends Fragment {
             optionsPerPosition = generatePasswordViewModel.toggleUppercase(optionsPerPosition);
             calculateAndSetEntropyLevel(optionsPerPosition, positions);
         });
+        buttonLowercase.setOnClickListener(v -> {
+            VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
+            optionsPerPosition = generatePasswordViewModel.toggleLowercase(optionsPerPosition);
+            calculateAndSetEntropyLevel(optionsPerPosition, positions);
+        });
         buttonNumber.setOnClickListener(v -> {
             VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Weak);
             optionsPerPosition = generatePasswordViewModel.toggleNumber(optionsPerPosition);
@@ -136,6 +146,11 @@ public class GeneratePasswordFragment extends Fragment {
         generatePasswordViewModel.getUppercaseStateLiveData().observe(getViewLifecycleOwner(), uppercaseState -> {
             int imageResource = (uppercaseState) ? R.drawable.btn_yes : R.drawable.btn_no;
             buttonUppercase.setImageDrawable(ContextCompat.getDrawable(this.requireActivity().getApplicationContext(), imageResource));
+        });
+
+        generatePasswordViewModel.getLowercaseStateLiveData().observe(getViewLifecycleOwner(), lowercaseState -> {
+            int imageResource = (lowercaseState) ? R.drawable.btn_yes : R.drawable.btn_no;
+            buttonLowercase.setImageDrawable(ContextCompat.getDrawable(this.requireActivity().getApplicationContext(), imageResource));
         });
 
         generatePasswordViewModel.getNumberStateLiveData().observe(getViewLifecycleOwner(), numberState -> {
@@ -159,7 +174,6 @@ public class GeneratePasswordFragment extends Fragment {
 
     private void calculateAndSetEntropyLevel(int optionsPerPosition, int positions) {
         double entropyLevel = Math.log(Math.pow(optionsPerPosition, positions))/(Math.log(2));
-        Log.i("8953467", "optionsPerPosition: " + optionsPerPosition + "        entropyLevel: " + entropyLevel);
 
         textViewEntropy.setText(String.format(Locale.US, "%.2f", entropyLevel));
         if (entropyLevel < 71.45) {
@@ -181,9 +195,10 @@ public class GeneratePasswordFragment extends Fragment {
         seekBar = binding.seekBar;
         textViewLength = binding.textViewLenghtValue;
         textViewPassword = binding.textViewPassword;
-        buttonUppercase = binding.buttonUppercase1;
-        buttonNumber = binding.buttonNumber1;
-        buttonSpecial = binding.buttonSpecial1;
+        buttonUppercase = binding.buttonUppercase;
+        buttonLowercase = binding.buttonLowercase;
+        buttonNumber = binding.buttonNumber;
+        buttonSpecial = binding.buttonSpecial;
         buttonRegenerate = binding.buttonRegenerate;
         backButton = binding.backButton;
         textViewEntropy = binding.textViewEntropy;

@@ -103,4 +103,5 @@
     <string name="continue_button">Continue</string>
     <string name="caution_message">⚠️ Please refrain from storing your passwords in NewPass at the moment, as it is currently undergoing active development and may not be completely secure.\n\nIt\'s advisable to use NewPass solely for testing purposes and contributions until its security has been thoroughly vetted. ⚠️</string>
     <string name="entropy">entropy:</string>
+    <string name="generate_lowercase">Lowercase</string>
 </resources>
