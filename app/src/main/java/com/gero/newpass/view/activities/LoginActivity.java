@@ -39,6 +39,8 @@ import com.gero.newpass.utilities.SystemBarColorHelper;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.viewmodel.LoginViewModel;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
@@ -73,11 +75,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginViewModel.getLoginSuccessLiveData().observe(this, success -> {
-            String savedPasswordSharedPreferences = encryptedSharedPreferences.getString("password", "");
+            String hashedPassword = encryptedSharedPreferences.getString("password", "");
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainViewActivity.class);
-                StringHelper.setSharedString(savedPasswordSharedPreferences);
+                StringHelper.setSharedString(hashedPassword);
                 startActivity(intent);
                 finish();
             } else {
@@ -90,8 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         //Determining whether to set dark or light mode based on shared preferences
         SharedPreferencesHelper.toggleDarkLightModeUI(this);
 
-        String password = encryptedSharedPreferences.getString("password", "");
-        Boolean isPasswordEmpty = password.isEmpty();
+        String hashedPassword = encryptedSharedPreferences.getString("password", "");
+        Boolean isPasswordEmpty = hashedPassword.isEmpty();
 
         if (!isPasswordEmpty) {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
@@ -179,7 +181,11 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonRegisterOrUnlock.setOnClickListener(v -> {
             String passwordInput = passwordEntry.getText().toString();
-            loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
+            try {
+                loginViewModel.createUser(passwordInput, encryptedSharedPreferences);
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                throw new RuntimeException(e);
+            }
             VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
         });
     }
@@ -213,7 +219,11 @@ public class LoginActivity extends AppCompatActivity {
                     return true;
                 case MotionEvent.ACTION_UP:
                     v.performClick();
-                    loginViewModel.loginUserWithPassword(passwordInput, encryptedSharedPreferences);
+                    try {
+                        loginViewModel.loginUserWithPassword(passwordInput, encryptedSharedPreferences);
+                    } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                        throw new RuntimeException(e);
+                    }
                     VibrationHelper.vibrate(v, VibrationHelper.VibrationType.Strong);
                     return true;
             }

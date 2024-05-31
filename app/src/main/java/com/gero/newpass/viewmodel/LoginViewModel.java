@@ -15,8 +15,11 @@ import androidx.lifecycle.ViewModel;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
+import com.gero.newpass.encryption.PasswordUtils;
 import com.gero.newpass.repository.ResourceRepository;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.Executor;
 
 public class LoginViewModel extends ViewModel {
@@ -40,11 +43,11 @@ public class LoginViewModel extends ViewModel {
 
 
 
-    public void loginUserWithPassword(String password, EncryptedSharedPreferences sharedPreferences) {
+    public void loginUserWithPassword(String password, EncryptedSharedPreferences sharedPreferences) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        String savedPasswordSharedPreferences = sharedPreferences.getString("password", "");
+        String hashedPassword = sharedPreferences.getString("password", "");
 
-        if (savedPasswordSharedPreferences.equals(password)) {
+        if (PasswordUtils.verifyPassword(password, hashedPassword)) {
             loginSuccessLiveData.setValue(true);
             loginMessageLiveData.setValue(resourceRepository.getString(R.string.login_done));
         } else {
@@ -88,11 +91,13 @@ public class LoginViewModel extends ViewModel {
     }
 
 
-    public void createUser(String password, EncryptedSharedPreferences sharedPreferences) {
+    public void createUser(String password, EncryptedSharedPreferences sharedPreferences) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         if (password.length() >= 4) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("password", password);
+
+            String hashedPassword = PasswordUtils.hashPassword(password);
+            editor.putString("password", hashedPassword);
             editor.apply();
 
             loginSuccessLiveData.setValue(true);
