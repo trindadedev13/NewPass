@@ -19,10 +19,7 @@ public class PasswordUtils {
 
     public static String hashPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[SALT_LENGTH];
-        random.nextBytes(salt);
-
+        byte[] salt = getSalt();
 
         PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, HASH_LENGTH);
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -32,6 +29,14 @@ public class PasswordUtils {
         String hashBase64 = Base64.encodeToString(hash, Base64.NO_WRAP);
 
         return saltBase64 + ":" + hashBase64;
+    }
+
+    public static byte[] getSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[SALT_LENGTH];
+        random.nextBytes(salt);
+
+        return salt;
     }
 
     public static boolean verifyPassword(String password, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
