@@ -218,8 +218,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public static void exportDatabaseToJson(Context context) {
 
-        //TODO: Encrypt the database before exporting it
-
         SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -254,7 +252,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             File file = new File(exportDir,  "NewPass_Exported_DB_" +
                     calendar.get(Calendar.YEAR) +
                     "_"+(calendar.get(Calendar.MONTH)+1) +
-                    "_"+calendar.get(Calendar.DAY_OF_MONTH)
+                    "_"+calendar.get(Calendar.DAY_OF_MONTH) + ".json"
             );
 
             String jsonString = jsonArray.toString();
@@ -263,18 +261,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, KEY_ENCRYPTION);
             Log.d("8953467", "jsonEncryptedString: " + jsonEncryptedString);
 
-            String passwordGotFromUser = KEY_ENCRYPTION;
 
-            String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, passwordGotFromUser);
-            Log.d("8953467", "jsonDecyptedString: " + jsonDecryptedString);
-/*
             FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(jsonArray.toString());
+            fileWriter.write(jsonEncryptedString);
             fileWriter.flush();
             fileWriter.close();
             Log.d("8953467", "Database exported to JSON successfully");
 
- */
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         } finally {
             db.close();
         }
@@ -283,14 +279,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static void importJsonToDatabase(Context context, Uri fileUri) {
 
-        String jsonString = readJsonFromFile(context, fileUri);
-        if (jsonString == null) {
+        String passwordGotFromUser = KEY_ENCRYPTION;
+        String jsonEncryptedString = readJsonFromFile(context, fileUri);
+        String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, passwordGotFromUser);
+        Log.d("8953467", "jsonDecyptedString: " + jsonDecryptedString);
+
+        if (jsonDecryptedString == null) {
             Log.e("8953467", "Error reading JSON file");
             return;
         }
 
         try {
-            JSONArray jsonArray = new JSONArray(jsonString);
+            JSONArray jsonArray = new JSONArray(jsonDecryptedString);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
