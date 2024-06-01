@@ -9,13 +9,18 @@ import android.util.Log;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 
 public class EncryptionHelper {
@@ -27,6 +32,7 @@ public class EncryptionHelper {
     private static final String MODE = "AES/GCM/NoPadding";
     // The initialization vector (IV) length for GCM mode.
     private static final int GCM_IV_LENGTH = 12;
+    private static final int GCM_TAG_LENGTH = 16;
     // The key alias used to store the AES key in the Android Keystore.
     private static final String KEY_ALIAS = "MyAesKey";
 
@@ -150,5 +156,80 @@ public class EncryptionHelper {
         return encryptedSharedPreferences;
     }
 
+    public static String encryptDatabase(String jsonString, String keyEncryption) {
+        try {
+            // Hash the user-provided key to derive a key for encryption
+            String hashedPassword = HashUtils.hashPassword(keyEncryption);
+
+            // Split the hashed password to get the salt and hash
+            String[] parts = hashedPassword.split(":");
+            String saltBase64 = parts[0];
+            String hashBase64 = parts[1];
+
+            // Decode the Base64-encoded hash
+            byte[] hash = Base64.decode(hashBase64, Base64.NO_WRAP);
+
+            // Use the hash as the AES key
+            SecretKey secretKey = new SecretKeySpec(hash, "AES");
+
+            // Generate a random IV (nonce)
+            SecureRandom secureRandom = new SecureRandom();
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            secureRandom.nextBytes(iv);
+
+            // Create cipher instance and initialize it for encryption
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
+
+            // Encrypt the JSON string
+            byte[] encryptedBytes = cipher.doFinal(jsonString.getBytes(StandardCharsets.UTF_8));
+
+            // Encode the IV and encrypted bytes to Base64 strings
+            String ivBase64 = Base64.encodeToString(iv, Base64.NO_WRAP);
+            String encryptedString = Base64.encodeToString(encryptedBytes, Base64.NO_WRAP);
+
+            // Combine IV, salt, and encrypted string for storage
+            return ivBase64 + ":" + saltBase64 + ":" + encryptedString;
+        } catch (Exception e) {
+            Log.e("8953467", "error during encryption " , e);
+        }
+        return null; // return null if encryption fails
+    }
+
+    public static String decryptDatabase(String encryptedData, String keyEncryption) {
+        try {
+            // Split the input to get IV, salt, and encrypted data
+            String[] parts = encryptedData.split(":");
+            String ivBase64 = parts[0];
+            String saltBase64 = parts[1];
+            String encryptedString = parts[2];
+
+            // Decode the Base64-encoded IV, salt, and encrypted data
+            byte[] iv = Base64.decode(ivBase64, Base64.NO_WRAP);
+            byte[] salt = Base64.decode(saltBase64, Base64.NO_WRAP);
+            byte[] encryptedBytes = Base64.decode(encryptedString, Base64.NO_WRAP);
+
+            // Derive the key from the user-provided key and salt
+            PBEKeySpec spec = new PBEKeySpec(keyEncryption.toCharArray(), salt, HashUtils.ITERATIONS, HashUtils.HASH_LENGTH);
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            byte[] keyBytes = keyFactory.generateSecret(spec).getEncoded();
+            SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
+
+            // Create cipher instance and initialize it for decryption
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+
+            // Decrypt the encrypted data
+            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
+            // Convert decrypted bytes to string
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            Log.e("8953467", "error during decryption " , e);
+        }
+        return null; // return null if decryption fails
+    }
 }
 

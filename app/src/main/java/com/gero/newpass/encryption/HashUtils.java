@@ -1,21 +1,20 @@
 package com.gero.newpass.encryption;
 
 import android.util.Base64;
-import android.util.Log;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class PasswordUtils {
+public class HashUtils {
 
+    public static final int ITERATIONS = 10000;
     private static final int SALT_LENGTH = 16;   // in bytes (at least 16 bytes)
-    private static final int HASH_LENGTH = 256; // in bits
-    private static final int ITERATIONS = 10000;
+    public static final int HASH_LENGTH = 256; // in bits
+
 
     public static String hashPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 

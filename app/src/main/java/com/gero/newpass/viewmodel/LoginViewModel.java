@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
-import com.gero.newpass.encryption.PasswordUtils;
+import com.gero.newpass.encryption.HashUtils;
 import com.gero.newpass.repository.ResourceRepository;
 
 import java.security.NoSuchAlgorithmException;
@@ -47,7 +47,7 @@ public class LoginViewModel extends ViewModel {
 
         String hashedPassword = sharedPreferences.getString("password", "");
 
-        if (PasswordUtils.verifyPassword(password, hashedPassword)) {
+        if (HashUtils.verifyPassword(password, hashedPassword)) {
             loginSuccessLiveData.setValue(true);
             loginMessageLiveData.setValue(resourceRepository.getString(R.string.login_done));
         } else {
@@ -96,7 +96,7 @@ public class LoginViewModel extends ViewModel {
         if (password.length() >= 4) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            String hashedPassword = PasswordUtils.hashPassword(password);
+            String hashedPassword = HashUtils.hashPassword(password);
             editor.putString("password", hashedPassword);
             editor.apply();
 

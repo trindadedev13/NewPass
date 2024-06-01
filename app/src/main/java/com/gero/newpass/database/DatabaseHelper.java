@@ -257,13 +257,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "_"+calendar.get(Calendar.DAY_OF_MONTH)
             );
 
+            String jsonString = jsonArray.toString();
+            Log.d("8953467", "jsonString: " + jsonString);
+
+            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, "2718");
+            Log.d("8953467", "jsonEncryptedString: " + jsonEncryptedString);
+
+            String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, "2718");
+            Log.d("8953467", "jsonDecyptedString: " + jsonDecryptedString);
+/*
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(jsonArray.toString());
             fileWriter.flush();
             fileWriter.close();
             Log.d("8953467", "Database exported to JSON successfully");
-        } catch (IOException e) {
-            Log.e("8953467", "Error exporting database to JSON", e);
+
+ */
         } finally {
             db.close();
         }
