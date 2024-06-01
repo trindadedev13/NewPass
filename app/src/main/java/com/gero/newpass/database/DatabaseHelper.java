@@ -21,6 +21,7 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
+import com.gero.newpass.encryption.HashUtils;
 import com.gero.newpass.utilities.StringHelper;
 
 import org.json.JSONArray;
@@ -36,6 +37,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -49,7 +52,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EMAIL = "record_email";
     private static final String COLUMN_PASSWORD = "record_password";
     private static final String KEY_ENCRYPTION = StringHelper.getSharedString();
-    private static final String IMPORTED_DATABASE_NAME = "Password_backup.db";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -277,12 +279,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static void importJsonToDatabase(Context context, Uri fileUri) {
+    public static void importJsonToDatabase(Context context, Uri fileUri) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        String passwordGotFromUser = KEY_ENCRYPTION;
+        //String passwordGotFromUser = KEY_ENCRYPTION;
+        String passwordGotFromUser = HashUtils.hashPassword("");
         String jsonEncryptedString = readJsonFromFile(context, fileUri);
         String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, passwordGotFromUser);
-        Log.d("8953467", "jsonDecyptedString: " + jsonDecryptedString);
+        Log.d("8953467", "[] key encryption: " + KEY_ENCRYPTION);
+        Log.d("8953467", "[] jsonDecyptedString: " + passwordGotFromUser);
 
         if (jsonDecryptedString == null) {
             Log.e("8953467", "Error reading JSON file");

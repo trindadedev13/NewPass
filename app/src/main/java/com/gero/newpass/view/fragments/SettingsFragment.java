@@ -34,6 +34,8 @@ import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -239,7 +241,13 @@ public class SettingsFragment extends Fragment {
                     //Log.i("32890457", inputPassword);
 
                     //DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
-                    DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
+                    try {
+                        DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
+                    } catch (NoSuchAlgorithmException e) {
+                        throw new RuntimeException(e);
+                    } catch (InvalidKeySpecException e) {
+                        throw new RuntimeException(e);
+                    }
 
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
@@ -262,7 +270,11 @@ public class SettingsFragment extends Fragment {
                     fileURL = data.getData();
 
                     //showImportingDialog(fileURL);
-                    DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
+                    try {
+                        DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
+                    } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
