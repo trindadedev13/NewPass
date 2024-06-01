@@ -260,10 +260,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String jsonString = jsonArray.toString();
             Log.d("8953467", "jsonString: " + jsonString);
 
-            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, "2718");
+            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, KEY_ENCRYPTION);
             Log.d("8953467", "jsonEncryptedString: " + jsonEncryptedString);
 
-            String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, "2718");
+            String passwordGotFromUser = KEY_ENCRYPTION;
+
+            String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, passwordGotFromUser);
             Log.d("8953467", "jsonDecyptedString: " + jsonDecryptedString);
 /*
             FileWriter fileWriter = new FileWriter(file);
