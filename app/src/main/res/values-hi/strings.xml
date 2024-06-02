@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unlock_newpass_button_text">[न्यूपास को अनलॉक करें]</string>
     <string name="create_password_button_text">[पासवर्ड बनाएं]</string>
@@ -61,7 +62,6 @@
     <string name="name_should_be_1_to">"नाम 1 से "</string>
     <string name="characters_long">" वर्णों की लंबाई तक होना चाहिए!"</string>
     <string name="email_should_be_0_to">"ईमेल 0 से "</string>
-    <string name="password_should_be_at_least_4_ch_long">"पासवर्ड 4 से "</string>
     <string name="login_done">लॉगिन हो गया</string>
     <string name="access_denied">पहुंच अस्वीकृत</string>
     <string name="user_created_successfully">उपयोगकर्ता सफलतापूर्वक बनाया गया!</string>

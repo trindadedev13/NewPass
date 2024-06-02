@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unlock_newpass_button_text">[desbloquear NewPass]</string>
     <string name="create_password_button_text">[crear contraseña]</string>
@@ -61,7 +62,6 @@
     <string name="name_should_be_1_to">"El nombre debe tener de 1 a "</string>
     <string name="characters_long">" caracteres de longitud!"</string>
     <string name="email_should_be_0_to">"El correo debe tener de 0 a "</string>
-    <string name="password_should_be_at_least_4_ch_long">"La contraseña debe tener de 4 a "</string>
     <string name="login_done">Inicio de sesión realizado</string>
     <string name="access_denied">Acceso denegado</string>
     <string name="user_created_successfully">¡Usuario creado con éxito!</string>
@@ -97,6 +97,4 @@
     <string name="language_changed">Idioma cambiado. Reinicie para ver los cambios</string>
     <string name="reenter_the_new_password">Vuelve a introducir la contraseña</string>
     <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
-
-
 </resources>
