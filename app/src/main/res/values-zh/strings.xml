@@ -64,7 +64,6 @@
     <string name="name_should_be_1_to">"名称应为 1 至 "</string>
     <string name="characters_long">" 字符长！"</string>
     <string name="email_should_be_0_to">"电子邮件应为 0 至 "</string>
-    <string name="password_should_be_at_least_4_ch_long">"密码应为 4 至 "</string>
     <string name="login_done">登录完成</string>
     <string name="access_denied">访问被拒绝</string>
     <string name="user_created_successfully">用户已成功创建！</string>

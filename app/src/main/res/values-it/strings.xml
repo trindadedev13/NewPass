@@ -1,23 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--Login Activity-->
     <string name="unlock_newpass_button_text">[sblocca NewPass]</string>
     <string name="create_password_button_text">[crea password]</string>
     <string name="welcome_newpass_text">Benvenuto in\nNewpass!</string>
     <string name="welcome_back_newpass_text">Bentornato\nin NewPass!</string>
-
     <!--login.xml-->
     <string name="login_text">text</string>
     <string name="login_password">Password</string>
     <string name="login_button">TextView_button</string>
-
     <!--add.xml-->
     <string name="add_add">Aggiungi</string>
     <string name="add_btn_add">[aggiungi]</string>
     <string name="add_name">Nome</string>
     <string name="add_email">Email/Username</string>
     <string name="add_password">Password</string>
-
     <!--generate.xml-->
     <string name="generate_create">Crea</string>
     <string name="generate_a_password_for">Una password per il \ntuo reame digitale</string>
@@ -29,14 +26,12 @@
     <string name="generate_special_example">[?#%]</string>
     <string name="generate_number">Numeri</string>
     <string name="generate_number_example">[123]</string>
-
     <!--main.xml-->
     <string name="main_saved_password">Password\nSalvate</string>
     <string name="main__btn_add">[aggiungi]</string>
     <string name="main_btn_generate">[genera]</string>
     <string name="main_all">Tutti</string>
     <string name="main_no_data">[Vuoto]</string>
-
     <!--settings.xml-->
     <string name="settings_settings">Impostazioni</string>
     <string name="settings_about">[aspetto]</string>
@@ -46,7 +41,6 @@
     <string name="settings_change_language">Cambia lingua</string>
     <string name="settings_dark_theme">Luci Spente</string>
     <string name="settings_github">Respository su GitHub</string>
-
     <!--update.xml-->
     <string name="update_update">Aggiorna</string>
     <string name="update_name">Nome</string>
@@ -67,7 +61,6 @@
     <string name="update_password_copied_to_the_clipboard">Password copiata negli appunti</string>
     <string name="update_email_copied_to_the_clipboard">Email copiata negli appunti</string>
     <string name="update_no_data">Vuoto</string>
-
     <string name="text_copied_to_clipboard">Testo copiato negli appunti</string>
     <string name="languagedialog_select_your_choice">Seleziona la lingua</string>
     <string name="cancel">Indietro</string>
@@ -76,8 +69,6 @@
     <string name="name_should_be_1_to">"Il nome deve essere compreso tra 1 e "</string>
     <string name="characters_long">" caratteri"</string>
     <string name="email_should_be_0_to">"L'email deve essere compresa tra 0 e "</string>
-    <string name="password_should_be_at_least_4_ch_long">"La password deve essere compresa tra 1 e "</string>
-
     <string name="login_done">Login effettuato</string>
     <string name="access_denied">Password errata</string>
     <string name="user_created_successfully">Utente creato con successo</string>
@@ -113,6 +104,4 @@
     <string name="language_changed">Lingua cambiata. Riavvia per vedere le modifiche</string>
     <string name="reenter_the_new_password">Reinserisci la password</string>
     <string name="passwords_do_not_match">Le password non corrispondono</string>
-
-
 </resources>
