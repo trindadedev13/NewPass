@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,8 +67,13 @@ public class DialogHelper {
         builder.setTitle(R.string.export_database)
                 .setPositiveButton(R.string.confirm, (dialog, id) -> {
                     String password = input.getText().toString();
-                    Log.i("8953467", "Password got from the user: " + password);
-                    DatabaseHelper.exportDatabaseToJson(context, password);
+
+                    if (password.isEmpty()) {
+                        Toast.makeText(context, context.getString(R.string.password_cannot_be_empty), Toast.LENGTH_LONG).show();
+                    } else {
+                        DatabaseHelper.exportDatabaseToJson(context, password);
+                    }
+
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
 

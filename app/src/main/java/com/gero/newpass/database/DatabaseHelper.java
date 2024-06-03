@@ -248,20 +248,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "_" + calendar.get(Calendar.DAY_OF_MONTH) + ".json"
             );
 
+            if (file.exists()) {
+                Log.d("8953467", "file already exists");
+            } else {
+                Log.d("8953467", "file not exists");
+            }
+
             String jsonString = jsonArray.toString();
-            Log.d("8953467", "jsonString: " + jsonString);
-
             String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, passwordGotFromUser);
-            Log.d("8953467", "content of the exported database: " + jsonEncryptedString);
-
 
             FileWriter fileWriter = new FileWriter(file);
 
             fileWriter.write(jsonEncryptedString);
             fileWriter.flush();
             fileWriter.close();
-            Log.d("8953467", "Database exported to JSON successfully");
 
+            Log.d("8953467", "Database exported to JSON successfully");
             Toast.makeText(context, context.getString(R.string.database_successfully_exported_to) + " " + Environment.DIRECTORY_DOWNLOADS, Toast.LENGTH_LONG).show();
 
 

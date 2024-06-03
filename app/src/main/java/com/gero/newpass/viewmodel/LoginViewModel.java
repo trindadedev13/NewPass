@@ -48,8 +48,6 @@ public class LoginViewModel extends ViewModel {
 
         String hashedPassword = sharedPreferences.getString("password", "");
 
-        Log.w("8953467", "[LOGIN] hasedPassword from sp:" + hashedPassword);
-
         if (HashUtils.verifyPassword(password, hashedPassword)) {
             loginSuccessLiveData.setValue(true);
             loginMessageLiveData.setValue(resourceRepository.getString(R.string.login_done));
