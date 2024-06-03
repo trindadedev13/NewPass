@@ -104,4 +104,7 @@
     <string name="caution_message">⚠️ Please refrain from storing your passwords in NewPass at the moment, as it is currently undergoing active development and may not be completely secure.\n\nIt\'s advisable to use NewPass solely for testing purposes and contributions until its security has been thoroughly vetted. ⚠️</string>
     <string name="entropy">entropy:</string>
     <string name="generate_lowercase">Lowercase</string>
+    <string name="export_database">Export encrypted database</string>
+    <string name="invalid_key">Invalid key</string>
+    <string name="password_cannot_be_empty">Password can not be empty!</string>
 </resources>

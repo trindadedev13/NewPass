@@ -5,29 +5,34 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import com.gero.newpass.R;
+
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 
 public class EncryptionHelper {
 
     private static final String TAG = "EncryptionHelper";
     private static EncryptedSharedPreferences encryptedSharedPreferences = null;
-
-    // Use AES-GCM mode for encryption to ensure data integrity.
     private static final String MODE = "AES/GCM/NoPadding";
-    // The initialization vector (IV) length for GCM mode.
     private static final int GCM_IV_LENGTH = 12;
-    // The key alias used to store the AES key in the Android Keystore.
+    private static final int GCM_TAG_LENGTH = 16;
     private static final String KEY_ALIAS = "MyAesKey";
 
     /**
@@ -150,5 +155,68 @@ public class EncryptionHelper {
         return encryptedSharedPreferences;
     }
 
+    public static String encryptDatabase(String jsonString, String keyEncryption) {
+        try {
+
+            String hashedPassword = HashUtils.hashPassword(keyEncryption);
+
+            String[] parts = hashedPassword.split(":");
+            String saltBase64 = parts[0];
+            String hashBase64 = parts[1];
+
+            byte[] hash = Base64.decode(hashBase64, Base64.NO_WRAP);
+
+            SecretKey secretKey = new SecretKeySpec(hash, "AES");
+
+            SecureRandom secureRandom = new SecureRandom();
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            secureRandom.nextBytes(iv);
+
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
+
+            byte[] encryptedBytes = cipher.doFinal(jsonString.getBytes(StandardCharsets.UTF_8));
+
+            String ivBase64 = Base64.encodeToString(iv, Base64.NO_WRAP);
+            String encryptedString = Base64.encodeToString(encryptedBytes, Base64.NO_WRAP);
+
+            return ivBase64 + ":" + saltBase64 + ":" + encryptedString;
+        } catch (Exception e) {
+            Log.e("8953467", "error during encryption " , e);
+        }
+        return null;
+    }
+
+    public static String decryptDatabase(Context context, String encryptedData, String keyEncryption) {
+        try {
+
+            String[] parts = encryptedData.split(":");
+            String ivBase64 = parts[0];
+            String saltBase64 = parts[1];
+            String encryptedString = parts[2];
+
+            byte[] iv = Base64.decode(ivBase64, Base64.NO_WRAP);
+            byte[] salt = Base64.decode(saltBase64, Base64.NO_WRAP);
+            byte[] encryptedBytes = Base64.decode(encryptedString, Base64.NO_WRAP);
+
+            PBEKeySpec spec = new PBEKeySpec(keyEncryption.toCharArray(), salt, HashUtils.ITERATIONS, HashUtils.HASH_LENGTH);
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            byte[] keyBytes = keyFactory.generateSecret(spec).getEncoded();
+            SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+
+            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            Toast.makeText(context, R.string.invalid_key, Toast.LENGTH_LONG).show();
+            Log.e("8953467", "error during decryption " , e);
+        }
+        return null;
+    }
 }
 
