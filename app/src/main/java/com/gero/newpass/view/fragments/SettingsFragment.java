@@ -3,17 +3,15 @@ package com.gero.newpass.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,19 +23,15 @@ import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
-import com.gero.newpass.database.DatabaseHelper;
 import com.gero.newpass.databinding.FragmentSettingsBinding;
 import com.gero.newpass.encryption.EncryptionHelper;
 import com.gero.newpass.model.SettingData;
+import com.gero.newpass.utilities.DialogHelper;
 import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.view.adapters.SettingsAdapter;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class SettingsFragment extends Fragment {
     private static final int REQUEST_CODE_IMPORT_DOCUMENT = 2;
@@ -55,8 +49,6 @@ public class SettingsFragment extends Fragment {
     static final int SHARE = 7;
     static final int CONTACT = 8;
     static final int APP_VERSION = 9;
-    View dialogView;
-    private String inputPassword;
 
 
     @Override
@@ -102,12 +94,12 @@ public class SettingsFragment extends Fragment {
 
                 case CHANGE_PASSWORD:
                     VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
-                    showChangePasswordDialog();
+                    DialogHelper.showChangePasswordDialog(requireContext(), encryptedSharedPreferences);
                     break;
 
                 case EXPORT:
                     VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
-                    DatabaseHelper.exportDatabaseToJson(requireContext());
+                    DialogHelper.showExportingDialog(requireContext());
                     break;
 
                 case IMPORT:
@@ -116,9 +108,7 @@ public class SettingsFragment extends Fragment {
                     Intent intentImport = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intentImport.addCategory(Intent.CATEGORY_OPENABLE);
                     intentImport.setType("*/*");
-
                     startActivityForResult(intentImport, REQUEST_CODE_IMPORT_DOCUMENT);
-
                     break;
 
                 case GITHUB:
@@ -152,6 +142,7 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+
     private void createSettingsList(ArrayList<SettingData> arrayList) {
         arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, getString(R.string.settings_dark_theme), false, true, 1));
         arrayList.add(new SettingData(R.drawable.icon_open_lock, getString(R.string.use_screen_lock_to_unlock), false, true, 2));
@@ -173,7 +164,7 @@ public class SettingsFragment extends Fragment {
             PackageInfo packageInfo = packageManager.getPackageInfo(requireActivity().getPackageName(), 0);
             versionName = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            //Log.e("AppVersion", "Error getting app version", e);
+            Log.e("AppVersion", "Error getting app version", e);
         }
         return versionName;
     }
@@ -182,50 +173,6 @@ public class SettingsFragment extends Fragment {
         buttonBack = binding.backButton;
         listView = binding.listView;
     }
-
-    private void showChangePasswordDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_change_password, null);
-        builder.setView(dialogView);
-
-        EditText firstInput = dialogView.findViewById(R.id.first_input);
-        EditText secondInput = dialogView.findViewById(R.id.second_input);
-        EditText thirdInput = dialogView.findViewById(R.id.third_input);
-
-        builder.setTitle(R.string.settings_change_password)
-                .setPositiveButton(R.string.update_alertdialog_yes, (dialog, id) -> {
-
-                    String inputOne = firstInput.getText().toString();
-                    String inputTwo = secondInput.getText().toString();
-                    String inputThree = thirdInput.getText().toString();
-
-                    if (inputOne.equals(encryptedSharedPreferences.getString("password", "")) && inputTwo.length() >= 4 && inputTwo.equals(inputThree)) {
-                        //Log.i("2895124", "Correct password");
-
-                        SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-                        editor.putString("password", inputTwo);
-                        editor.apply();
-
-                        //Log.w("Database123", "psw in the encryptedsharedpref aka new key: " + encryptedSharedPreferences.getString("password", ""));
-                        DatabaseHelper.changeDBPassword(inputTwo, requireContext());
-                    } else if (inputTwo.length() < 4) {
-                        Toast.makeText(requireContext(), R.string.password_must_be_at_least_4_characters_long, Toast.LENGTH_SHORT).show();
-
-                    } else if (!inputTwo.equals(inputThree)) {
-                        Toast.makeText(requireContext(), R.string.passwords_do_not_match, Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        //Log.i("2895124", "Incorrect password");
-                        Toast.makeText(requireContext(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton(R.string.update_alertdialog_no, (dialog, id) -> dialog.cancel());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -238,41 +185,9 @@ public class SettingsFragment extends Fragment {
                 if (data != null) {
                     fileURL = data.getData();
 
-                    showImportingDialog(fileURL);
+                    DialogHelper.showImportingDialog(requireContext(), fileURL);
                 }
             }
         }
-    }
-
-
-    @SuppressLint("InflateParams")
-    private void showImportingDialog(Uri fileURL) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        LayoutInflater inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_import_db, null);
-        builder.setView(dialogView);
-        EditText input = dialogView.findViewById(R.id.input);
-
-        builder.setTitle(R.string.import_database)
-                .setPositiveButton(R.string.confirm, (dialog, id) -> {
-
-                    inputPassword = input.getText().toString();
-                    //Log.i("32890457", inputPassword);
-
-                    //DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
-                    try {
-                        DatabaseHelper.importJsonToDatabase(requireContext(), fileURL, inputPassword);
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
-                    } catch (InvalidKeySpecException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                })
-                .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }

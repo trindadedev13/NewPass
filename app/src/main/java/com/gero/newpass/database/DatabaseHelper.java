@@ -1,11 +1,8 @@
 package com.gero.newpass.database;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteException;
@@ -17,11 +14,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
 import com.gero.newpass.encryption.EncryptionHelper;
-import com.gero.newpass.encryption.HashUtils;
 import com.gero.newpass.utilities.StringHelper;
 
 import org.json.JSONArray;
@@ -30,17 +25,13 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Calendar;
-import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -82,10 +73,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Encrypts the password and adds a new entry with the given name, email, and (encrypted) password to the database.
      *
-     * @param context   The context to get the database of the application
-     * @param name      The name of the entry.
-     * @param email     The email of the entry.
-     * @param password  The password of the entry (it will be encrypted before being inserted into the database)
+     * @param context  The context to get the database of the application
+     * @param name     The name of the entry.
+     * @param email    The email of the entry.
+     * @param password The password of the entry (it will be encrypted before being inserted into the database)
      */
     public static void addEntry(Context context, String name, String email, String password) {
         //SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
@@ -145,7 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param email    The new value for the email column.
      * @param password The new value for the password column.
      */
-    public void updateData(String row_id, String name, String email, String password){
+    public void updateData(String row_id, String name, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
         ContentValues cv = new ContentValues();
 
@@ -164,7 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param rowId The ID of the row to be deleted.
      * @throws SQLiteException If there's an error accessing or updating the database.
      */
-    public void deleteOneRow(String rowId){
+    public void deleteOneRow(String rowId) {
         SQLiteDatabase db = this.getWritableDatabase(KEY_ENCRYPTION);
         db.delete(TABLE_NAME, "id=?", new String[]{rowId});
     }
@@ -218,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     @SuppressLint("Range")
-    public static void exportDatabaseToJson(Context context) {
+    public static void exportDatabaseToJson(Context context, String passwordGotFromUser) {
 
         SQLiteDatabase db = SQLiteDatabase.openDatabase(context.getDatabasePath(DATABASE_NAME).getAbsolutePath(), KEY_ENCRYPTION, null, SQLiteDatabase.OPEN_READWRITE);
 
@@ -251,17 +242,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             Calendar calendar = Calendar.getInstance();
 
-            File file = new File(exportDir,  "NewPass_Exported_DB_" +
+            File file = new File(exportDir, "Encrypted_NewPass_DB_" +
                     calendar.get(Calendar.YEAR) +
-                    "_"+(calendar.get(Calendar.MONTH)+1) +
-                    "_"+calendar.get(Calendar.DAY_OF_MONTH) + ".json"
+                    "_" + (calendar.get(Calendar.MONTH) + 1) +
+                    "_" + calendar.get(Calendar.DAY_OF_MONTH) + ".json"
             );
 
             String jsonString = jsonArray.toString();
             Log.d("8953467", "jsonString: " + jsonString);
 
-            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, key);
-            Log.d("8953467", "jsonEncryptedString: " + jsonEncryptedString);
+            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, passwordGotFromUser);
+            Log.d("8953467", "content of the exported database: " + jsonEncryptedString);
 
 
             FileWriter fileWriter = new FileWriter(file);
@@ -272,7 +263,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Log.e("8953467", "Error: ", e);
         } finally {
             db.close();
         }
@@ -281,47 +272,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static void importJsonToDatabase(Context context, Uri fileUri, String passwordGotFromUser) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        EncryptedSharedPreferences encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(context);
-        String hashedPassword = encryptedSharedPreferences.getString("password", "");
+        String jsonEncryptedString = readJsonFromFile(context, fileUri);
+        String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, passwordGotFromUser);
 
-        Log.w("8953467", "[EXPORT] hasedPassword from sp:" + hashedPassword);
+        if (jsonDecryptedString == null) {
+            Log.e("8953467", "Error reading JSON file");
+            return;
+        }
 
-        if(HashUtils.verifyPassword(passwordGotFromUser, hashedPassword)) {
-            Log.i("8953467", "[EXPORT] Password match");
+        try {
+            JSONArray jsonArray = new JSONArray(jsonDecryptedString);
 
-            String jsonEncryptedString = readJsonFromFile(context, fileUri);
-            String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, key);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-            if (jsonDecryptedString == null) {
-                Log.e("8953467", "Error reading JSON file");
-                return;
-            }
+                String name = jsonObject.getString(COLUMN_NAME);
+                String email = jsonObject.getString(COLUMN_EMAIL);
+                String password = jsonObject.getString(COLUMN_PASSWORD);
 
-            try {
-                JSONArray jsonArray = new JSONArray(jsonDecryptedString);
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                    String name = jsonObject.getString(COLUMN_NAME);
-                    String email = jsonObject.getString(COLUMN_EMAIL);
-                    String password = jsonObject.getString(COLUMN_PASSWORD);
-
-                    if (!checkIfAccountAlreadyExist(context, name, email)) {
-                        addEntry(context, name, email, password);
-                    }
-                    else {
-                        Log.e("8953467", "entry: " + name + " " + email + " already exists");
-                    }
+                if (!checkIfAccountAlreadyExist(context, name, email)) {
+                    addEntry(context, name, email, password);
+                } else {
+                    Log.e("8953467", "entry: " + name + " " + email + " already exists");
                 }
-
-                Log.d("8953467", "Data imported from JSON to database successfully");
-            } catch (JSONException e) {
-                Log.e("8953467", "Error parsing JSON", e);
             }
 
-        } else {
-            Log.e("8953467", "[EXPORT] Password not match");
+            Log.d("8953467", "Data imported from JSON to database successfully");
+        } catch (JSONException e) {
+            Log.e("8953467", "Error parsing JSON", e);
         }
     }
 
@@ -343,7 +321,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("8953467", "Error reading JSON file", e);
         }
         return null;
-        */
     }
 
 }
