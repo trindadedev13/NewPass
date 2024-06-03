@@ -105,4 +105,5 @@
     <string name="entropy">entropy:</string>
     <string name="generate_lowercase">Lowercase</string>
     <string name="export_database">Export encrypted database</string>
+    <string name="invalid_key">Invalid key</string>
 </resources>
