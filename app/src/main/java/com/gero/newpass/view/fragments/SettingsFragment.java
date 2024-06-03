@@ -226,6 +226,25 @@ public class SettingsFragment extends Fragment {
         dialog.show();
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri fileURL;
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT) {
+                if (data != null) {
+                    fileURL = data.getData();
+
+                    showImportingDialog(fileURL);
+                }
+            }
+        }
+    }
+
+
     @SuppressLint("InflateParams")
     private void showImportingDialog(Uri fileURL) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -242,7 +261,7 @@ public class SettingsFragment extends Fragment {
 
                     //DatabaseHelper.importDatabase(requireContext(), fileURL, inputPassword);
                     try {
-                        DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
+                        DatabaseHelper.importJsonToDatabase(requireContext(), fileURL, inputPassword);
                     } catch (NoSuchAlgorithmException e) {
                         throw new RuntimeException(e);
                     } catch (InvalidKeySpecException e) {
@@ -255,28 +274,5 @@ public class SettingsFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Uri fileURL;
-
-        if (resultCode == Activity.RESULT_OK) {
-
-            if (requestCode == REQUEST_CODE_IMPORT_DOCUMENT) {
-                if (data != null) {
-                    fileURL = data.getData();
-
-                    //showImportingDialog(fileURL);
-                    try {
-                        DatabaseHelper.importJsonToDatabase(requireContext(), fileURL);
-                    } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
     }
 }

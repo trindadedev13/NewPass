@@ -260,7 +260,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String jsonString = jsonArray.toString();
             Log.d("8953467", "jsonString: " + jsonString);
 
-            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, KEY_ENCRYPTION);
+            String jsonEncryptedString = EncryptionHelper.encryptDatabase(jsonString, key);
             Log.d("8953467", "jsonEncryptedString: " + jsonEncryptedString);
 
 
@@ -279,41 +279,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static void importJsonToDatabase(Context context, Uri fileUri) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static void importJsonToDatabase(Context context, Uri fileUri, String passwordGotFromUser) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        //String passwordGotFromUser = KEY_ENCRYPTION;
-        String passwordGotFromUser = HashUtils.hashPassword("");
-        String jsonEncryptedString = readJsonFromFile(context, fileUri);
-        String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, passwordGotFromUser);
-        Log.d("8953467", "[] key encryption: " + KEY_ENCRYPTION);
-        Log.d("8953467", "[] jsonDecyptedString: " + passwordGotFromUser);
+        EncryptedSharedPreferences encryptedSharedPreferences = EncryptionHelper.getEncryptedSharedPreferences(context);
+        String hashedPassword = encryptedSharedPreferences.getString("password", "");
 
-        if (jsonDecryptedString == null) {
-            Log.e("8953467", "Error reading JSON file");
-            return;
-        }
+        Log.w("8953467", "[EXPORT] hasedPassword from sp:" + hashedPassword);
 
-        try {
-            JSONArray jsonArray = new JSONArray(jsonDecryptedString);
+        if(HashUtils.verifyPassword(passwordGotFromUser, hashedPassword)) {
+            Log.i("8953467", "[EXPORT] Password match");
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String jsonEncryptedString = readJsonFromFile(context, fileUri);
+            String jsonDecryptedString = EncryptionHelper.decryptDatabase(jsonEncryptedString, key);
 
-                String name = jsonObject.getString(COLUMN_NAME);
-                String email = jsonObject.getString(COLUMN_EMAIL);
-                String password = jsonObject.getString(COLUMN_PASSWORD);
-
-                if (!checkIfAccountAlreadyExist(context, name, email)) {
-                    addEntry(context, name, email, password);
-                }
-                else {
-                    Log.e("8953467", "entry: " + name + " " + email + " already exists");
-                }
+            if (jsonDecryptedString == null) {
+                Log.e("8953467", "Error reading JSON file");
+                return;
             }
 
-            Log.d("8953467", "Data imported from JSON to database successfully");
-        } catch (JSONException e) {
-            Log.e("8953467", "Error parsing JSON", e);
+            try {
+                JSONArray jsonArray = new JSONArray(jsonDecryptedString);
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    String name = jsonObject.getString(COLUMN_NAME);
+                    String email = jsonObject.getString(COLUMN_EMAIL);
+                    String password = jsonObject.getString(COLUMN_PASSWORD);
+
+                    if (!checkIfAccountAlreadyExist(context, name, email)) {
+                        addEntry(context, name, email, password);
+                    }
+                    else {
+                        Log.e("8953467", "entry: " + name + " " + email + " already exists");
+                    }
+                }
+
+                Log.d("8953467", "Data imported from JSON to database successfully");
+            } catch (JSONException e) {
+                Log.e("8953467", "Error parsing JSON", e);
+            }
+
+        } else {
+            Log.e("8953467", "[EXPORT] Password not match");
         }
     }
 
@@ -335,5 +343,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("8953467", "Error reading JSON file", e);
         }
         return null;
+        */
     }
+
 }
