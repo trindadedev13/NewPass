@@ -15,6 +15,7 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.gero.newpass.R;
 import com.gero.newpass.database.DatabaseHelper;
+import com.gero.newpass.encryption.HashUtils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -33,22 +34,32 @@ public class DialogHelper {
 
         builder.setTitle(R.string.settings_change_password)
                 .setPositiveButton(R.string.update_alertdialog_yes, (dialog, id) -> {
-                    String inputOne = firstInput.getText().toString();
-                    String inputTwo = secondInput.getText().toString();
-                    String inputThree = thirdInput.getText().toString();
 
-                    if (inputOne.equals(encryptedSharedPreferences.getString("password", "")) && inputTwo.length() >= 4 && inputTwo.equals(inputThree)) {
-                        SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-                        editor.putString("password", inputTwo);
-                        editor.apply();
+                    String inputOldPassword = firstInput.getText().toString();
+                    String inputNewPassword = secondInput.getText().toString();
+                    String inputConfirmNewPassword = thirdInput.getText().toString();
 
-                        DatabaseHelper.changeDBPassword(inputTwo, context);
-                    } else if (inputTwo.length() < 4) {
-                        Toast.makeText(context, R.string.password_must_be_at_least_4_characters_long, Toast.LENGTH_SHORT).show();
-                    } else if (!inputTwo.equals(inputThree)) {
-                        Toast.makeText(context, R.string.passwords_do_not_match, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, R.string.wrong_password, Toast.LENGTH_SHORT).show();
+                    String hashedPasswordFromSharedPrefs = encryptedSharedPreferences.getString("password", "");
+
+                    try {
+                        if (HashUtils.verifyPassword(inputOldPassword, hashedPasswordFromSharedPrefs) && inputNewPassword.length() >= 4 && inputNewPassword.equals(inputConfirmNewPassword)) {
+
+                            SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+
+                            String hashedPassword = HashUtils.hashPassword(inputNewPassword);
+                            editor.putString("password", hashedPassword);
+                            editor.apply();
+
+                            DatabaseHelper.changeDBPassword(hashedPassword, context);
+                        } else if (inputNewPassword.length() < 4) {
+                            Toast.makeText(context, R.string.password_must_be_at_least_4_characters_long, Toast.LENGTH_SHORT).show();
+                        } else if (!inputNewPassword.equals(inputConfirmNewPassword)) {
+                            Toast.makeText(context, R.string.passwords_do_not_match, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, R.string.wrong_password, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                        throw new RuntimeException(e);
                     }
                 })
                 .setNegativeButton(R.string.update_alertdialog_no, (dialog, id) -> dialog.cancel());
