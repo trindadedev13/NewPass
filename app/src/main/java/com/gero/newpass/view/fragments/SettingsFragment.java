@@ -41,14 +41,17 @@ public class SettingsFragment extends Fragment {
     private String url;
     private Intent intent;
     private EncryptedSharedPreferences encryptedSharedPreferences;
+    static final int DARK_THEME = 0;
+    static final int LOCK_SCREEN = 1;
     static final int CHANGE_LANGUAGE = 2;
     static final int CHANGE_PASSWORD = 3;
     static final int EXPORT = 4;
     static final int IMPORT = 5;
-    static final int GITHUB = 6;
-    static final int SHARE = 7;
-    static final int CONTACT = 8;
-    static final int APP_VERSION = 9;
+    static final int WEBSITE = 6;
+    static final int GITHUB = 7;
+    static final int SHARE = 8;
+    static final int REPORT_ISSUE = 9;
+    static final int APP_VERSION = 10;
 
 
     @Override
@@ -111,6 +114,14 @@ public class SettingsFragment extends Fragment {
                     startActivityForResult(intentImport, REQUEST_CODE_IMPORT_DOCUMENT);
                     break;
 
+                case WEBSITE:
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
+                    url = "https://www.newpass.solutions/";
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+                    break;
+
                 case GITHUB:
                     VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
                     url = "https://github.com/6eero/NewPass";
@@ -127,9 +138,9 @@ public class SettingsFragment extends Fragment {
                     startActivity(Intent.createChooser(shareIntent, "Share with..."));
                     break;
 
-                case CONTACT:
+                case REPORT_ISSUE:
                     VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
-                    url = "https://t.me/geroED";
+                    url = "https://github.com/6eero/NewPass/blob/master/SECURITY.md";
                     intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(url));
                     startActivity(intent);
@@ -144,16 +155,17 @@ public class SettingsFragment extends Fragment {
 
 
     private void createSettingsList(ArrayList<SettingData> arrayList) {
-        arrayList.add(new SettingData(R.drawable.settings_icon_dark_theme, getString(R.string.settings_dark_theme), false, true, 1));
-        arrayList.add(new SettingData(R.drawable.icon_open_lock, getString(R.string.use_screen_lock_to_unlock), false, true, 2));
-        arrayList.add(new SettingData(R.drawable.settings_icon_language, getString(R.string.settings_change_language)));
-        arrayList.add(new SettingData(R.drawable.settings_icon_lock, getString(R.string.settings_change_password)));
-        arrayList.add(new SettingData(R.drawable.icon_export, getString(R.string.settings_export_db)));
-        arrayList.add(new SettingData(R.drawable.icon_import, getString(R.string.settings_import_db)));
-        arrayList.add(new SettingData(R.drawable.settings_icon_github, getString(R.string.settings_github), true));
-        arrayList.add(new SettingData(R.drawable.settings_icon_share, getString(R.string.settings_share_newpass), true));
-        arrayList.add(new SettingData(R.drawable.settings_icon_telegram, getString(R.string.settings_contact_me), true));
-        arrayList.add(new SettingData(R.drawable.settings_icon_version, getString(R.string.app_version) + getAppVersion()));
+        arrayList.add(new SettingData(DARK_THEME, R.drawable.settings_icon_dark_theme, getString(R.string.settings_dark_theme), false, true, 1));
+        arrayList.add(new SettingData(LOCK_SCREEN, R.drawable.icon_open_lock, getString(R.string.use_screen_lock_to_unlock), false, true, 2));
+        arrayList.add(new SettingData(CHANGE_LANGUAGE, R.drawable.settings_icon_language, getString(R.string.settings_change_language)));
+        arrayList.add(new SettingData(CHANGE_PASSWORD, R.drawable.settings_icon_lock, getString(R.string.settings_change_password)));
+        arrayList.add(new SettingData(EXPORT, R.drawable.icon_export, getString(R.string.settings_export_db)));
+        arrayList.add(new SettingData(IMPORT, R.drawable.icon_import, getString(R.string.settings_import_db)));
+        arrayList.add(new SettingData(WEBSITE, R.drawable.website, getString(R.string.website), true));
+        arrayList.add(new SettingData(GITHUB, R.drawable.settings_icon_github, getString(R.string.settings_github), true));
+        arrayList.add(new SettingData(SHARE, R.drawable.settings_icon_share, getString(R.string.settings_share_newpass), true));
+        arrayList.add(new SettingData(REPORT_ISSUE, R.drawable.report_issue, getString(R.string.report_an_issue_securely), true));
+        arrayList.add(new SettingData(APP_VERSION, R.drawable.settings_icon_version, getString(R.string.app_version) + getAppVersion()));
     }
 
     private String getAppVersion() {

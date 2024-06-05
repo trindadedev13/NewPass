@@ -300,7 +300,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (!checkIfAccountAlreadyExist(context, name, email)) {
                     addEntry(context, name, email, password);
                 } else {
-                    Log.e("8953467", "entry: " + name + " " + email + " already exists");
+                    Log.w("8953467", "entry: " + name + " " + email + " already exists");
                 }
             }
 

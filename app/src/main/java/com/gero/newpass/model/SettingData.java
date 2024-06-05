@@ -1,7 +1,7 @@
 package com.gero.newpass.model;
 
 public class SettingData {
-    private int image;
+    private int position, image;
     private String name;
     private Boolean isSwitchPresent;
     private Boolean isImagePresent;
@@ -16,7 +16,8 @@ public class SettingData {
 
     private int switchID;
 
-    public SettingData(int image, String name, boolean isImagePresent, Boolean isSwitchPresent, int switchID) {
+    public SettingData(int position, int image, String name, boolean isImagePresent, Boolean isSwitchPresent, int switchID) {
+        this.position = position;
         this.image = image;
         this.name = name;
         this.isImagePresent = isImagePresent;
@@ -24,14 +25,16 @@ public class SettingData {
         this.switchID = switchID;
     }
 
-    public SettingData(int image, String name, Boolean isImagePresent) {
+    public SettingData(int position, int image, String name, Boolean isImagePresent) {
+        this.position = position;
         this.image = image;
         this.name = name;
         this.isImagePresent = isImagePresent;
         isSwitchPresent = false;
     }
 
-    public SettingData(int image, String name) {
+    public SettingData(int position, int image, String name) {
+        this.position = position;
         this.image = image;
         this.name = name;
         isSwitchPresent = false;
