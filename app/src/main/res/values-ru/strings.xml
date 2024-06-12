@@ -97,4 +97,15 @@
     <string name="language_changed">Язык изменён. Перезапустите приложение, чтобы увидеть изменения</string>
     <string name="reenter_the_new_password">Введите пароль ещё раз</string>
     <string name="passwords_do_not_match">Пароли не совпадают</string>
+    <string name="name_should_not_be_empty">Имя не должно быть пустым</string>
+    <string name="email_should_not_be_empty">Электронная почта/пользователь не должны быть пустыми</string>
+    <string name="continue_button">Продолжить</string>
+    <string name="caution_message">⚠️ Пожалуйста, воздержитесь от хранения ваших паролей в NewPass на данный момент, так как он находится в активной разработке и может быть недостаточно безопасным.\n\nРекомендуется использовать NewPass исключительно для тестирования и внесения вклада, пока его безопасность не будет тщательно проверена. ⚠️</string>
+    <string name="entropy">энтропия:</string>
+    <string name="generate_lowercase">Строчные буквы</string>
+    <string name="export_database">Экспортировать зашифрованную базу данных</string>
+    <string name="invalid_key">Недействительный ключ</string>
+    <string name="password_cannot_be_empty">Пароль не может быть пустым!</string>
+    <string name="report_an_issue_securely">Сообщить о проблеме безопасно</string>
+    <string name="website">Веб-сайт</string>
 </resources>

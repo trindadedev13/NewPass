@@ -99,4 +99,15 @@
     <string name="language_changed">Dil değiştirildi. Değişiklikleri görmek için yeniden başlatın</string>
     <string name="reenter_the_new_password">Şifreyi Yeniden Girin</string>
     <string name="passwords_do_not_match">Şifreler eşleşmiyor</string>
+    <string name="name_should_not_be_empty">Ad boş olmamalı</string>
+    <string name="email_should_not_be_empty">E-posta/kullanıcı boş olmamalı</string>
+    <string name="continue_button">Devam</string>
+    <string name="caution_message">⚠️ Lütfen şu anda şifrelerinizi NewPass'te saklamaktan kaçının, çünkü şu anda aktif olarak geliştiriliyor ve tamamen güvenli olmayabilir.\n\nGüvenliği tam olarak test edilene kadar NewPass'i sadece test amaçlı ve katkılar için kullanmanız önerilir. ⚠️</string>
+    <string name="entropy">entropi:</string>
+    <string name="generate_lowercase">Küçük harfler</string>
+    <string name="export_database">Şifreli veritabanını dışa aktar</string>
+    <string name="invalid_key">Geçersiz anahtar</string>
+    <string name="password_cannot_be_empty">Parola boş olamaz!</string>
+    <string name="report_an_issue_securely">Güvenli bir şekilde bir sorun bildirin</string>
+    <string name="website">Web sitesi</string>
 </resources>

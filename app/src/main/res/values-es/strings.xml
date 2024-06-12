@@ -97,4 +97,16 @@
     <string name="language_changed">Idioma cambiado. Reinicie para ver los cambios</string>
     <string name="reenter_the_new_password">Vuelve a introducir la contraseña</string>
     <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
+    <string name="name_should_not_be_empty">El nombre no debe estar vacío</string>
+    <string name="email_should_not_be_empty">El correo electrónico/usuario no debe estar vacío</string>
+    <string name="continue_button">Continuar</string>
+    <string name="caution_message">⚠️ Por favor, absténgase de almacenar sus contraseñas en NewPass por el momento, ya que actualmente está en desarrollo activo y puede no ser completamente seguro.\n\nEs recomendable usar NewPass únicamente con fines de prueba y contribuciones hasta que su seguridad haya sido completamente evaluada. ⚠️</string>
+    <string name="entropy">entropía:</string>
+    <string name="generate_lowercase">Minúsculas</string>
+    <string name="export_database">Exportar base de datos encriptada</string>
+    <string name="invalid_key">Clave no válida</string>
+    <string name="password_cannot_be_empty">¡La contraseña no puede estar vacía!</string>
+    <string name="report_an_issue_securely">Reportar un problema de forma segura</string>
+    <string name="website">Sitio web</string>
+
 </resources>

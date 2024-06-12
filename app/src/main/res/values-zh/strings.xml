@@ -99,4 +99,16 @@
     <string name="language_changed">语言已更改。重启以查看更改</string>
     <string name="reenter_the_new_password">重新输入密码</string>
     <string name="passwords_do_not_match">密码不匹配</string>
+    <string name="name_should_not_be_empty">姓名不能为空</string>
+    <string name="email_should_not_be_empty">电子邮件/用户名不能为空</string>
+    <string name="continue_button">继续</string>
+    <string name="caution_message">⚠️ 请暂时不要将您的密码存储在NewPass中，因为它目前正在积极开发中，可能不完全安全。\n\n建议仅将NewPass用于测试目的和贡献，直到其安全性经过彻底审查。 ⚠️</string>
+    <string name="entropy">熵：</string>
+    <string name="generate_lowercase">小写字母</string>
+    <string name="export_database">导出加密数据库</string>
+    <string name="invalid_key">无效的密钥</string>
+    <string name="password_cannot_be_empty">密码不能为空！</string>
+    <string name="report_an_issue_securely">安全报告问题</string>
+    <string name="website">网站</string>
+
 </resources>
