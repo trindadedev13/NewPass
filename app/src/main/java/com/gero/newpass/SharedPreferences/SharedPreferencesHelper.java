@@ -53,7 +53,8 @@ public class SharedPreferencesHelper {
 
         if (Objects.equals(selectedLanguage, "Русский")) {
             selectedLanguage = "ru";
-
+        } 
+        
         if (Objects.equals(selectedLanguage, "Portuguse")) {
             selectedLanguage = "pt-rBR";
         }
