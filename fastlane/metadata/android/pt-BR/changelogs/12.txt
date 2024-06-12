@@ -1,0 +1,15 @@
+Adicionado
+- Adicionado um ícone e um recurso para pesquisar uma conta no banco de dados.
+- Introduzida uma terceira entrada de texto para confirmar a senha durante o processo de troca de senha.
+- Incluído suporte ao idioma chinês.
+- Integrado suporte ao idioma hindi.
+
+Removido
+- Removida a permissão WRITE_EXTERNAL_STORAGE.
+- Removida a permissão READ_EXTERNAL_STORAGE.
+
+Melhorias
+- Design dos diálogos aprimorado para uma melhor experiência do usuário.
+
+Correções
+- Resolvido o problema em que a barra de status no tema claro não aparecia.
