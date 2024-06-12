@@ -32,8 +32,9 @@ import com.gero.newpass.viewmodel.MainViewModel;
 
 import java.util.Objects;
 
+import com.trindade.dev.NewPassFragment;
 
-public class MainViewFragment extends Fragment {
+public class MainViewFragment extends NewPassFragment {
 
     private FragmentMainViewBinding binding;
     private TextView noData, count;

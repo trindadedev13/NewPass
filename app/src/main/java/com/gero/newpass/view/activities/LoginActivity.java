@@ -43,7 +43,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity {
+import com.trindade.dev.NewPassActivity;
+
+public class LoginActivity extends NewPassActivity {
 
     private EditText passwordEntry;
     private ImageButton buttonRegisterOrUnlock, buttonPasswordVisibility;
@@ -60,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        SystemBarColorHelper.changeBarsColor(this, R.color.background_primary);
 
         initViews(binding);
 

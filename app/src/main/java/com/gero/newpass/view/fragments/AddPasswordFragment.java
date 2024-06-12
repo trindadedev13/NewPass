@@ -27,8 +27,9 @@ import com.gero.newpass.utilities.VibrationHelper;
 import com.gero.newpass.view.activities.MainViewActivity;
 import com.gero.newpass.viewmodel.AddViewModel;
 
+import com.trindade.dev.NewPassFragment;
 
-public class AddPasswordFragment extends Fragment {
+public class AddPasswordFragment extends NewPassFragment {
 
     private EditText nameInput, emailInput, passwordInput;
     private ImageButton buttonAdd, buttonBack, buttonPasswordVisibility;

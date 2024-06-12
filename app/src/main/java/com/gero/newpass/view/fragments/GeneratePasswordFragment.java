@@ -33,8 +33,9 @@ import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
 
 import java.util.Locale;
 
+import com.trindade.dev.NewPassFragment;
 
-public class GeneratePasswordFragment extends Fragment {
+public class GeneratePasswordFragment extends NewPassFragment {
 
     private GeneratePasswordViewModel generatePasswordViewModel;
     private SeekBar seekBar;
