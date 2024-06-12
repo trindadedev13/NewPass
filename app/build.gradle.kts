@@ -34,8 +34,8 @@ android {
     }
 
     /*
-    this configuration is used to make the build output (APK or AAB) smaller by
-    excluding information about the project's dependencies
+      this configuration is used to make the build output (APK or AAB) smaller by
+      excluding information about the project's dependencies
      */
     android {
         dependenciesInfo {
@@ -43,6 +43,18 @@ android {
             includeInApk = false
             // Disables dependency metadata when building Android App Bundles.
             includeInBundle = false
+        }
+    }
+    /*
+      Sign apk in debug build
+      to keep the same signature in all debug builds
+    */
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file(layout.buildDirectory.dir("../testkey.keystore"))
+            storePassword = "testkey"
+            keyAlias = "testkey"
+            keyPassword = "testkey"
         }
     }
 }

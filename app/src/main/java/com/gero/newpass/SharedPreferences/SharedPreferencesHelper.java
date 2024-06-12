@@ -37,9 +37,11 @@ public class SharedPreferencesHelper {
 
         } else if (Objects.equals(currentLanguage, "ru")) {
             currentLanguage = "Русский";
-        }
-
-
+            
+        } else if (Objects.equals(currentLanguage, "pt-rBR")) {
+            currentLanguage = "Portuguese";
+        } 
+        
         return currentLanguage;
     }
 
@@ -51,6 +53,13 @@ public class SharedPreferencesHelper {
 
         if (Objects.equals(selectedLanguage, "Русский")) {
             selectedLanguage = "ru";
+
+        if (Objects.equals(selectedLanguage, "Portuguse")) {
+            selectedLanguage = "pt-rBR";
+        }
+        
+        if (Objects.equals(selectedLanguage, "Portuguse")) {
+            selectedLanguage = "pt-rBR";
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences(context);
