@@ -100,13 +100,12 @@
     <string name="name_should_not_be_empty">नाम खाली नहीं होना चाहिए</string>
     <string name="email_should_not_be_empty">ईमेल/उपयोगकर्ता खाली नहीं होना चाहिए</string>
     <string name="continue_button">जारी रखें</string>
-    <string name="caution_message">⚠️ कृपया इस समय अपने पासवर्ड को न्यूपास में संग्रहित करने से बचें, क्योंकि यह वर्तमान में सक्रिय विकास में है और पूरी तरह से सुरक्षित नहीं हो सकता।\n\nयह सलाह दी जाती है कि न्यूपास का उपयोग केवल परीक्षण और योगदान के उद्देश्यों के लिए ही किया जाए, जब तक इसकी सुरक्षा की गई ना हो। ⚠️</string>
     <string name="entropy">प्रसार:</string>
     <string name="generate_lowercase">लोअरकेस</string>
     <string name="export_database">एन्क्रिप्टेड डेटाबेस निर्यात करें</string>
     <string name="invalid_key">अमान्य कुंजी</string>
     <string name="password_cannot_be_empty">पासवर्ड खाली नहीं हो सकता!</string>
-    <string name="report_an_issue_securely">सुरक्षित रूप से समस्या की रिपोर्ट करें</string>
+    <string name="report_an_issue_securely">समस्या की सूचना दें</string>
     <string name="website">वेबसाइट</string>
 
 </resources>
