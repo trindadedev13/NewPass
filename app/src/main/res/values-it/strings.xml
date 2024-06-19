@@ -107,13 +107,12 @@
     <string name="name_should_not_be_empty">Il nome non deve essere vuoto</string>
     <string name="email_should_not_be_empty">Email/utente non deve essere vuoto</string>
     <string name="continue_button">Continua</string>
-    <string name="caution_message">⚠️ Si prega di astenersi dal memorizzare le proprie password in NewPass al momento, poiché è attualmente in fase di sviluppo attivo e potrebbe non essere completamente sicuro.\n\nSi consiglia di utilizzare NewPass esclusivamente per scopi di test e contributi fino a quando la sua sicurezza non sia stata completamente valutata. ⚠️</string>
     <string name="entropy">entropia:</string>
     <string name="generate_lowercase">Minuscole</string>
     <string name="export_database">Esporta database crittografato</string>
     <string name="invalid_key">Chiave non valida</string>
     <string name="password_cannot_be_empty">La password non può essere vuota!</string>
-    <string name="report_an_issue_securely">Segnala un problema in modo sicuro</string>
+    <string name="report_an_issue_securely">Segnala un problema</string>
     <string name="website">Sito web</string>
 
 </resources>

@@ -1,0 +1,21 @@
+v1.2.0 - What's New
+
+Main
+- Switched to AES-GCM mode for encryption to ensure the integrity of input values.
+- Added functionality to export/import database as encrypted JSON (AES-GCM and PBKDF2 with HMAC SHA256).
+- Password hashes are now stored in encrypted shared preferences (PBKDF2 with HMAC SHA256).
+
+Additions
+- The generate password screen now displays the entropy level of the password.
+- Added a switch to disable lowercase characters during the password generation.
+- Added information on secure contact methods, website links, and more in the settings.
+- Added animation to the login button when an incorrect password is entered.
+- Added a warning message displayed on first launch.
+- Added multiple language options.
+
+Removals
+- Removed all length restrictions on input fields such as name, email, and password.
+
+Improvements
+- Enhanced haptic feedback experience.
+- Increased the length of generated passwords up to 64 characters.

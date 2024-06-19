@@ -101,7 +101,7 @@
     <string name="name_should_not_be_empty">Name should not be empty</string>
     <string name="email_should_not_be_empty">Email/user should not be empty</string>
     <string name="continue_button">Continue</string>
-    <string name="caution_message">⚠️ Please refrain from storing your passwords in NewPass at the moment, as it is currently undergoing active development and may not be completely secure.\n\nIt\'s advisable to use NewPass solely for testing purposes and contributions until its security has been thoroughly vetted. ⚠️</string>
+    <string name="caution_message" translatable="false">⚠️ Please refrain from storing your passwords in NewPass at the moment, as it is currently undergoing active development and may not be completely secure.\n\nIt\'s advisable to use NewPass solely for testing purposes and contributions until its security has been thoroughly vetted. ⚠️</string>
     <string name="entropy">entropy:</string>
     <string name="generate_lowercase">Lowercase</string>
     <string name="export_database">Export encrypted database</string>

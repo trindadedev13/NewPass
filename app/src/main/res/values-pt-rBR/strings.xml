@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">NewPass</string>
     <string name="unlock_newpass_button_text">[desbloquear NewPass]</string>
     <string name="create_password_button_text">[criar senha]</string>
     <string name="welcome_newpass_text">Bem vindo ao \nNewpass!</string>
@@ -75,7 +74,6 @@
     <string name="wrong_password">Senha incorreta</string>
     <string name="enter_the_old_password">Senha Antiga</string>
     <string name="enter_the_new_password">Nova senha</string>
-    <string name="this_feature_will_be_available_soon" translatable="false">Este recurso estará disponível em breve</string>
     <string name="use_screen_lock_to_unlock">Use o bloqueio de tela para desbloquear</string>
     <string name="import_database">Importar banco de dados</string>
     <string name="confirm">Confirme</string>
@@ -101,12 +99,11 @@
     <string name="name_should_not_be_empty">O nome não deve estar vazio</string>
     <string name="email_should_not_be_empty">Email/usuário não deve estar vazio</string>
     <string name="continue_button">Continuar</string>
-    <string name="caution_message">⚠️ Evite armazenar suas senhas no NewPass no momento, pois ele está em desenvolvimento ativo e pode não ser completamente seguro.\n\nÉ aconselhável usar o NewPass apenas para fins de teste e contribuições até que sua segurança seja completamente verificada. ⚠️</string>
     <string name="entropy">entropia:</string>
     <string name="generate_lowercase">Minúsculas</string>
     <string name="export_database">Exportar banco de dados criptografado</string>
     <string name="invalid_key">Chave inválida</string>
     <string name="password_cannot_be_empty">A senha não pode ficar vazia!</string>
-    <string name="report_an_issue_securely">Relate um problema com segurança</string>
+    <string name="report_an_issue_securely">Relate um problema</string>
     <string name="website">Website</string>
 </resources>
