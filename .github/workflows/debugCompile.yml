@@ -11,6 +11,15 @@ on:
       - gradlew
       - gradlew.bat
       - settings.gradle.kts
+  pull_request:
+    paths:
+      - .github/workflows/debugCompile.yml
+      - app/**
+      - build.gradle.kts
+      - gradle.properties
+      - gradlew
+      - gradlew.bat
+      - settings.gradle.kts
 
 jobs:
   build_debug_apk:
