@@ -1,4 +1,4 @@
-package com.trindade.dev;
+package dev.trindadedev.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;

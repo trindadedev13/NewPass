@@ -32,7 +32,7 @@ import com.gero.newpass.viewmodel.MainViewModel;
 
 import java.util.Objects;
 
-import com.trindade.dev.NewPassFragment;
+import dev.trindadedev.ui.base.NewPassFragment;
 
 public class MainViewFragment extends NewPassFragment {
 

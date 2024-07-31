@@ -33,7 +33,7 @@ import com.gero.newpass.viewmodel.GeneratePasswordViewModel;
 
 import java.util.Locale;
 
-import com.trindade.dev.NewPassFragment;
+import dev.trindadedev.ui.base.NewPassFragment;
 
 public class GeneratePasswordFragment extends NewPassFragment {
 

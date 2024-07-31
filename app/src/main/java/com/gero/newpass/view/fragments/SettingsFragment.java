@@ -33,7 +33,7 @@ import com.gero.newpass.view.adapters.SettingsAdapter;
 
 import java.util.ArrayList;
 
-import com.trindade.dev.NewPassFragment;
+import dev.trindadedev.ui.base.NewPassFragment;
 
 public class SettingsFragment extends NewPassFragment {
 

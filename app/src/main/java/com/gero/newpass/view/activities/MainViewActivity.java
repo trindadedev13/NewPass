@@ -22,7 +22,7 @@ import com.gero.newpass.view.fragments.MainViewFragment;
 import java.util.Locale;
 import java.util.Objects;
 
-import com.trindade.dev.NewPassActivity;
+import dev.trindadedev.ui.base.NewPassActivity;
 
 public class MainViewActivity extends NewPassActivity implements LanguageDialogFragment.LanguageListener {
 

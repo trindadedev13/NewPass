@@ -43,7 +43,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Locale;
 
-import com.trindade.dev.NewPassActivity;
+import dev.trindadedev.ui.base.NewPassActivity;
 
 public class LoginActivity extends NewPassActivity {
 
