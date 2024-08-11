@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.NewPass" parent="Theme.Material3.Light.NoActionBar" />
+    <style name="Base.Theme.NewPass" parent="Theme.Material3.Dark.NoActionBar" />
 
     <style name="Theme.NewPass" parent="Base.Theme.NewPass" >
         <item name="android:statusBarColor">@color/background_login</item>
