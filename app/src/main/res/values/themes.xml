@@ -6,7 +6,33 @@
         <item name="android:navigationBarColor">@color/background_login</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="textInputStyle">@style/Widget.NewPass.TextInputLayout</item>
+        <item name="textInputStyle">@style/Theme.NewPass.TextInputLayoutStyle</item>
+    </style>
+    
+    <style name="Theme.NewPass.TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:paddingHorizontal">0dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:bottomLeftRadius">14dp</item>
+        <item name="android:bottomRightRadius">14dp</item>
+        <item name="android:topLeftRadius">14dp</item>
+        <item name="android:topRightRadius">14dp</item>
+        <item name="hintEnabled">true</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.NewPass.TextInputLayout.Rounded</item>
     </style>
 
+    <style name="InLayoutTheme.NewPass.TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:paddingHorizontal">0dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:bottomLeftRadius">14dp</item>
+        <item name="android:bottomRightRadius">14dp</item>
+        <item name="android:topLeftRadius">14dp</item>
+        <item name="android:topRightRadius">14dp</item>
+        <item name="hintEnabled">true</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.NewPass.TextInputLayout.Rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.NewPass.TextInputLayout.Rounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
 </resources>
