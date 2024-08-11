@@ -10,11 +10,13 @@
         <item name="hintEnabled">true</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.NewPass.TextInputLayoutStyle</item>
     </style>
-    
-    <style name="ShapeAppearance.NewPass" />
 
     <style name="ShapeAppearance.NewPass.TextInputLayoutStyle">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
     </style>
+    
+    <!-- just to fix bugs -->
+    <style name="ShapeAppearance" />
+    <style name="ShapeAppearance.NewPass" />
 </resources>
