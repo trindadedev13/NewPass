@@ -54,7 +54,7 @@ public class LanguageDialogFragment extends DialogFragment {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(getActivity());
 
         dialog.setTitle(R.string.languagedialog_select_your_choice)
-                .setSingleChoiceItems(languageList, position, (dialog, which) -> position = which)
+                .setSingleChoiceItems(languageList, position, (dialogIn, which) -> position = which)
                 .setPositiveButton("Ok", (dialogIn, which) -> {
                     mListener.onPositiveButtonClicked(languageList, position);
                     Toast.makeText(requireContext(), getString(R.string.language_changed), Toast.LENGTH_SHORT).show();
