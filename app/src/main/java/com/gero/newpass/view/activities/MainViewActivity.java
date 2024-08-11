@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 
 import com.gero.newpass.ContextWrapper.NewPassContextWrapper;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
