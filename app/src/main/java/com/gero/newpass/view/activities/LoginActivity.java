@@ -101,7 +101,7 @@ public class LoginActivity extends NewPassActivity {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
             welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
         } else {
-            MaterialAlertDialogBuilder dialog = getMaterialAlertDialog();
+            var dialog = getMaterialAlertDialog();
             dialog.show();
         }
 
@@ -129,7 +129,6 @@ public class LoginActivity extends NewPassActivity {
              .setMessage(getString(R.string.caution_message))
              .setPositiveButton(getString(R.string.continue_button), (dialogIn, which) -> dialogIn.dismiss())
              .create();
-        var returnDialog = dialog.show();     
         return returnDialog;
     }
 
