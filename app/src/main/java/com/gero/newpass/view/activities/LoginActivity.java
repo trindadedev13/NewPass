@@ -110,7 +110,6 @@ public class LoginActivity extends NewPassActivity {
         }
 
         buttonPasswordVisibility.setOnClickListener(v -> {
-
             if (isPasswordVisible) {
                 buttonPasswordVisibility.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.icon_visibility_on));
                 passwordEntry.setTransformationMethod(PasswordTransformationMethod.getInstance());
