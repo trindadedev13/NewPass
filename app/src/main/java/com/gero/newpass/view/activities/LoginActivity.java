@@ -26,6 +26,8 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import com.gero.newpass.ContextWrapper.NewPassContextWrapper;
 import com.gero.newpass.R;
 import com.gero.newpass.SharedPreferences.SharedPreferencesHelper;
@@ -124,7 +126,7 @@ public class LoginActivity extends NewPassActivity {
 
     @NonNull
     private AlertDialog getAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        MaterialAlertDialogBuilder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.welcome_newpass_text);
         builder.setMessage(R.string.caution_message);
         builder.setPositiveButton(R.string.continue_button, (dialog, which) -> dialog.dismiss());
