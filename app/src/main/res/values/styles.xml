@@ -4,4 +4,13 @@
         <item name="colorControlActivated">@color/colorOn</item>
         <item name="colorSwitchThumbNormal">@color/colorOff</item>
     </style>
+    
+    <style name="Widget.NewPass.TextInputLayout" parent="Widget.Material3.TextInputLayout.*">
+        <item name="shapeAppearance">@style/ShapeAppearance.NewPass.TextInputLayout</item>
+    </style>
+    
+    <style name="ShapeAppearance.NewPass.TextInputLayout" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">18dp</item>
+    </style>
 </resources>
