@@ -70,11 +70,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("com.google.android.material:material:1.12.0")
     implementation("net.zetetic:android-database-sqlcipher:4.4.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.biometric:biometric:1.1.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.android.material:material:1.12.0")
     implementation("com.daimajia.androidanimations:library:2.4@aar")
 }
