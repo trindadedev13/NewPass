@@ -35,7 +35,7 @@ public class DialogHelper {
         EditText thirdInput = dialogView.findViewById(R.id.third_input);
 
         dialog.setTitle(R.string.settings_change_password)
-                .setPositiveButton(R.string.update_alertdialog_yes, (dialog, id) -> {
+                .setPositiveButton(R.string.update_alertdialog_yes, (dialogIn, id) -> {
 
                     String inputOldPassword = firstInput.getText().toString();
                     String inputNewPassword = secondInput.getText().toString();
@@ -64,7 +64,7 @@ public class DialogHelper {
                         throw new RuntimeException(e);
                     }
                 })
-                .setNegativeButton(R.string.update_alertdialog_no, (dialog, id) -> dialog.cancel());
+                .setNegativeButton(R.string.update_alertdialog_no, (dialogIn, id) -> dialog.cancel());
         dialog.show();
     }
 
@@ -76,7 +76,7 @@ public class DialogHelper {
         EditText input = dialogView.findViewById(R.id.input);
 
         dialog.setTitle(R.string.export_database)
-                .setPositiveButton(R.string.confirm, (dialog, id) -> {
+                .setPositiveButton(R.string.confirm, (dialogIn, id) -> {
                     String password = input.getText().toString();
 
                     if (password.isEmpty()) {
@@ -86,7 +86,7 @@ public class DialogHelper {
                     }
 
                 })
-                .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+                .setNegativeButton(R.string.cancel, (dialogIn, id) -> dialog.cancel());
         dialog.show();
     }
 
@@ -98,7 +98,7 @@ public class DialogHelper {
         EditText input = dialogView.findViewById(R.id.input);
 
         dialog.setTitle(R.string.import_database)
-                .setPositiveButton(R.string.confirm, (dialog, id) -> {
+                .setPositiveButton(R.string.confirm, (dialogIn, id) -> {
                     String password = input.getText().toString();
                     try {
                         DatabaseHelper.importJsonToDatabase(context, fileURL, password);
@@ -106,7 +106,7 @@ public class DialogHelper {
                         Log.e("8953467", "Error: ", e);
                     }
                 })
-                .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
+                .setNegativeButton(R.string.cancel, (dialogIn, id) -> dialog.cancel());
         dialog.show();
     }
 }
