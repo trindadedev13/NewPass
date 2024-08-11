@@ -101,7 +101,11 @@ public class LoginActivity extends NewPassActivity {
             textViewRegisterOrUnlock.setText(getString(R.string.unlock_newpass_button_text));
             welcomeTextView.setText(getString(R.string.welcome_back_newpass_text));
         } else {
-            var dialog = getMaterialAlertDialog();
+            var dialog = new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.welcome_newpass_text))
+                .setMessage(getString(R.string.caution_message))
+                .setPositiveButton(getString(R.string.continue_button), (dialogIn, which) -> dialogIn.dismiss())
+                .create();
             dialog.show();
         }
 
@@ -122,18 +126,7 @@ public class LoginActivity extends NewPassActivity {
         buttonRegisterOrUnlockListener(buttonRegisterOrUnlock, isPasswordEmpty);
     }
 
-    @NonNull
-    private MaterialAlertDialogBuilder getMaterialAlertDialog() {
-        var dialog = new MaterialAlertDialogBuilder(this)
-             .setTitle(getString(R.string.welcome_newpass_text))
-             .setMessage(getString(R.string.caution_message))
-             .setPositiveButton(getString(R.string.continue_button), (dialogIn, which) -> dialogIn.dismiss())
-             .create();
-        return dialog;
-    }
-
     public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
-
         if (!isPasswordEmpty) {
             loginUser(view);
 
