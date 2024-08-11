@@ -129,7 +129,8 @@ public class LoginActivity extends NewPassActivity {
              .setMessage(getString(R.string.caution_message))
              .setPositiveButton(getString(R.string.continue_button), (dialogIn, which) -> dialogIn.dismiss())
              .create();
-        return dialog;
+        var returnDialog = dialog.show();     
+        return returnDialog;
     }
 
     public void buttonRegisterOrUnlockListener(View view, Boolean isPasswordEmpty) {
