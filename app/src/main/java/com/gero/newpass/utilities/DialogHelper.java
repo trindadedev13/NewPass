@@ -64,7 +64,7 @@ public class DialogHelper {
                         throw new RuntimeException(e);
                     }
                 })
-                .setNegativeButton(R.string.update_alertdialog_no, (dialogIn, id) -> dialog.cancel());
+                .setNegativeButton(R.string.update_alertdialog_no, (dialogIn, id) -> dialogIn.cancel());
         dialog.show();
     }
 
@@ -86,7 +86,7 @@ public class DialogHelper {
                     }
 
                 })
-                .setNegativeButton(R.string.cancel, (dialogIn, id) -> dialog.cancel());
+                .setNegativeButton(R.string.cancel, (dialogIn, id) -> dialogIn.cancel());
         dialog.show();
     }
 
@@ -106,7 +106,7 @@ public class DialogHelper {
                         Log.e("8953467", "Error: ", e);
                     }
                 })
-                .setNegativeButton(R.string.cancel, (dialogIn, id) -> dialog.cancel());
+                .setNegativeButton(R.string.cancel, (dialogIn, id) -> dialogIn.cancel());
         dialog.show();
     }
 }
