@@ -125,10 +125,11 @@ public class LoginActivity extends NewPassActivity {
 
     @NonNull
     private MaterialAlertDialogBuilder getMaterialAlertDialog() {
-        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
-        dialog.setTitle(R.string.welcome_newpass_text);
-        dialog.setMessage(R.string.caution_message);
-        dialog.setPositiveButton(R.string.continue_button, (dialogIn, which) -> dialogIn.dismiss());
+        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this)
+             .setTitle(getString(R.string.welcome_newpass_text))
+             .setMessage(getString(R.string.caution_message))
+             .setPositiveButton(getString(R.string.continue_button), (dialogIn, which) -> dialogIn.dismiss())
+             .create();
         return dialog;
     }
 
