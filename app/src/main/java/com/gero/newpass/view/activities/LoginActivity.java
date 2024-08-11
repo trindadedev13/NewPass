@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.core.content.ContextCompat;
@@ -125,7 +124,7 @@ public class LoginActivity extends NewPassActivity {
 
     @NonNull
     private MaterialAlertDialogBuilder getMaterialAlertDialog() {
-        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this)
+        var dialog = new MaterialAlertDialogBuilder(this)
              .setTitle(getString(R.string.welcome_newpass_text))
              .setMessage(getString(R.string.caution_message))
              .setPositiveButton(getString(R.string.continue_button), (dialogIn, which) -> dialogIn.dismiss())
