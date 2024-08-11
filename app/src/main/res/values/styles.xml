@@ -5,7 +5,7 @@
         <item name="colorSwitchThumbNormal">@color/colorOff</item>
     </style>
     
-    <style name="Widget.NewPass.TextInputLayout" parent="Widget.Material3.TextInputLayout.*">
+    <style name="Widget.NewPass.TextInputLayout" parent="Widget.Material3.TextInputLayout">
         <item name="shapeAppearance">@style/ShapeAppearance.NewPass.TextInputLayout</item>
     </style>
     
