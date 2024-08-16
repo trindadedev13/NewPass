@@ -158,7 +158,7 @@ public class MainViewFragment extends NewPassFragment {
     @SuppressLint("SetTextI18n")
     private void showInputDialog() {
 
-        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext());
+        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_search, null);
         dialog.setView(dialogView);
@@ -167,7 +167,7 @@ public class MainViewFragment extends NewPassFragment {
         EditText input = dialogView.findViewById(R.id.input);
 
         dialog.setTitle(R.string.search_password)
-                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                .setPositiveButton(R.string.ok, (dialogIn, which) -> {
 
                     String searchTerm = input.getText().toString().toLowerCase().trim();
 
@@ -195,8 +195,7 @@ public class MainViewFragment extends NewPassFragment {
                         }
                     });
                 });
-        dialog.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
-
+        dialog.setNegativeButton(R.string.cancel, (dialogIn, which) -> dialogIn.cancel());
         dialog.show();
     }
 
