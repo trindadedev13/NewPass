@@ -6,7 +6,7 @@ import android.os.Bundle
 
 import com.geero.newpass.databinding.DialogLoadingBinding
 
-class LoadingScreen(context: Context) : Dialog(context) {
+class LoadingDialog(context: Context) : Dialog(context) {
 
     private lateinit var binding: DialogLoadingBinding
     private val c: Context = context
