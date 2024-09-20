@@ -6,14 +6,14 @@ import android.os.Bundle;
 
 import com.google.android.material.loadingindicator.LoadingIndicator;
 
-import com.geero.newpass.databinding.DialogLoadingBinding;
+import com.gero.newpass.databinding.DialogLoadingBinding;
 
-public class LoadingScreen extends Dialog {
+public class LoadingDialog extends Dialog {
 
     private DialogLoadingBinding binding;
     private Context c;
 
-    public LoadingScreen(Context context) {
+    public LoadingDialog(Context context) {
         super(context);
         c = context;
     }
