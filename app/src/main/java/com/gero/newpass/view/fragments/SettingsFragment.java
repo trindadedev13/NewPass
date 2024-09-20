@@ -34,6 +34,7 @@ import com.gero.newpass.view.adapters.SettingsAdapter;
 import java.util.ArrayList;
 
 import dev.trindadedev.ui.base.NewPassFragment;
+import dev.trindadedev.ui.components.dialog.LoadingDialog;
 
 public class SettingsFragment extends NewPassFragment {
 
@@ -55,6 +56,7 @@ public class SettingsFragment extends NewPassFragment {
     static final int SHARE = 8;
     static final int REPORT_ISSUE = 9;
     static final int APP_VERSION = 10;
+    static final int LOADING_DIALOG_DEBUG = 11;
 
 
     @Override
@@ -152,6 +154,11 @@ public class SettingsFragment extends NewPassFragment {
                 case APP_VERSION:
                     Toast.makeText(requireContext(), "\uD83D\uDE80⚡", Toast.LENGTH_SHORT).show();
                     break;
+                case LOADING_DIALOG_DEBUG:
+                    VibrationHelper.vibrate(binding.getRoot(), VibrationHelper.VibrationType.Weak);
+                    LoadingDialog d = new LoadingDialog(requireContext());
+                    d.show();
+                    break;
             }
         });
     }
@@ -169,6 +176,7 @@ public class SettingsFragment extends NewPassFragment {
         arrayList.add(new SettingData(SHARE, R.drawable.settings_icon_share, getString(R.string.settings_share_newpass), true));
         arrayList.add(new SettingData(REPORT_ISSUE, R.drawable.report_issue, getString(R.string.report_an_issue_securely), true));
         arrayList.add(new SettingData(APP_VERSION, R.drawable.settings_icon_version, getString(R.string.app_version) + getAppVersion()));
+        arrayList.add(new SettingData(LOADING_DIALOG_DEBUG, R.drawable.settings.icon_version, "[DEBUG] Show Loading Dialog"));
     }
 
     private String getAppVersion() {
