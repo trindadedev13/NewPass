@@ -176,7 +176,7 @@ public class SettingsFragment extends NewPassFragment {
         arrayList.add(new SettingData(SHARE, R.drawable.settings_icon_share, getString(R.string.settings_share_newpass), true));
         arrayList.add(new SettingData(REPORT_ISSUE, R.drawable.report_issue, getString(R.string.report_an_issue_securely), true));
         arrayList.add(new SettingData(APP_VERSION, R.drawable.settings_icon_version, getString(R.string.app_version) + getAppVersion()));
-        arrayList.add(new SettingData(LOADING_DIALOG_DEBUG, R.drawable.settings.icon_version, "[DEBUG] Show Loading Dialog"));
+        arrayList.add(new SettingData(LOADING_DIALOG_DEBUG, R.drawable.settings_icon_version, "[DEBUG] Show Loading Dialog"));
     }
 
     private String getAppVersion() {
